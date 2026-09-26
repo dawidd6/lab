@@ -1,0 +1,5 @@
+namespace: envoy-gateway
+repo: docker.io/envoyproxy
+chart: gateway-helm
+version: 1.9.2
+values: {}

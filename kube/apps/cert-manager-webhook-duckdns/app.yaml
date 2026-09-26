@@ -1,0 +1,10 @@
+namespace: cert-manager
+repo: ghcr.io/cobexer/charts
+chart: cert-manager-webhook-duckdns
+version: 2.0.0
+values:
+  certManager:
+    namespace: cert-manager # grants cert-manager's service account access to the solver
+  secret:
+    existingSecret: true
+    existingSecretName: duckdns # from kube/secrets.sops.yaml

@@ -1,0 +1,63 @@
+- name: Provision OS
+  hosts: servers
+  gather_facts: false
+  handlers:
+    - name: Update grub bootloader
+      become: true
+      ansible.builtin.command: update-grub
+      listen: update-grub
+      changed_when: true
+  tasks:
+    # a fresh install's sudo asks for a password; ask for it once, then drop the sudoers file that ends that
+    - name: Check for passwordless sudo
+      ansible.builtin.command: sudo -n true
+      register: sudo_check
+      changed_when: false
+      failed_when: false
+
+    - name: Ask for the sudo password
+      when: sudo_check.rc != 0
+      ansible.builtin.pause:
+        prompt: "Passwordless sudo isn't set up on {{ inventory_hostname }} yet; sudo password"
+        echo: false
+      register: sudo_password
+
+    - name: Use it to become root
+      when: sudo_check.rc != 0
+      no_log: true
+      ansible.builtin.set_fact:
+        ansible_become_password: "{{ sudo_password.user_input }}"
+
+    - name: Set nopasswd for sudo group
+      become: true
+      community.general.sudoers:
+        name: sudo-nopasswd
+        group: sudo
+        commands: ALL
+        nopassword: true
+
+    - name: Use systemd-timesyncd instead of chrony
+      become: true
+      ansible.builtin.apt:
+        name: systemd-timesyncd
+
+    - name: Remove unnecessary packages
+      become: true
+      notify: update-grub
+      ansible.builtin.apt:
+        autoremove: true
+        purge: true
+        state: absent
+        name:
+          - snapd
+          - packagekit
+          - udisks2
+          - kdump-tools
+          - multipath-tools
+          - rsyslog
+          - modemmanager
+
+    - name: Set appropriate timezone
+      become: true
+      community.general.timezone:
+        name: Europe/Warsaw

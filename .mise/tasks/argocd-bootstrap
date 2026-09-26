@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#MISE description="Install Argo CD and the root app (which then deploys everything)"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube/apps"
+
+if ! helm status -n argocd argocd &>/dev/null; then
+  helm install argocd "$(yq '.chart' argocd/app.yaml)" \
+    --repo "$(yq '.repo' argocd/app.yaml)" \
+    --version "$(yq '.version' argocd/app.yaml)" \
+    --values <(yq '.values' argocd/app.yaml) \
+    --namespace "$(yq '.namespace' argocd/app.yaml)" \
+    --create-namespace \
+    --wait
+fi
+
+if ! kubectl -n argocd get application root &>/dev/null; then
+  kubectl create -f apps.yaml
+fi

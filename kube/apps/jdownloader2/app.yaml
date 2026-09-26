@@ -1,0 +1,10 @@
+namespace: media
+repo: oci.trueforge.org/truecharts
+chart: jdownloader2
+version: 22.12.0
+values:
+  persistence:
+    output:
+      existingClaim: media # jellyfin/pvc.yaml, shared with jellyfin
+    config:
+      storageClass: openebs-hostpath

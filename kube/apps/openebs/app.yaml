@@ -1,0 +1,24 @@
+namespace: openebs
+repo: ghcr.io/openebs/charts
+chart: openebs
+version: 4.6.1
+values:
+  global:
+    kubeletDir: /var/lib/k0s/kubelet/
+  engines:
+    local:
+      lvm:
+        enabled: false
+      hostpath:
+        enabled: true
+      zfs:
+        enabled: false
+      rawfile:
+        enabled: false
+    replicated:
+      mayastor:
+        enabled: false
+  loki:
+    enabled: false
+  alloy:
+    enabled: false
