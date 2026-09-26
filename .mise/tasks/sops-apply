@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="Decrypt kube/secrets.sops.yaml and apply it"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube"
+
+sops decrypt secrets.sops.yaml | kubectl apply --server-side -f -

@@ -1,0 +1,69 @@
+# the root app: syncs this file (the ApplicationSet below and itself) from git; created by argocd-bootstrap
+# (Argo CD reads only the files directly in kube/apps, not the app directories)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/dawidd6/lab
+    targetRevision: master
+    path: kube/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# synced by the root app above, deliberately not part of any app it deploys
+# every apps/<name> becomes an Application: the chart in its app.yaml plus its other *.yaml, into app.yaml's namespace;
+# all sync at once, each retrying until what it needs (another app's CRDs, namespaces, secrets) exists
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - git:
+        repoURL: https://github.com/dawidd6/lab
+        revision: master
+        files:
+          - path: kube/apps/*/app.yaml
+  template:
+    metadata:
+      name: '{{ .path.basename }}'
+    spec:
+      project: default
+      sources:
+        - repoURL: '{{ .repo }}'
+          chart: '{{ .chart }}'
+          targetRevision: '{{ .version }}'
+          helm:
+            releaseName: '{{ .path.basename }}'
+            values: '{{ toYaml .values }}'
+        - repoURL: https://github.com/dawidd6/lab # the app's own plain manifests
+          targetRevision: master
+          path: '{{ .path.path }}'
+          directory:
+            exclude: app.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: -1
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or the app's own chart installs

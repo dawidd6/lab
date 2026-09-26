@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "description": "Helm charts in kube/apps/*/app.yaml from https:// Helm repositories",
+      "customType": "regex",
+      "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"],
+      "matchStrings": ["repo: (?<registryUrl>https://\\S+)\\nchart: (?<depName>\\S+)\\nversion: (?<currentValue>\\S+)"],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "description": "Helm charts in kube/apps/*/app.yaml from OCI registries (repo without oci://, so no colon)",
+      "customType": "regex",
+      "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"],
+      "matchStrings": ["repo: (?<registry>[^:\\s]+)\\nchart: (?<depName>\\S+)\\nversion: (?<currentValue>\\S+)"],
+      "packageNameTemplate": "{{{registry}}}/{{{depName}}}",
+      "datasourceTemplate": "docker"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+[settings]
+lockfile = true
+
+[env]
+KUBECONFIG = "{{config_root}}/kube/.config"
+
+[tools]
+sops = "latest"
+helm = "latest"
+k0sctl = "latest"
+kubectl = "latest"
+yq = "latest"
+python = { version = "3.14", postinstall = "python -m pip install ansible==14.4.0 ansible-lint==26.9.0" }

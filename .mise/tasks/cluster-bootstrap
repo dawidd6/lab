@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Install k0s on the server and write the kubeconfig"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube"
+
+k0sctl apply
+k0sctl kubeconfig > "$KUBECONFIG"

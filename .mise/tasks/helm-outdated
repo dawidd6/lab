@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#MISE description="Compare every app's pinned chart version with the latest one"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube/apps"
+
+for app in */app.yaml; do
+  repo=$(yq '.repo' "$app")
+  chart=$(yq '.chart' "$app")
+  if [[ $repo == https://* ]]; then ref=(--repo "$repo" "$chart"); else ref=("oci://$repo/$chart"); fi
+  # helm show chart without --version resolves the latest
+  printf '%-30s %-10s -> %s\n' "$(dirname "$app")" "$(yq '.version' "$app")" "$(helm show chart "${ref[@]}" | yq '.version | sub("^v"; "")')"
+done
