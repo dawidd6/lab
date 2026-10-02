@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-webhook-duckdns
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: ghcr.io/cobexer/charts
+      chart: cert-manager-webhook-duckdns
+      targetRevision: 2.0.0
+      helm:
+        releaseName: cert-manager-webhook-duckdns
+        valuesObject:
+          certManager:
+            namespace: cert-manager # grants cert-manager's service account access to the solver
+          secret:
+            existingSecret: true
+            existingSecretName: duckdns # from kube/secrets.sops.yaml
+    - repoURL: https://github.com/dawidd6/lab # this directory's other manifests
+      targetRevision: master
+      path: kube/apps/cert-manager-webhook-duckdns
+      directory:
+        exclude: application.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs

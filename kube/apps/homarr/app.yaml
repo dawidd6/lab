@@ -1,9 +1,0 @@
-namespace: homarr
-repo: ghcr.io/homarr-labs/charts
-chart: homarr
-version: 8.29.2
-values:
-  persistence:
-    homarrDatabase:
-      enabled: true
-      storageClassName: openebs-hostpath

@@ -1,0 +1,22 @@
+# the root app: syncs every */application.yaml, this one included (app of apps); created by argocd-bootstrap
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/dawidd6/lab
+    targetRevision: master
+    path: kube/apps
+    directory:
+      recurse: true
+      include: '*/application.yaml' # the apps' other manifests belong to the apps themselves
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

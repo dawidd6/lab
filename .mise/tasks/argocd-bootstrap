@@ -5,15 +5,15 @@ set -euo pipefail
 cd "$MISE_PROJECT_ROOT/kube/apps"
 
 if ! helm status -n argocd argocd &>/dev/null; then
-  helm install argocd "$(yq '.chart' argocd/app.yaml)" \
-    --repo "$(yq '.repo' argocd/app.yaml)" \
-    --version "$(yq '.version' argocd/app.yaml)" \
-    --values <(yq '.values' argocd/app.yaml) \
-    --namespace "$(yq '.namespace' argocd/app.yaml)" \
+  helm install argocd "$(yq '.spec.sources[0].chart' argocd/application.yaml)" \
+    --repo "$(yq '.spec.sources[0].repoURL' argocd/application.yaml)" \
+    --version "$(yq '.spec.sources[0].targetRevision' argocd/application.yaml)" \
+    --values <(yq '.spec.sources[0].helm.valuesObject' argocd/application.yaml) \
+    --namespace "$(yq '.spec.destination.namespace' argocd/application.yaml)" \
     --create-namespace \
     --wait
 fi
 
 if ! kubectl -n argocd get application root &>/dev/null; then
-  kubectl create -f apps.yaml
+  kubectl create -f root/application.yaml
 fi

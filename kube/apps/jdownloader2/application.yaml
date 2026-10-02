@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jdownloader2
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: jdownloader2
+      targetRevision: 22.12.0
+      helm:
+        releaseName: jdownloader2
+        valuesObject:
+          persistence:
+            output:
+              existingClaim: media # jellyfin/pvc.yaml, shared with jellyfin
+            config:
+              storageClass: openebs-hostpath
+    - repoURL: https://github.com/dawidd6/lab # this directory's other manifests
+      targetRevision: master
+      path: kube/apps/jdownloader2
+      directory:
+        exclude: application.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs

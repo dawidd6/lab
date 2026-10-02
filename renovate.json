@@ -1,16 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "customManagers": [
+  "argocd": {
+    "managerFilePatterns": ["/^kube/apps/[^/]+/application\\.yaml$/"]
+  },
+  "packageRules": [
     {
-      "description": "Helm charts in kube/apps/*/app.yaml: repo is an https:// Helm repository or an OCI registry (without oci://)",
-      "customType": "regex",
-      "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"],
-      "matchStrings": ["repo: (?<repo>\\S+)\\nchart: (?<depName>\\S+)\\nversion: (?<currentValue>\\S+)"],
-      "datasourceTemplate": "{{#if (containsString repo 'https://')}}helm{{else}}docker{{/if}}",
-      "registryUrlTemplate": "{{#if (containsString repo 'https://')}}{{{repo}}}{{/if}}",
-      "packageNameTemplate": "{{#if (containsString repo 'https://')}}{{{depName}}}{{else}}{{{repo}}}/{{{depName}}}{{/if}}",
-      "extractVersionTemplate": "^v?(?<version>.*)$"
+      "description": "charts are pinned without v (OCI registries tag cert-manager, envoy-gateway with v)",
+      "matchManagers": ["argocd"],
+      "extractVersion": "^v?(?<version>.*)$"
     }
   ]
 }
