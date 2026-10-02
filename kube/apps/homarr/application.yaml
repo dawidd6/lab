@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: ghcr.io/homarr-labs/charts
       chart: homarr
-      targetRevision: 8.29.2
+      targetRevision: 8.30.0
       helm:
         releaseName: homarr
         valuesObject:
