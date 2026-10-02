@@ -219,7 +219,7 @@ url = "https://dl.k8s.io/v1.37.1/bin/windows/amd64/kubectl.exe"
 [[tools.python]]
 version = "3.14.7"
 backend = "core:python"
-specifiers = ["3.14"]
+specifiers = ["latest"]
 
 [tools.python."platforms.linux-arm64"]
 checksum = "sha256:d922413468a276e69a132b79fb7493faa46ef2e85b1a29844d3af1f7710ab5bd"
