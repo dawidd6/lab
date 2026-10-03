@@ -58,7 +58,6 @@ spec:
                       path: /secrets/authelia/oidc.client.argocd
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
-                    scopes: [openid, profile, email, groups]
                     redirect_uris:
                       - https://argocd.dawidd6.duckdns.org/auth/callback
                   - client_id: homarr
@@ -67,7 +66,6 @@ spec:
                       path: /secrets/authelia/oidc.client.homarr
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
-                    scopes: [openid, profile, email, groups]
                     redirect_uris:
                       - https://homarr.dawidd6.duckdns.org/api/auth/callback/oidc
                   - client_id: jdownloader
@@ -76,7 +74,6 @@ spec:
                       path: /secrets/authelia/oidc.client.jdownloader
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
-                    scopes: [openid, profile, email, groups]
                     redirect_uris:
                       - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/securitypolicy.yaml
     - repoURL: https://github.com/dawidd6/lab # this directory's other manifests
