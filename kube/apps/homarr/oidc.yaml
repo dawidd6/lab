@@ -1,4 +1,4 @@
-# Homarr's Dex client (dex/application.yaml)
+# Homarr's Authelia client (authelia/application.yaml)
 apiVersion: secrets.infisical.com/v1alpha1
 kind: InfisicalSecret
 metadata:

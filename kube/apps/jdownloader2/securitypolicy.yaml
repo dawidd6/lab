@@ -1,4 +1,4 @@
-# JDownloader has no login of its own: the gateway asks Dex first
+# JDownloader has no login of its own: the gateway asks Authelia first
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
@@ -10,7 +10,7 @@ spec:
       name: jdownloader
   oidc:
     provider:
-      issuer: https://dex.dawidd6.duckdns.org
+      issuer: https://auth.dawidd6.duckdns.org
     clientID: jdownloader
     clientSecret:
       group: ""

@@ -17,13 +17,13 @@ spec:
               url: https://argocd.dawidd6.duckdns.org
               # Argo CD only takes this as a string; the client secret comes from oidc.yaml (Infisical)
               oidc.config: |
-                name: Dex
-                issuer: https://dex.dawidd6.duckdns.org
+                name: Authelia
+                issuer: https://auth.dawidd6.duckdns.org
                 clientID: argocd
                 clientSecret: $argocd-oidc:clientSecret
                 requestedScopes: [openid, profile, email, groups]
             rbac:
-              policy.csv: g, admins, role:admin # Dex's admins group
+              policy.csv: g, admins, role:admin # the admins group in Authelia's users file
             params:
               server.insecure: true # TLS ends at the gateway
           dex:

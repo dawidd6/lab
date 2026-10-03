@@ -1,4 +1,4 @@
-# the gateway's Dex client for JDownloader (securitypolicy.yaml)
+# the gateway's Authelia client for JDownloader (securitypolicy.yaml)
 apiVersion: secrets.infisical.com/v1alpha1
 kind: InfisicalSecret
 metadata:
