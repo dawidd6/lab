@@ -24,6 +24,8 @@ spec:
                 clientID: argocd
                 clientSecret: $argocd-oidc:clientSecret
                 requestedScopes: [openid, profile, email, groups]
+                enableUserInfoGroups: true # Authelia sends groups in userinfo, not in the ID token
+                userInfoPath: /api/oidc/userinfo
             rbac:
               policy.csv: g, admins, role:admin # the admins group in Authelia's users file
             params:
