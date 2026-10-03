@@ -1,30 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager-webhook-duckdns
+  name: infisical
   namespace: argocd
 spec:
   project: default
   sources:
-    - repoURL: ghcr.io/cobexer/charts
-      chart: cert-manager-webhook-duckdns
-      targetRevision: 2.0.0
+    - repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
+      chart: secrets-operator
+      targetRevision: 0.11.10
       helm:
-        releaseName: cert-manager-webhook-duckdns
+        releaseName: infisical
         valuesObject:
-          certManager:
-            namespace: cert-manager # grants cert-manager's service account access to the solver
-          secret:
-            existingSecret: true
-            existingSecretName: duckdns # duckdns.yaml (Infisical)
+          hostAPI: https://eu.infisical.com/api # Infisical Cloud, EU region
     - repoURL: https://github.com/dawidd6/lab # this directory's other manifests
       targetRevision: master
-      path: kube/apps/cert-manager-webhook-duckdns
+      path: kube/apps/infisical
       directory:
         exclude: application.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: cert-manager
+    namespace: infisical
   syncPolicy:
     automated:
       prune: true

@@ -1,0 +1,23 @@
+# the gateway's Dex client for JDownloader (securitypolicy.yaml)
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
+metadata:
+  name: jdownloader-oidc
+spec:
+  authentication:
+    universalAuth:
+      credentialsRef:
+        secretName: universal-auth-credentials # kube/infisical.sops.yaml
+        secretNamespace: infisical
+      secretsScope:
+        projectSlug: lab
+        envSlug: prod
+        secretsPath: /
+  managedKubeSecretReferences:
+    - secretName: jdownloader-oidc
+      secretNamespace: media
+      creationPolicy: Owner
+      secretType: Opaque
+      template:
+        data:
+          client-secret: '{{ .JDOWNLOADER_CLIENT_SECRET.Value }}'

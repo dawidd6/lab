@@ -12,6 +12,10 @@ spec:
       helm:
         releaseName: homarr
         valuesObject:
+          env:
+            AUTH_PROVIDERS: credentials,oidc # local login kept as a fallback
+            AUTH_OIDC_ISSUER: https://dex.dawidd6.duckdns.org
+            AUTH_OIDC_CLIENT_NAME: Dex
           persistence:
             homarrDatabase:
               enabled: true

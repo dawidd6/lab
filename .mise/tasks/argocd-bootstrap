@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-#MISE description="Install Argo CD and the root app (which then deploys everything)"
+#MISE description="Apply the Infisical credentials, install Argo CD and the root app (which then deploys everything)"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
+
+sops decrypt ../infisical.sops.yaml | kubectl apply --server-side -f -
 
 if ! helm status -n argocd argocd &>/dev/null; then
   helm install argocd "$(yq '.spec.sources[0].chart' argocd/application.yaml)" \

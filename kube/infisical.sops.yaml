@@ -1,11 +1,7 @@
-# DuckDNS API token, for the wildcard certificate's DNS-01 challenges (cert-manager-webhook-duckdns)
 apiVersion: v1
-kind: Secret
+kind: Namespace
 metadata:
-    name: duckdns
-    namespace: cert-manager
-stringData:
-    token: ENC[AES256_GCM,data:JN92NB7HyjGUDXITqxG8Ss2Q5QBHWlhmk5SN3RFTlStFcWWM,iv:wxNoEBfJGdXFDETVxCN/bee1xH9abEal/XR5I9lAIn8=,tag:JOzKNzeWuMJHD12Qgbiq6w==,type:str]
+    name: infisical
 sops:
     age:
         - enc: |
@@ -18,18 +14,18 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-02T16:19:18Z"
-    mac: ENC[AES256_GCM,data:WUOmYlH/CdphwjlRLXvKSqP2F2EQ3Aw1DZf6TKr0sJypET6nSuITu1kMpogi3f5qE36KNIiSCH/ikUzVgDibI0kZk71UeBCLwbMSybmdDdfPwIJAyv6j+FltM9oR8MwDOwvWh/6wflv1RKF6UUfTZb3gVKSh2VK2anjJ5EXSzXw=,iv:rOtl7LB8655x6Ad8poa3MT8YfXS6wn/V9GuI6us8Ytg=,tag:DIs1PZ8F0w1bGEdOMqX8pg==,type:str]
+    lastmodified: "2026-10-03T20:45:48Z"
+    mac: ENC[AES256_GCM,data:ZSMEHwN5KMhKzWsjoqfwkmh3eUYTEjIMHbplsa0cNPGLjSGTcRRdyJA/Qxlik5isB83VgU3Q11DbYy8nGnTpRYe+H8bLcKaNq5GRokUVLYEMODqsUXfCJIW4wEyVUyH6/Gi53nDf1xBL5xuvwOTH9z1ot223Aybl1wCbQtEFBBU=,iv:h8JUhmPkqAwITZB/fdZs+X5XmN0HtJcXH+2sL7srtYE=,tag:4WqpD6hv8WGk4fu8RTDr5w==,type:str]
     version: 3.13.3
 ---
-# Homarr's database encryption key: 64 hex chars, e.g. `openssl rand -hex 32`
 apiVersion: v1
 kind: Secret
 metadata:
-    name: db-encryption
-    namespace: homarr
+    name: universal-auth-credentials
+    namespace: infisical
 stringData:
-    db-encryption-key: ENC[AES256_GCM,data:eNmRAq5i8CiTaNvBFE614kH1nznNpDWA0vYAg8YSFcbFdrAVDeQcYZ3s/ONMNDjDeZBSeBDgdD0ySK2pQnBQYw==,iv:+OLdIepekwt4ScIkgxuY0FBNDYGQCGN467wmXYeTO7w=,tag:Ezcs1VV8esvsT3rnr8VvOQ==,type:str]
+    clientId: ENC[AES256_GCM,data:YwEPi5t1Qt4TF2Huyk8g+//xSBiWsMeUmjM/AF/mgKIu+LS4,iv:xpprIPAhrvX1uglNu0r42pxwfUCthmRpTLslvXpQ6Hg=,tag:Yb1i6JlXJB76FlwqGa0IIQ==,type:str]
+    clientSecret: ENC[AES256_GCM,data:RJEDwBceQzVCPRYtVUiUH3cfNppb3jcC9IkTnk9lhK/6hE3Dc5zj8XVSF/oxInPpkJhuOu5MFKOS8s5oTgacsg==,iv:szGA+ncrQ9THiwxIZ7XCpHTAOLh6WX/qrlJSOCAP5PA=,tag:dAKmm7rcrUZVPUZpiW5pAQ==,type:str]
 sops:
     age:
         - enc: |
@@ -42,6 +38,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-02T16:19:18Z"
-    mac: ENC[AES256_GCM,data:WUOmYlH/CdphwjlRLXvKSqP2F2EQ3Aw1DZf6TKr0sJypET6nSuITu1kMpogi3f5qE36KNIiSCH/ikUzVgDibI0kZk71UeBCLwbMSybmdDdfPwIJAyv6j+FltM9oR8MwDOwvWh/6wflv1RKF6UUfTZb3gVKSh2VK2anjJ5EXSzXw=,iv:rOtl7LB8655x6Ad8poa3MT8YfXS6wn/V9GuI6us8Ytg=,tag:DIs1PZ8F0w1bGEdOMqX8pg==,type:str]
+    lastmodified: "2026-10-03T20:45:48Z"
+    mac: ENC[AES256_GCM,data:ZSMEHwN5KMhKzWsjoqfwkmh3eUYTEjIMHbplsa0cNPGLjSGTcRRdyJA/Qxlik5isB83VgU3Q11DbYy8nGnTpRYe+H8bLcKaNq5GRokUVLYEMODqsUXfCJIW4wEyVUyH6/Gi53nDf1xBL5xuvwOTH9z1ot223Aybl1wCbQtEFBBU=,iv:h8JUhmPkqAwITZB/fdZs+X5XmN0HtJcXH+2sL7srtYE=,tag:4WqpD6hv8WGk4fu8RTDr5w==,type:str]
     version: 3.13.3

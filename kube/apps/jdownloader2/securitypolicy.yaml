@@ -1,0 +1,20 @@
+# JDownloader has no login of its own: the gateway asks Dex first
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: jdownloader
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: jdownloader
+  oidc:
+    provider:
+      issuer: https://dex.dawidd6.duckdns.org
+    clientID: jdownloader
+    clientSecret:
+      group: ""
+      kind: Secret
+      name: jdownloader-oidc # oidc.yaml (Infisical), key client-secret
+    redirectURL: https://jdownloader.dawidd6.duckdns.org/oauth2/callback
+    logoutPath: /logout
