@@ -18,7 +18,9 @@ spec:
             enabled: true # /config: the SQLite database and notification.txt
             storageClass: openebs-hostpath
           secret:
-            existingSecret: authelia # secret.yaml (Infisical), mounted at /secrets/internal
+            existingSecret: authelia # secret.yaml (Infisical); the chart mounts only its own keys at /secrets/internal
+            additionalSecrets:
+              authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets, users file
           configMap:
             totp:
               disable: true # no second factor
@@ -29,7 +31,7 @@ spec:
             authentication_backend:
               file:
                 enabled: true
-                path: /secrets/internal/users_database.yml
+                path: /secrets/authelia/users_database.yml
                 watch: true
             session:
               cookies:
@@ -46,12 +48,12 @@ spec:
                 enabled: true
                 jwks:
                   - key:
-                      path: /secrets/internal/oidc.jwk.RS256.pem
+                      path: /secrets/authelia/oidc.jwk.RS256.pem
                 clients:
                   - client_id: argocd
                     client_name: Argo CD
                     client_secret:
-                      path: /secrets/internal/oidc.client.argocd
+                      path: /secrets/authelia/oidc.client.argocd
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
                     scopes: [openid, profile, email, groups]
@@ -60,7 +62,7 @@ spec:
                   - client_id: homarr
                     client_name: Homarr
                     client_secret:
-                      path: /secrets/internal/oidc.client.homarr
+                      path: /secrets/authelia/oidc.client.homarr
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
                     scopes: [openid, profile, email, groups]
@@ -69,7 +71,7 @@ spec:
                   - client_id: jdownloader
                     client_name: JDownloader
                     client_secret:
-                      path: /secrets/internal/oidc.client.jdownloader
+                      path: /secrets/authelia/oidc.client.jdownloader
                     authorization_policy: one_factor # password only
                     consent_mode: implicit
                     scopes: [openid, profile, email, groups]
