@@ -44,7 +44,6 @@ spec:
           helm:
             valueFiles:
               - $repo/{{ $.path.path }}/values.yaml
-            ignoreMissingValueFiles: true # an app may have no values.yaml
       {{- end }}
         - repoURL: https://github.com/dawidd6/lab # the app's own manifests, and $repo for its values.yaml
           targetRevision: master
