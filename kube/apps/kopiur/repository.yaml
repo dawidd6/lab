@@ -17,9 +17,6 @@ spec:
       namespace: kopiur
       key: KOPIA_PASSWORD
   allowedNamespaces:
-    list:
-      - authelia
-      - homarr
-      - media
+    all: true
   credentialProjection:
     allowed: true
