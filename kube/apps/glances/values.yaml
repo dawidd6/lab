@@ -1,0 +1,26 @@
+# Glances in web server mode: its REST API serves Homarr's Health Monitoring widget (CPU, memory, temperatures, disks)
+# at http://glances.glances.svc:61208; /proc and /sys aren't namespaced, so a plain pod sees the host's values
+controllers:
+  glances:
+    containers:
+      glances:
+        image:
+          repository: docker.io/nicolargo/glances
+          tag: 4.5.7
+        args: [-w]
+        resources:
+          limits:
+            memory: 128Mi
+service:
+  glances:
+    controller: glances
+    ports:
+      http:
+        port: 61208
+persistence:
+  rootfs: # the host's disks, read-only, so Glances can report their usage
+    type: hostPath
+    hostPath: /
+    globalMounts:
+      - path: /rootfs
+        readOnly: true
