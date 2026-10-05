@@ -1,0 +1,54 @@
+# every apps/<name>/app.yaml becomes an Application named <name>: its chart and namespace from app.yaml, its values
+# from values.yaml next to it, plus everything every app shares (below); removing the directory deletes what it deployed
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - git:
+        repoURL: https://github.com/dawidd6/lab
+        revision: master
+        files:
+          - path: kube/apps/*/app.yaml
+  template:
+    metadata:
+      name: '{{ .path.basename }}'
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .spec.destination.namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: -1
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs
+  # sources is a list (app.yaml's chart sources plus this directory), which plain template strings can't build
+  templatePatch: |
+    spec:
+      sources:
+      {{- range .spec.sources }}
+        - repoURL: {{ .repoURL }}
+          chart: {{ .chart }}
+          targetRevision: {{ .targetRevision }}
+          helm:
+            valueFiles:
+              - $repo/{{ $.path.path }}/values.yaml
+            ignoreMissingValueFiles: true # an app may have no values.yaml
+      {{- end }}
+        - repoURL: https://github.com/dawidd6/lab # the app's own manifests, and $repo for its values.yaml
+          targetRevision: master
+          path: {{ .path.path }}
+          ref: repo
+          directory:
+            exclude: '{app.yaml,values.yaml}'

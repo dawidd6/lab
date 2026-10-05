@@ -1,0 +1,5 @@
+persistence:
+  output:
+    existingClaim: media # jellyfin/pvc.yaml, shared with jellyfin
+  config:
+    storageClass: openebs-hostpath

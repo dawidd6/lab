@@ -1,0 +1,22 @@
+global:
+  kubeletDir: /var/lib/k0s/kubelet/
+localpv-provisioner:
+  hostpathClass:
+    reclaimPolicy: Retain # a deleted PVC keeps its data on disk (removing an app deletes its PVCs)
+engines:
+  local:
+    lvm:
+      enabled: false
+    hostpath:
+      enabled: true
+    zfs:
+      enabled: false
+    rawfile:
+      enabled: false
+  replicated:
+    mayastor:
+      enabled: false
+loki:
+  enabled: false
+alloy:
+  enabled: false

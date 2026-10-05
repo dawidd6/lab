@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: media
+  sources:
+    - repoURL: https://jellyfin.github.io/jellyfin-helm
+      chart: jellyfin
+      targetRevision: 3.2.0

@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: argocd
+  sources:
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 10.9.6

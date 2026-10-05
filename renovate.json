@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "argocd": {
-    "managerFilePatterns": ["/^kube/apps/[^/]+/application\\.yaml$/"]
+    "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
   },
   "packageRules": [
     {

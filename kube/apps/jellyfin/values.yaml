@@ -1,0 +1,5 @@
+persistence:
+  media:
+    existingClaim: media # pvc.yaml
+  config:
+    storageClass: openebs-hostpath

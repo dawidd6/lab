@@ -1,0 +1,8 @@
+env:
+  AUTH_PROVIDERS: credentials,oidc # local login kept as a fallback
+  AUTH_OIDC_ISSUER: https://auth.dawidd6.duckdns.org
+  AUTH_OIDC_CLIENT_NAME: Authelia
+persistence:
+  homarrDatabase:
+    enabled: true
+    storageClassName: openebs-hostpath

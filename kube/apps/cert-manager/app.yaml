@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: cert-manager
+  sources:
+    - repoURL: quay.io/jetstack/charts
+      chart: cert-manager
+      targetRevision: 1.21.2

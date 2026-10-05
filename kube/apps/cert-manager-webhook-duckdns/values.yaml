@@ -1,0 +1,5 @@
+certManager:
+  namespace: cert-manager # grants cert-manager's service account access to the solver
+secret:
+  existingSecret: true
+  existingSecretName: duckdns # duckdns.yaml (Infisical)

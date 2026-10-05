@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: infisical
+  sources:
+    - repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
+      chart: secrets-operator
+      targetRevision: 0.11.11

@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: homarr
+  sources:
+    - repoURL: ghcr.io/homarr-labs/charts
+      chart: homarr
+      targetRevision: 8.31.1

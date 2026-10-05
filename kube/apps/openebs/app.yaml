@@ -1,0 +1,10 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: openebs
+  sources:
+    - repoURL: ghcr.io/openebs/charts
+      chart: openebs
+      targetRevision: 4.6.1
