@@ -1,0 +1,2 @@
+# defaults: only namespaces with a k8up Schedule are backed up (the Schedule is the opt-in);
+# within such a namespace a Schedule can narrow down its PVCs (backup.labelSelectors, k8up.io/backup: "false")

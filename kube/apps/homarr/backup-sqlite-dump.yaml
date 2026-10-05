@@ -1,0 +1,25 @@
+# before each backup (backup.yaml), k8up starts this pod and stores the output of backupCommand: a consistent SQL dump
+# of Homarr's database (the raw db.sqlite on the PVC is backed up too, but may be caught mid-write)
+# restore: sqlite3 db.sqlite < homarr-sqlite-dump-sqlite.sql (the dump file in the restic snapshot)
+apiVersion: k8up.io/v1
+kind: PreBackupPod
+metadata:
+  name: homarr-sqlite-dump
+spec:
+  backupCommand: sqlite3 -readonly /appdata/db.sqlite .dump
+  fileExtension: .sql
+  pod:
+    spec:
+      containers:
+        - name: sqlite
+          image: docker.io/keinos/sqlite3:3.53.4
+          command: [sleep, "3600"] # kept running; k8up runs backupCommand in it, then removes the pod
+          volumeMounts:
+            - name: data
+              mountPath: /appdata
+              readOnly: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: homarr-database
+            readOnly: true

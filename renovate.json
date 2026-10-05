@@ -4,6 +4,9 @@
   "argocd": {
     "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
   },
+  "kubernetes": {
+    "managerFilePatterns": ["/^kube/apps/.+\\.yaml$/"]
+  },
   "packageRules": [
     {
       "description": "charts are pinned without v (OCI registries tag cert-manager, envoy-gateway with v)",
