@@ -1,0 +1,43 @@
+# Jellyfin's config volume (not the media), nightly (backup-schedule.yaml) into kopiur's B2 repository (kopiur/repository.yaml)
+# on demand: kubectl kopiur snapshot now -n media --policy jellyfin --wait
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: jellyfin
+spec:
+  repository:
+    kind: ClusterRepository
+    name: b2
+  credentialProjection:
+    enabled: true
+  copyMethod: Direct # openebs-hostpath has no snapshots, so kopia reads the live volume
+  sources:
+    - pvc:
+        name: jellyfin-config
+  retention:
+    keepDaily: 7
+    keepWeekly: 4
+    keepMonthly: 6
+  hooks:
+    beforeSnapshot:
+      # a consistent copy of the live SQLite database, /config/data/jellyfin.db.bak, for kopia to back up (restore that one)
+      - runJob:
+          timeout: 5m
+          jobSpec:
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                containers:
+                  - name: sqlite
+                    image: keinos/sqlite3:3.53.4
+                    securityContext:
+                      runAsUser: 0 # the database belongs to root, and a WAL database needs its -shm writable even to read
+                    command: [sqlite3, /config/data/jellyfin.db, ".backup /config/data/jellyfin.db.bak"]
+                    volumeMounts:
+                      - name: data
+                        mountPath: /config
+                volumes:
+                  - name: data
+                    persistentVolumeClaim:
+                      claimName: jellyfin-config

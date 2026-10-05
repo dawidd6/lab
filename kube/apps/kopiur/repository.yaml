@@ -1,0 +1,25 @@
+# the one kopia repository every app's SnapshotPolicy (<app>/backup-policy.yaml) backs up into
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: b2
+spec:
+  backend:
+    b2:
+      bucket: dawidd6-lab
+      auth:
+        secretRef:
+          name: b2 # secret.yaml
+          namespace: kopiur
+  encryption:
+    passwordSecretRef:
+      name: b2
+      namespace: kopiur
+      key: KOPIA_PASSWORD
+  allowedNamespaces:
+    list:
+      - authelia
+      - homarr
+      - media
+  credentialProjection:
+    allowed: true

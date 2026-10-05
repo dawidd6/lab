@@ -1,0 +1,10 @@
+# when kopiur runs backup-policy.yaml
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: homarr
+spec:
+  policyRef:
+    name: homarr
+  schedule:
+    cron: "30 3 * * *"

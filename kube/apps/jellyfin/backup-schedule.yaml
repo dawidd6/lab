@@ -1,0 +1,10 @@
+# when kopiur runs backup-policy.yaml
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: jellyfin
+spec:
+  policyRef:
+    name: jellyfin
+  schedule:
+    cron: "30 3 * * *"
