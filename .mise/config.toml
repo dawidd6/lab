@@ -12,3 +12,4 @@ k0sctl = "latest"
 kubectl = "latest"
 yq = "latest"
 python = { version = "latest", postinstall = "python -m pip install ansible==14.4.0 ansible-lint==26.9.0" }
+"npm:@ansible/ansible-language-server" = "latest"

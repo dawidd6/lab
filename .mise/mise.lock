@@ -277,6 +277,12 @@ url = "https://dl.k8s.io/v1.37.1/bin/darwin/amd64/kubectl"
 checksum = "sha256:14b93c4916a6f37a06fbc1f46b0a1d2404c4f9741be09f00d6caf8af3b05f1d3"
 url = "https://dl.k8s.io/v1.37.1/bin/windows/amd64/kubectl.exe"
 
+[[tools."npm:@ansible/ansible-language-server"]]
+version = "26.6.0"
+aube = { path = "locks/npm-ansible-ansible-language-server/26.6.0", digest = "sha256:7f02367a6009a1da9f62719c81df01eed6d579d58219cfe6a869fdb4d46aee0f" }
+backend = "npm:@ansible/ansible-language-server"
+specifiers = ["latest"]
+
 [[tools.python]]
 version = "3.14.8"
 backend = "core:python"
