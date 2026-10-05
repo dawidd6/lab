@@ -1,0 +1,20 @@
+# Glances has no login of its own: the gateway asks Authelia first (Homarr uses the in-cluster Service, not this route)
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: glances
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: glances
+  oidc:
+    provider:
+      issuer: https://auth.dawidd6.duckdns.org
+    clientID: glances
+    clientSecret:
+      group: ""
+      kind: Secret
+      name: glances-oidc # oidc.yaml (Infisical), key client-secret
+    redirectURL: https://glances.dawidd6.duckdns.org/oauth2/callback
+    logoutPath: /logout

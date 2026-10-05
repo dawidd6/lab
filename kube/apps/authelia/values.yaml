@@ -60,3 +60,11 @@ configMap:
           consent_mode: implicit
           redirect_uris:
             - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/securitypolicy.yaml
+        - client_id: glances
+          client_name: Glances
+          client_secret:
+            path: /secrets/authelia/oidc.client.glances
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://glances.dawidd6.duckdns.org/oauth2/callback # glances/securitypolicy.yaml
