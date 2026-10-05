@@ -8,4 +8,4 @@ spec:
   sources:
     - repoURL: ghcr.io/homarr-labs/charts
       chart: homarr
-      targetRevision: 8.31.1
+      targetRevision: 8.32.0
