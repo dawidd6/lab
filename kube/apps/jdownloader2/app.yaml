@@ -8,4 +8,4 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: jdownloader2
-      targetRevision: 22.12.0
+      targetRevision: 22.13.0
