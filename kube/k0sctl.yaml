@@ -9,7 +9,3 @@ spec:
         address: server.lan
   k0s:
     version: v1.36.4+k0s.1
-    config:
-      spec:
-        storage:
-          type: kine # SQLite; etcd's constant fsyncs are too much for the server's eMMC

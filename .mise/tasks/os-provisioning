@@ -4,4 +4,4 @@ set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/ansible"
 
-ansible-playbook -v playbooks/provision.yml
+ansible-playbook -K -v playbooks/provision.yml
