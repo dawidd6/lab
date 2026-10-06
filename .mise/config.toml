@@ -3,7 +3,6 @@ lockfile = true
 
 [env]
 KUBECONFIG = "{{config_root}}/kube/.config"
-RESTIC_REPOSITORY = "s3:https://s3.eu-central-003.backblazeb2.com/dawidd6-lab"
 
 [tools]
 sops = "latest"
@@ -12,6 +11,5 @@ argocd = "latest"
 k0sctl = "latest"
 kubectl = "latest"
 yq = "latest"
-"github:home-operations/kopiur" = "latest" # kubectl-kopiur, used as `kubectl kopiur`
 python = { version = "latest", postinstall = "python -m pip install ansible==14.4.0 ansible-lint==26.9.0" }
 "npm:@ansible/ansible-language-server" = "latest"
