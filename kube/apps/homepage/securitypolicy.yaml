@@ -1,13 +1,13 @@
-# Glances has no login of its own: the gateway asks Authelia first (Homepage uses the in-cluster Service, not this route)
+# Homepage has no login of its own: the gateway asks Authelia first
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: glances
+  name: homepage
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: glances
+      name: homepage
   oidc:
     provider:
       issuer: https://authelia.dawidd6.duckdns.org
@@ -15,10 +15,10 @@ spec:
       # e.g. when it processes this policy while Authelia restarts
       authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
       tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
-    clientID: glances
+    clientID: homepage
     clientSecret:
       group: ""
       kind: Secret
-      name: glances-oidc # oidc.yaml (Infisical), key client-secret
-    redirectURL: https://glances.dawidd6.duckdns.org/oauth2/callback
+      name: homepage-oidc # oidc.yaml (Infisical), key client-secret
+    redirectURL: https://homepage.dawidd6.duckdns.org/oauth2/callback
     logoutPath: /logout

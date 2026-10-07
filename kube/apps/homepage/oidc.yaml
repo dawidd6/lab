@@ -1,8 +1,8 @@
-# the chart reads SECRET_ENCRYPTION_KEY from this secret (64 hex chars, e.g. openssl rand -hex 32)
+# the gateway's Authelia client for Homepage (securitypolicy.yaml)
 apiVersion: secrets.infisical.com/v1alpha1
 kind: InfisicalSecret
 metadata:
-  name: db-encryption
+  name: homepage-oidc
 spec:
   authentication:
     universalAuth:
@@ -14,10 +14,10 @@ spec:
         envSlug: prod
         secretsPath: /
   managedKubeSecretReferences:
-    - secretName: db-encryption
-      secretNamespace: homarr
+    - secretName: homepage-oidc
+      secretNamespace: homepage
       creationPolicy: Owner
       secretType: Opaque
       template:
         data:
-          db-encryption-key: '{{ .HOMARR_DB_ENCRYPTION_KEY.Value }}'
+          client-secret: '{{ .HOMEPAGE_CLIENT_SECRET.Value }}'

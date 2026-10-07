@@ -6,7 +6,7 @@ persistence:
 secret:
   existingSecret: authelia # secret.yaml (Infisical); the chart mounts only its own keys at /secrets/internal
   additionalSecrets:
-    authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets, users file
+    authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets
 configMap:
   totp:
     disable: true # no second factor
@@ -15,14 +15,17 @@ configMap:
   access_control:
     default_policy: one_factor # the chart sets two_factor, impossible without a second factor
   authentication_backend:
-    file:
+    ldap:
       enabled: true
-      path: /secrets/authelia/users_database.yml
-      watch: true
+      implementation: lldap # LLDAP's attributes, filters and password reset
+      address: ldap://lldap.lldap.svc:3890 # lldap/values.yaml
+      base_dn: dc=lab
+      # ponytail: binds as LLDAP's admin; a dedicated user in lldap_password_manager if that's too broad
+      user: uid=admin,ou=people,dc=lab # password: authentication.ldap.password.txt in secret.yaml
   session:
     cookies:
       - domain: dawidd6.duckdns.org
-        subdomain: auth
+        subdomain: authelia
   storage:
     local:
       enabled: true
@@ -44,14 +47,14 @@ configMap:
           consent_mode: implicit
           redirect_uris:
             - https://argocd.dawidd6.duckdns.org/auth/callback
-        - client_id: homarr
-          client_name: Homarr
+        - client_id: homepage
+          client_name: Homepage
           client_secret:
-            path: /secrets/authelia/oidc.client.homarr
+            path: /secrets/authelia/oidc.client.homepage
           authorization_policy: one_factor # password only
           consent_mode: implicit
           redirect_uris:
-            - https://homarr.dawidd6.duckdns.org/api/auth/callback/oidc
+            - https://homepage.dawidd6.duckdns.org/oauth2/callback # homepage/securitypolicy.yaml
         - client_id: jdownloader
           client_name: JDownloader
           client_secret:

@@ -10,11 +10,11 @@ spec:
       name: jdownloader
   oidc:
     provider:
-      issuer: https://auth.dawidd6.duckdns.org
+      issuer: https://authelia.dawidd6.duckdns.org
       # stated explicitly so Envoy Gateway never fetches (and caches a failure of) Authelia's discovery document,
       # e.g. when it processes this policy while Authelia restarts
-      authorizationEndpoint: https://auth.dawidd6.duckdns.org/api/oidc/authorization
-      tokenEndpoint: https://auth.dawidd6.duckdns.org/api/oidc/token
+      authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
     clientID: jdownloader
     clientSecret:
       group: ""

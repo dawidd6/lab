@@ -1,4 +1,4 @@
-# Glances in web server mode: its REST API serves Homarr's Health Monitoring widget (CPU, memory, temperatures, disks)
+# Glances in web server mode: its REST API serves Homepage's glances widget (CPU, memory, temperature, disk)
 # at http://glances.glances.svc:61208; /proc and /sys aren't namespaced, so a plain pod sees the host's values
 controllers:
   glances:

@@ -4,8 +4,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 spec:
   destination:
-    namespace: homarr
+    namespace: lldap
   sources:
-    - repoURL: ghcr.io/homarr-labs/charts
-      chart: homarr
-      targetRevision: 8.32.0
+    - repoURL: ghcr.io/bjw-s-labs/helm
+      chart: app-template # a generic chart for any container image (LLDAP has no chart of its own)
+      targetRevision: 5.2.1

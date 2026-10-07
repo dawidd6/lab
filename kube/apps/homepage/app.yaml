@@ -1,0 +1,11 @@
+# read by root/applicationset.yaml, which adds this directory's values.yaml and manifests and what every app shares
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: homepage
+  sources:
+    - repoURL: https://jameswynn.github.io/helm-charts
+      chart: homepage
+      targetRevision: 2.1.0
