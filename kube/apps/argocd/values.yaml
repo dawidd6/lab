@@ -11,7 +11,7 @@ configs:
       enableUserInfoGroups: true # Authelia sends groups in userinfo, not in the ID token
       userInfoPath: /api/oidc/userinfo
   rbac:
-    policy.csv: g, admins, role:admin # the admins group in LLDAP (via Authelia)
+    policy.csv: g, lldap_admin, role:admin # LLDAP's built-in admin group (via Authelia)
   params:
     server.insecure: true # TLS ends at the gateway
 dex:
