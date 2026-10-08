@@ -2,7 +2,7 @@ pod:
   kind: Deployment # the chart's default is a DaemonSet
 persistence:
   enabled: true # /config: the SQLite database and notification.txt
-  storageClass: openebs-hostpath
+  storageClass: internal
 secret:
   existingSecret: authelia # manifests/secret.sops.yaml; the chart mounts only its own keys at /secrets/internal
   additionalSecrets:

@@ -2,4 +2,4 @@ persistence:
   media:
     existingClaim: media # manifests/pvc.yaml
   config:
-    storageClass: openebs-hostpath
+    storageClass: internal

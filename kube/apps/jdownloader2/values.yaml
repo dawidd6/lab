@@ -19,7 +19,7 @@ persistence:
   config: # JDownloader's settings
     type: persistentVolumeClaim
     suffix: config # keeps the existing claim's name, jdownloader2-config (the chart names a sole claim just jdownloader2)
-    storageClass: openebs-hostpath
+    storageClass: internal
     accessMode: ReadWriteOnce
     size: 100Gi
     globalMounts:

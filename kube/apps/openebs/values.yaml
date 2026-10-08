@@ -2,6 +2,8 @@ global:
   kubeletDir: /var/lib/k0s/kubelet/
 localpv-provisioner:
   hostpathClass:
+    name: internal # the StorageClass every app's volumes use
+    basePath: /data # volumes live in /data/pvc-<uid> on the host
     reclaimPolicy: Retain # a deleted PVC keeps its data on disk (removing an app deletes its PVCs)
 engines:
   local:
