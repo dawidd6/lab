@@ -1,0 +1,22 @@
+# nightly restic backup of the authelia volume to Backblaze B2 (backup.sops.yaml); restore with a ReplicationDestination
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: authelia
+spec:
+  sourcePVC: authelia
+  trigger:
+    schedule: "0 3 * * *"
+  restic:
+    repository: authelia-backup # backup.sops.yaml
+    copyMethod: Direct # openebs hostpath has no snapshots, so the mover reads the live volume
+    cacheStorageClassName: internal # no default StorageClass in this cluster
+    pruneIntervalDays: 7
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 6
+    moverSecurityContext: # the user that owns the volume's files
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0

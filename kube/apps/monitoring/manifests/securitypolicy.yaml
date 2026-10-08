@@ -1,0 +1,24 @@
+# Grafana's own login is off (values.yaml): the gateway asks Authelia first
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: grafana
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: grafana # route.yaml
+  oidc:
+    provider:
+      issuer: https://authelia.dawidd6.duckdns.org
+      # stated explicitly so Envoy Gateway never fetches (and caches a failure of) Authelia's discovery document,
+      # e.g. when it processes this policy while Authelia restarts
+      authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
+    clientID: grafana
+    clientSecret:
+      group: ""
+      kind: Secret
+      name: grafana-oidc # oidc.sops.yaml, key client-secret
+    redirectURL: https://grafana.dawidd6.duckdns.org/oauth2/callback
+    logoutPath: /logout

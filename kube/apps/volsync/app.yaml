@@ -4,8 +4,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 spec:
   destination:
-    namespace: glances
+    namespace: volsync
   sources:
-    - repoURL: ghcr.io/bjw-s-labs/helm
-      chart: app-template # a generic chart for any container image (Glances has no chart of its own)
-      targetRevision: 5.2.1
+    - repoURL: https://backube.github.io/helm-charts
+      chart: volsync
+      targetRevision: 0.16.0

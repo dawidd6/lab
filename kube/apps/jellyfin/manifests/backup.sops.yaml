@@ -1,0 +1,28 @@
+# restic settings for backup.yaml: the repository in B2, its password (generated), and the B2 key pair
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: jellyfin-backup
+spec:
+  secretTemplates:
+    - name: jellyfin-backup
+      stringData:
+        RESTIC_REPOSITORY: ENC[AES256_GCM,data:kz5Gor3HeCeOIvsjE+row9j3Eio7d3k+Pb0mNvSU7YDktCqfZHNZvll9tYpt8JmbqU6Oqoo72jKW6O4UbkI9rfwnjMN9KVXGvg==,iv:6LKnNJggk562TTrUKfrEZBWxNtKPdL6AyjJu5GaTbgU=,tag:Y1RM6rC7Ej4jmepouYE5Zw==,type:str]
+        RESTIC_PASSWORD: ENC[AES256_GCM,data:ECuYSRu2waM2E8GfKKhdU4qUkeVbde5xmrKysDErr9eoYY7jFtNs2CLBtky/NBGLhuXmzVGxXnYCmU3gkSm0yg==,iv:6nWdtSd4ZlASkq0ymyrmAxDLuT3D/BmaC2VLAw8w2wY=,tag:EiYujv+8Nus1+7fwYm03yQ==,type:str]
+        AWS_ACCESS_KEY_ID: ENC[AES256_GCM,data:Z+nURcRbcKJ6y41fb0/aMoT+8lmKtQ==,iv:kAXwYNI1FWQV+8PIbVXxHxGn6S+7xGOZwiCee+UlOfA=,tag:yRJfNYTbrkpojiiftQjdVg==,type:str]
+        AWS_SECRET_ACCESS_KEY: ENC[AES256_GCM,data:uznEWuQsB5V3a4PhR7hwrZcFgt+DqQrxYcbB7kuwhQ==,iv:Kwn38I2n8lBkVdUko3jveujCnLtzCXT2aG/3aAap5VY=,tag:CeIXMDeh6Z0P0aFUAzHpvA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwVUcwa0lKMGNxWkFobk53
+        VW1uNGk0N3VEZ1F4OHRuSUwrdjQ5cm4xejJnCk1zaGZ1ZmRTTFVCb1lvckNoY082
+        MXlCZ2RFSUVpRkJkV0V1U1ZxYWFNMDgKLS0tIHA2N0R3YjJqM3BRcTdnbDNrY1N0
+        ZWFjR3VuNkU4d1VTUVRYb2ZuYVFaSkEKjJZzQuIBGRc1ZuXsNn8ujf/xaCWzZKXx
+        TQ8GUv2aoZd0xN9DOcH+DfLIrl3cvviB3RtqJ22TImvpGIIbTkD6jw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:03:07Z"
+  mac: ENC[AES256_GCM,data:7J+iRPeCrqC8CnHAW9rk1q7yVr7t+v/yEsceYkdkd999YZQOi9hiHaf0/AIAw2neRkY3i2rIVATMK20zTOwZxBDSiC9xB90wRADMqzmrbEJEkTtl90pSVwgN8dw3qP4EdKQruLvIIo/ARhTRZHSsXwNAwOO+2WRUcbgtj9MQ8a0=,iv:d8LzCr78n92i4b2fdX0T593C4rA5OCex681um1nFDTg=,tag:ZeWnLMDHtd0HXin9DyLwWg==,type:str]
+  version: 3.13.3

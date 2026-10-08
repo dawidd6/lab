@@ -1,0 +1,2 @@
+reloader:
+  autoReloadAll: true # restart any workload when a ConfigMap or Secret it uses changes, no per-app annotations

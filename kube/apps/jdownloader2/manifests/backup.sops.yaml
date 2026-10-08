@@ -1,0 +1,28 @@
+# restic settings for backup.yaml: the repository in B2, its password (generated), and the B2 key pair
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: jdownloader2-backup
+spec:
+  secretTemplates:
+    - name: jdownloader2-backup
+      stringData:
+        RESTIC_REPOSITORY: ENC[AES256_GCM,data:hmbsvW4gRhU5417Rh3rs9fOPaUk0PzBt++E5NBEFLj4lQzwMfWyng/hmpAX97QFpeA75gOCjGqXtVrqsqvhanBD0ZAysGhRt0ZaKFBg=,iv:g88x2UNThOTvj/o1cIzayz9VopuvTv3JRh6YDnrNVGo=,tag:AaOxghMyMrlwzDlra9/6bw==,type:str]
+        RESTIC_PASSWORD: ENC[AES256_GCM,data:FpDgOAF2tB91ldlCnCMam8wMNPjPQay29BoDbO9VJL8N9/adq1KHb2TA3QUNOUJBlqogdLc3PGF7L7ff0A5hew==,iv:7ocS+h6vj6r7/FlzoNCPEZkf0rs6FmJyzn062JWrZso=,tag:10jnjbyEBWgMccLzyhwgIg==,type:str]
+        AWS_ACCESS_KEY_ID: ENC[AES256_GCM,data:dSZYjz28YhBea+e7+uUAZQdGGRswBQ==,iv:5GTI5VRBT6lrj1z52ZDXZVZOgNYQngZ5rlLC0iMjR3Q=,tag:WPgrk1RLHOE6pjAdZXL9vg==,type:str]
+        AWS_SECRET_ACCESS_KEY: ENC[AES256_GCM,data:9AZygZhSUa6hPDXLMfqJmykoU9ZhM9EoD0i4xDiLOw==,iv:9gmjMXzh+JE6PHv4yHZ6VvDFWlLbBdTR6/3KkPcI61U=,tag:1tCq2rKIfLrS3Avje/GiJA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSByWXRrZU9KTGRZSU1aTHF5
+        cms0cjZ1MkFIVFZYTzVnOGFUWGVDOCsrL3g4CnFpdzAwWVRDbDErUkFqLzFHczVw
+        eXdGcThSVFNSZXdVaDhMTjFCcU1vMjAKLS0tIHlLcWhVVjFmQk0xZTJtRzBsMHJs
+        UDR5WUpwaWZpM1kxTDRmSnZaWDlHdHcKCZRKimGFDKXB1CRIBaHvG2GxJ3/f/nZ+
+        zfM5cNXheAkruohIhcKPQQ30Lcodrv+mY6wAzbjxJLfqMqle1neI3w==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:03:07Z"
+  mac: ENC[AES256_GCM,data:FWpkoQlVUzzHPTaLm6CWNMMUYbeQGK4Qc+Kz327iFXpu33x4nnIWGshBimsIpUMYJFTg9n7Akg8HnWyvnc75oFlHqBU7zdvqNypPQHH/B0m6lWSKXVnLdXtI+NMxYSVT2f9gCZD7XgGKC6lr/ilTcdUiZVtUrEaabFpur+7Rlws=,iv:F0ae711kCLrsF/DiV5vMBmNNlJQWgCQ1ma7C8b0fYeE=,tag:wQO74vDkmi4N62kxZWnCtA==,type:str]
+  version: 3.13.3

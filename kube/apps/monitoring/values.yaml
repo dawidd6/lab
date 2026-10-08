@@ -1,0 +1,42 @@
+# VictoriaMetrics (metrics from node-exporter, kube-state-metrics, the kubelet) and Grafana with its dashboards;
+# node-exporter's hwmon metrics include CPU, NVMe and board temperatures (node_hwmon_temp_celsius)
+vmsingle:
+  spec:
+    retentionPeriod: "1" # months
+    storage:
+      storageClassName: internal
+      resources:
+        requests:
+          storage: 1Gi
+# k0s runs these inside its own controller process: nothing to scrape, they'd only show as down
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+# no alerting yet: nothing would deliver the alerts
+vmalert:
+  enabled: false
+alertmanager:
+  enabled: false
+defaultRules:
+  create: false
+victoria-metrics-operator:
+  admissionWebhooks:
+    certManager:
+      enabled: true # cert-manager issues the webhook's certificate; otherwise the chart generates a new one on every render
+grafana:
+  admin:
+    existingSecret: grafana-admin # manifests/admin.sops.yaml; set so the chart doesn't generate a new password on every render
+  grafana.ini:
+    server:
+      root_url: https://grafana.dawidd6.duckdns.org
+    # login happens at the gateway (manifests/securitypolicy.yaml): whoever gets past Authelia is Grafana's admin
+    auth:
+      disable_login_form: true
+    auth.basic:
+      enabled: false
+    auth.anonymous:
+      enabled: true
+      org_role: Admin

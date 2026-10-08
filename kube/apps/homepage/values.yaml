@@ -19,15 +19,6 @@ configMaps:
       settings.yaml: |
         title: Lab
       widgets.yaml: |
-        - glances: # the host's stats from Glances' API, in-cluster (glances/values.yaml)
-            url: http://glances.glances.svc:61208
-            href: https://glances.dawidd6.duckdns.org # where the panel links to (it would link to url otherwise)
-            version: 4
-            cpu: true
-            mem: true
-            cputemp: true
-            uptime: true
-            disk: /rootfs # the host's / as Glances sees it (glances/values.yaml)
         - search:
             provider: duckduckgo
       services.yaml: |
@@ -42,9 +33,12 @@ configMaps:
             - Argo CD:
                 href: https://argocd.dawidd6.duckdns.org
                 icon: argo-cd.png
-            - Glances:
-                href: https://glances.dawidd6.duckdns.org
-                icon: glances.png
+            - Grafana:
+                href: https://grafana.dawidd6.duckdns.org
+                icon: grafana.png
+            - Gatus:
+                href: https://gatus.dawidd6.duckdns.org
+                icon: gatus.png
             - Authelia:
                 href: https://authelia.dawidd6.duckdns.org
                 icon: authelia.png

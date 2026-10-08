@@ -1,0 +1,33 @@
+# status of everything in the cluster; history is kept in memory (no persistence), so it starts over on restart
+config:
+  endpoints:
+    # public, through the gateway: the site answers and its certificate is valid for 2 more weeks
+    - name: Argo CD
+      group: public
+      url: https://argocd.dawidd6.duckdns.org
+      conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+    - name: Authelia
+      group: public
+      url: https://authelia.dawidd6.duckdns.org/api/health
+      conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+    - name: Jellyfin
+      group: public
+      url: https://jellyfin.dawidd6.duckdns.org/health
+      conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+    # behind Authelia at the gateway, so checked on their in-cluster Services
+    - name: Homepage
+      group: internal
+      url: tcp://homepage.homepage.svc:3000 # it only answers requests for its public host
+      conditions: ["[CONNECTED] == true"]
+    - name: JDownloader
+      group: internal
+      url: http://jdownloader2.media.svc:5800
+      conditions: ["[STATUS] == 200"]
+    - name: Grafana
+      group: internal
+      url: http://monitoring-grafana.monitoring.svc/api/health
+      conditions: ["[STATUS] == 200"]
+    - name: VictoriaMetrics
+      group: internal
+      url: http://vmsingle-monitoring-victoria-metrics-k8s-stack.monitoring.svc:8428/health # the operator's Service for the VMSingle
+      conditions: ["[STATUS] == 200"]

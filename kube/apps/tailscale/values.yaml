@@ -1,0 +1,2 @@
+# chart defaults: the operator joins your tailnet as tag:k8s-operator, with the OAuth client in manifests/oauth.sops.yaml;
+# expose a Service on the tailnet with the annotation tailscale.com/expose: "true"

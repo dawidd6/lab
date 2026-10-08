@@ -1,0 +1,25 @@
+# the gateway's Authelia client for Grafana (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: grafana-oidc
+spec:
+  secretTemplates:
+    - name: grafana-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:bU1z2+OGAz97V1PeM8KWRJYNgiu+CjvE+5MMv7s1/hu2NwM+Gk3N1GFQ1tv4K/AtO9b8pG+kVwXmc8J71+1HDdypNzOnYm1w,iv:nCv4Z+VUAPRR42QNlycuKyNciiN4566wUZNlSRla6l8=,tag:hFvtsopoWqkGaUPMsHpS6g==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXbTN1VHR1cFRHVXNzRi80
+        WE16cnd0Q3VncFFFT1pOTXhDU21JTisxNHl3Ck94N0FXcnpZUkc2cnF4eGVxT2o4
+        aW80M1gwa3liSVFocFJFcFYzYW9Ea2MKLS0tIEhMK0VuTTFlcDlBem9Oei9TV09k
+        L1k4OEkvWGZYWEpMTThhanVKYXJqR1UK0tzhORrPYuFtHeTUmQGsML6T9dA9pTpL
+        3D8W7JXUkuHG2aeeTuDmV2+CE8C6xeTg2A5/+YtHWUrnrZmfijFAUg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:10:16Z"
+  mac: ENC[AES256_GCM,data:tIAa87Sa7uP6r2OPeQ5cw6uq01ncYjWyntHDdAlBguYTnSDaxIFJeiJ2C0deT3Lc9XL5x1tSnSOzAQ5/3VT7oyywy0z1rU9UU0kwBy3lwovQXiTjBxsEuPUyLJVXu2Vv7PJTxPzahUSE6xt+eyZsqVHt5KmMVN74eHEMH1QBSf0=,iv:R0AnQEkdRrv9zOlEJRYkbEIkZhbywXYEINNJBH0nX00=,tag:hRiExO4AI38iX/vbXT/jCQ==,type:str]
+  version: 3.13.3

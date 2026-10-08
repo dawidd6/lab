@@ -1,0 +1,25 @@
+# the gateway's Authelia client for Gatus (route.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: gatus-oidc
+spec:
+  secretTemplates:
+    - name: gatus-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:Y+pIQLWx/cbKGo+1pkyjaxFMio2Aqh/E8tiDLqpgl64M6ggjYQvmODNbgEeX4DTFi8YlqyHEwE1Tbr5VAt+xlM2iD2cEx8UW,iv:PfS2qUk0Y5NrQIFAnKlqwzeQrefqZjGxzmv55PSHKOA=,tag:7ZGnBRkZjGESD2MNPekm6A==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGS0Jub21TVzVTQ2o1NCs4
+        UTI5U3Y2bFVPaENOei84d25ONmR3dWVXTW1rCkpHa2lmWndFSnk2bnFlMnhJZWVn
+        YUF3K3RXOFVGV2xucmplOXdUYUVhaEkKLS0tIFdXc1k0NURUWU9Id0FuM0Rza1JD
+        Z21Bd2RtSXBpZ2dXMmF0aFVDY2JXOUEKrBeC+Uhp3FnOzdK8EfSuB0mpOeSh5Q2k
+        Kyu9eVO7yvM6EUIwlbPXGyZRoLvRMrRxukOfwxgVdAtahosPYY/KFA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:02:15Z"
+  mac: ENC[AES256_GCM,data:B0LkHBFW/x7xF7R4O3+YxcLP8ssIb895cJY3fa0tqBIPQd6JvWu8FLG/PUeO7M/5hLZsEGjdW8mKZ38C/9cXSBFZjWmw04P6XXKjy8lBgatoCBlbXna4EzQSBSxzfg4JVa/alyPKHZgedgGz72m4/PqrObOKSdhzZ/OeZRLNlMM=,iv:ja8rEu5y902DF3WSSdwmGL77Qj1c9fDYce+FLt3hPEA=,tag:vL1BJw2ZXWnUc56kLR2N/A==,type:str]
+  version: 3.13.3

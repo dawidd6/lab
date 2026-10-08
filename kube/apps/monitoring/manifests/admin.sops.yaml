@@ -1,0 +1,26 @@
+# Grafana's admin account; unused (login form and basic auth are off, values.yaml) but the chart needs one
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: grafana-admin
+spec:
+  secretTemplates:
+    - name: grafana-admin
+      stringData:
+        admin-user: ENC[AES256_GCM,data:CHlRk0c=,iv:V274cqlpefs3ZRxakmX5vn0Y5OjVj4eGOqBMMh9+wAI=,tag:FFpB7NPdU2rZ6gOm5+mksw==,type:str]
+        admin-password: ENC[AES256_GCM,data:NnNTl8TcuzvzuBxGOBhrjFVqcVPSw61QEC8OW7mD8o5hzU38z/o3okqxwQ==,iv:lLtPvBylJlkZRFpBFqWiZmbLAq5udYgmvZ1QGbctPN4=,tag:IXcHbrO/gh3HFdje74/8+Q==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTWG5OWWhzUW1JVmg0Zkhq
+        ZVp5WU1KbDhsRGlSTmIyTkE3RUZNVFNXVEVRCldod2FVL1AyeStvaVdwTnJFUTFw
+        UVlqbVpIeVV2MUp5Ti8wS09ZM20zekkKLS0tIGNqV3RycW9HM2JIQkJlZWU1eDFw
+        ZlJHUjJVYlg0Wk5qd2dOa3BBZ2h4YzQK8rbNZFpkOLzMediKhwr+HABRE31sa6w2
+        VsEuPpO6n1RNXL6rLLK99qYrMu3uqwvBEx6BBeFL4a6mmQe7nTs2fQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:10:16Z"
+  mac: ENC[AES256_GCM,data:Yg6F5m138rIroBSVLnqrwIiFDjAQ9sQplQeg1x+djn1P6JVp9KPurXNbBo8VLWytsXZwE1QN4tdWgESSqR7fyMTxFr/tl/pMTSlQ4k38tWcfqj88bluvKnfaVJWsEvGQDYcZH5BdVXKajaFGwiILgBMgQwVUWyTCk2Hdjh69Cjk=,iv:uv/dqBOwEm5JjzSrWWjrDzRl5vEOehdfgr5unwolaj0=,tag:bdfYHioKXQOVEw/ZLmfjvw==,type:str]
+  version: 3.13.3

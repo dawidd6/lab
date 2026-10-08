@@ -1,0 +1,28 @@
+# restic settings for backup.yaml: the repository in B2, its password (generated), and the B2 key pair
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: authelia-backup
+spec:
+  secretTemplates:
+    - name: authelia-backup
+      stringData:
+        RESTIC_REPOSITORY: ENC[AES256_GCM,data:TmBgFOtq4ZULWd/kQNqMi0qgcbwFpSMaQD2ZU+U55kCAfeK3Dvq8C1OWuL4uZQzkBk5k5JDrp4rklbtK+akCnmu2XIGVqiANWA==,iv:ITtncdGkdnCnjjIKq9DnC5VHQ7q78bi8LWEWN1C2/dA=,tag:YztWFJLSqFck1QrI+aeNaw==,type:str]
+        RESTIC_PASSWORD: ENC[AES256_GCM,data:hF7a8CnGLCqClaX6bpa1jEdnqqSEmfVyuVd6FOZhS3JkXhiFOZeAMvplPAlUUcp3EwZMlyJD7GVxr7Sv7NJyCw==,iv:zddrhNXD88l+z/Bh0PScMZs7fIf/aSJTye4HKFS3i0Y=,tag:J8mMwQzZll3M9eYKRESxMQ==,type:str]
+        AWS_ACCESS_KEY_ID: ENC[AES256_GCM,data:c5vdk4zQrG7cqgCGSDB+4p5ekz0yGA==,iv:nTI1BNIrSam9x015yXG34TNtkCMPJkqVEH2MlmBxtks=,tag:XCa4aW3RCVEQJPFEPLHD4g==,type:str]
+        AWS_SECRET_ACCESS_KEY: ENC[AES256_GCM,data:T7GDgyyYO4vecCvYOHlkn3H4R7iu4RL7MAy7nWKVTw==,iv:t5uNrDECnGogfVm3hGJL6rdmKE7dT+Fji2Bjk1JHaXA=,tag:SnvHM2Ql8O+1dhLHsjPc1Q==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIZGJNL0ZrR2dXOE1QZDU5
+        Y2JVVHN3M0pwVlg5TmlMSUlQK0dDN2l2K1RrClpqN01vTFAyUDRKMXBzczkzVXBB
+        bnpBdGxQTGFMbkxzbCtURGlzSHlZVUUKLS0tIG1LbkpIYkxRaTBaSExIQmN4RUNN
+        eExsMW5NOW9zRXA3aHZ1cXZZTEZHY2sKb6fAR4DrHTXGmfULk54bsGAyFgCL22qk
+        9W/+TlKUIaqwpXkGlTkGwZVyIo3fG1UXcHz2UrmldK37hUp1cPReOA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T15:03:07Z"
+  mac: ENC[AES256_GCM,data:3W73uEBzKALyaqiQ1g2+gqtAroF65g4nyaWDEcKtZW7zTcHzyuLY4H3fIzHynJ7n9e0tS+oUaGb5N+wvABkCPhCqt4rNncrC/cUpBz6vuVb0hNKAv7ajTb5Rw9j56aIVBMiyGIHPJM1ZrWOZiWQ2G1h1TPmfSqPSXZuzbgRXUlk=,iv:Ry0naQ1GJ6Wh4QKSgqNbO8Lo3R3l80144mKwMr1XYDQ=,tag:3SwjKC0HkgPM9hP8uQ2s4A==,type:str]
+  version: 3.13.3
