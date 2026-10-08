@@ -2,6 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "kubernetes": {
-    "managerFilePatterns": ["/^kube/apps/[^/]+/[^/]+\\.yaml$/"]
+    "managerFilePatterns": ["/^kube/apps/[^/]+/manifests/[^/]+\\.yaml$/"]
   }
 }
