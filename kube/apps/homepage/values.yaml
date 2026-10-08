@@ -21,6 +21,7 @@ configMaps:
       widgets.yaml: |
         - glances: # the host's stats from Glances' API, in-cluster (glances/values.yaml)
             url: http://glances.glances.svc:61208
+            href: https://glances.dawidd6.duckdns.org # where the panel links to (it would link to url otherwise)
             version: 4
             cpu: true
             mem: true
