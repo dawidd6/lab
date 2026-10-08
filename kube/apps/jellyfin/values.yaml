@@ -3,3 +3,4 @@ persistence:
     existingClaim: media # manifests/pvc.yaml
   config:
     storageClass: internal
+    size: 1Gi
