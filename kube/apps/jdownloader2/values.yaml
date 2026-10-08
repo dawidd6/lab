@@ -1,0 +1,42 @@
+controllers:
+  jdownloader2:
+    containers:
+      jdownloader2:
+        image:
+          repository: docker.io/jlesage/jdownloader-2
+          tag: v26.09.1
+        env:
+          # the image starts as root and runs JDownloader as this user; 568 owns the existing files in /config and /output
+          USER_ID: 568
+          GROUP_ID: 568
+service:
+  jdownloader2:
+    controller: jdownloader2
+    ports:
+      http: # the web UI (noVNC)
+        port: 5800
+persistence:
+  config: # JDownloader's settings
+    type: persistentVolumeClaim
+    suffix: config # keeps the existing claim's name, jdownloader2-config (the chart names a sole claim just jdownloader2)
+    storageClass: openebs-hostpath
+    accessMode: ReadWriteOnce
+    size: 100Gi
+    globalMounts:
+      - path: /config
+  output: # downloads, shared with Jellyfin
+    existingClaim: media # jellyfin/manifests/pvc.yaml
+    globalMounts:
+      - path: /output
+route:
+  jdownloader2:
+    parentRefs:
+      - name: envoy
+        namespace: envoy-gateway
+        sectionName: https
+    hostnames:
+      - jdownloader.dawidd6.duckdns.org
+    rules:
+      - backendRefs:
+          - identifier: jdownloader2
+            port: 5800

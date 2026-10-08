@@ -1,0 +1,11 @@
+# read by root/applicationset.yaml: its charts (with values.yaml next to it) plus manifests/, and what every app shares
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+  destination:
+    namespace: glances
+  sources:
+    - repoURL: ghcr.io/bjw-s-labs/helm
+      chart: app-template # a generic chart for any container image (Glances has no chart of its own)
+      targetRevision: 5.2.1

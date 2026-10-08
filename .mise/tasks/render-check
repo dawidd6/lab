@@ -1,17 +1,36 @@
 #!/usr/bin/env bash
-#MISE description="Render every app with kustomize"
+#MISE description="Render every app's charts with its values.yaml, and check that its manifests/ parse"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
 
+failed=0
+
 for app in */; do
-  app="${app%/}"
-  if [[ -f "$app/kustomization.yaml" ]]; then
-    echo -n "$app: "
-    if kubectl kustomize --enable-helm "$app" >/dev/null; then
-      echo 'ok'
+  app=${app%/}
+  [[ -f $app/app.yaml ]] || continue # root/ isn't an app
+  namespace=$(yq '.spec.destination.namespace' "$app/app.yaml")
+
+  while read -r repo chart version; do
+    if [[ $repo == https://* ]]; then
+      source=("$chart" --repo "$repo")
     else
-      echo 'fail'
+      source=("oci://$repo/$chart") # Argo CD writes OCI repositories without the scheme
     fi
-  fi
+    # helm's output (it logs every OCI pull) only matters when the render fails
+    if ! output=$(helm template "$app" "${source[@]}" --version "$version" --namespace "$namespace" --values "$app/values.yaml" 2>&1 >/dev/null); then
+      echo "$app: $chart does not render: $output"
+      failed=1
+    fi
+  done < <(yq '.spec.sources[] | .repoURL + " " + .chart + " " + .targetRevision' "$app/app.yaml")
+
+  for manifest in "$app"/manifests/*.yaml; do
+    [[ -e $manifest ]] || continue # no manifests/
+    if ! yq '.' "$manifest" >/dev/null; then
+      echo "$manifest: not valid YAML"
+      failed=1
+    fi
+  done
 done
+
+exit $failed
