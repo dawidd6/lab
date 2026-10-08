@@ -1,0 +1,25 @@
+# DuckDNS API token, for the wildcard certificate's DNS-01 challenges
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: duckdns
+spec:
+  secretTemplates:
+    - name: duckdns
+      stringData:
+        token: ENC[AES256_GCM,data:1nAyJfkBV2NIkpytXRfNRgTjDveeDRl7yMpPUTfmc8Y3v8pt,iv:aDSi3OdIYJvA7GcX2ihM8mZ7Xc7SprFaanyG01dIUDE=,tag:SlJhMRhdxTEHcdHm9w1J1w==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKREFzY1I2TEpONDRRRWlo
+        UEE4K09nc0h6TVZUNDZkVHgzZGtSUkI3QkhFCjJKSC9vN1FSZ0FkNGd4eXZPeEo0
+        bVNlVDhZWXRuN3pOZHdGZXh2RVFPK1UKLS0tIG9TUFNsTlhDMlF2UVZFb2ZiZ0lI
+        dVQzMTVLa2JmcVZtTHFhakhvUTMrZjgK5Xvv/ygJGmxzIxmaTPmy/8tkLCUHOKb/
+        IOmTy6yIV6q8oPFbhzBHlTLw1UL+qfrKQboOtYwYFtc8Q8HRjg5BKg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T08:05:28Z"
+  mac: ENC[AES256_GCM,data:LhOOsMLYjpMMuBm06c2/fGJlj9ZRmaHFMG+WD9AM4EZ7c27Pv4YTU4leuwfL5/O6VKMVxLUU7Vw+4L0ViDMpFGX9BKMGmfT7EV94ja/vXiPcrlG/9m5lp3EPrEJatuBTeDfPYaKZofn7krvihN6cAPch3xjO5ptbw8JrD7nLGsg=,iv:CMFgvpko0n6GIKQB2teqbi+7egiSTDYm+9pLrK8Bsbc=,tag:iBGFhvBT1r9MxDQjEMwmPw==,type:str]
+  version: 3.13.3

@@ -1,1 +1,3 @@
 /.config
+# what kubectl kustomize --enable-helm pulls when building an app locally
+apps/*/charts/charts/

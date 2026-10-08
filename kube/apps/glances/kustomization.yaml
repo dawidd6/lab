@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: glances
+resources:
+  - manifests/deployment.yaml
+  - manifests/oidc.sops.yaml
+  - manifests/route.yaml
+  - manifests/securitypolicy.yaml
+  - manifests/service.yaml

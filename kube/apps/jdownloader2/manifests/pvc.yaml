@@ -1,0 +1,12 @@
+# JDownloader's settings; the name is the existing claim's (from the TrueCharts chart), so its data stays
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jdownloader2-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: openebs-hostpath
+  resources:
+    requests:
+      storage: 100Gi

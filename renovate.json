@@ -1,14 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "argocd": {
-    "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
-  },
-  "packageRules": [
-    {
-      "description": "charts are pinned without v (OCI registries tag cert-manager, envoy-gateway with v)",
-      "matchManagers": ["argocd"],
-      "extractVersion": "^v?(?<version>.*)$"
-    }
-  ]
+  "kubernetes": {
+    "managerFilePatterns": ["/^kube/apps/[^/]+/[^/]+\\.yaml$/"]
+  }
 }

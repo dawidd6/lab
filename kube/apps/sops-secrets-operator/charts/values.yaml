@@ -1,0 +1,9 @@
+# decrypts every app's *.sops.yaml (SopsSecret) with the age key that argocd-bootstrap puts in secret sops-age
+secretsAsFiles:
+  - name: age
+    mountPath: /etc/sops-age
+    secretName: sops-age
+extraEnv:
+  - name: SOPS_AGE_KEY_FILE
+    value: /etc/sops-age/keys.txt
+defaultEnforceOwnership: true # adopt Secrets that already exist (e.g. after a restore) instead of refusing to touch them

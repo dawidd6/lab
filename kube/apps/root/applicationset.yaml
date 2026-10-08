@@ -1,5 +1,6 @@
-# every apps/<name>/app.yaml becomes an Application named <name>: its chart and namespace from app.yaml, its values
-# from values.yaml next to it, plus everything every app shares (below); removing the directory deletes what it deployed
+# every apps/<name>/kustomization.yaml becomes an Application named <name> in the namespace it sets: its charts/
+# (helmCharts, rendered with --enable-helm, argocd/charts/values.yaml) and manifests/, plus everything every app shares (below);
+# removing the directory deletes what it deployed
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -14,15 +15,21 @@ spec:
         repoURL: https://github.com/dawidd6/lab
         revision: master
         files:
-          - path: kube/apps/*/app.yaml
+          - path: kube/apps/*/kustomization.yaml
   template:
     metadata:
       name: '{{ .path.basename }}'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: . # re-render only when a commit touches this app's directory
     spec:
       project: default
+      source:
+        repoURL: https://github.com/dawidd6/lab
+        targetRevision: master
+        path: '{{ .path.path }}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{ .spec.destination.namespace }}'
+        namespace: '{{ .namespace }}'
       syncPolicy:
         automated:
           prune: true
@@ -33,21 +40,3 @@ spec:
           - CreateNamespace=true
           - ServerSideApply=true
           - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs
-  # sources is a list (app.yaml's chart sources plus this directory), which plain template strings can't build
-  templatePatch: |
-    spec:
-      sources:
-      {{- range .spec.sources }}
-        - repoURL: {{ .repoURL }}
-          chart: {{ .chart }}
-          targetRevision: {{ .targetRevision }}
-          helm:
-            valueFiles:
-              - $repo/{{ $.path.path }}/values.yaml
-      {{- end }}
-        - repoURL: https://github.com/dawidd6/lab # the app's own manifests, and $repo for its values.yaml
-          targetRevision: master
-          path: {{ .path.path }}
-          ref: repo
-          directory:
-            exclude: '{app.yaml,values.yaml}'

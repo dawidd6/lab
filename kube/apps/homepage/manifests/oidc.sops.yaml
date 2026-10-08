@@ -1,0 +1,25 @@
+# the gateway's Authelia client for Homepage (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: homepage-oidc
+spec:
+  secretTemplates:
+    - name: homepage-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:7dIRnkLsP+B4n4oyYpEbcYvY7lJGEu1TVQ2ukis09wwkHTMK03c7cZwx67cfbHL7TyZdbY9YfjCDoHSMNoZNPA==,iv:OnVabqYCQIC1ZP2BHswyH/mJfaSiuYrtbbsAMOeZ/CA=,tag:r6khRCM8nlBuFufeq0gZYw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCTjJDVnIzdlNOWkJBQnBC
+        a2JyejFvaDloT240RndrNldMUEpkeit2QUdRCkFuWFN2MzBwMGR6cU1qTTR1M0Rp
+        WlpqYkc0a3ZJbW10TVI4T2RLR2F4VUEKLS0tIE1POTh4cmk0TWU0YWlsU2EzR2FL
+        TFk0QU1EK2ZrcHRGUWlzOVJwK2R0M1UKL2wtYITr4WQA86DmwobjojlOXSQ1HGKy
+        FL4iBLo+k/w9YR+4OlIAZIGbZFJWA+UftXomOkShst5ckp857mA+qQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T08:05:28Z"
+  mac: ENC[AES256_GCM,data:s2cMPihW+9tBTPj8R384C4kYU8h/n8NQfbRVDjGLpkaBKbIx1KKiMLy6Fx9slDka1rLjBLsw4MZYiFXjHuIE5OBNYDQlRPNpxUS8tHb7oJGl1sE3VNrlg/+KlFln8EEEUFZTeqmp3g6QoWhDPcPluwJPouocA9QnUtR/vIlykT8=,iv:c4Rm3LGl8/o7q17hX/Qpf5HYa4gy1C1gHhQOjWCinSQ=,tag:oivy1/iitKqP2kCMfdzB7Q==,type:str]
+  version: 3.13.3

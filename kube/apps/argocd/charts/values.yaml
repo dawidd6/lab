@@ -1,0 +1,21 @@
+configs:
+  cm:
+    url: https://argocd.dawidd6.duckdns.org
+    kustomize.buildOptions: --enable-helm # apps' charts/kustomization.yaml inflate their charts (root/applicationset.yaml)
+    # Argo CD only takes this as a string; the client secret comes from ../manifests/oidc.sops.yaml
+    oidc.config: |
+      name: Authelia
+      issuer: https://authelia.dawidd6.duckdns.org
+      clientID: argocd
+      clientSecret: $argocd-oidc:clientSecret
+      requestedScopes: [openid, profile, email, groups]
+      enableUserInfoGroups: true # Authelia sends groups in userinfo, not in the ID token
+      userInfoPath: /api/oidc/userinfo
+  rbac:
+    policy.csv: g, admins, role:admin # the admins group in Authelia's users file
+  params:
+    server.insecure: true # TLS ends at the gateway
+dex:
+  enabled: false
+notifications:
+  enabled: false

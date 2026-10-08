@@ -1,21 +1,19 @@
 #!/usr/bin/env bash
-#MISE description="Apply the Infisical credentials, install Argo CD and the root app (which then deploys everything)"
+#MISE description="Give the cluster the age key, install Argo CD and the root app (which then deploys everything)"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
 
-sops decrypt ../infisical.sops.yaml | kubectl apply --server-side -f -
+for namespace in sops-secrets-operator argocd; do
+  kubectl get namespace "$namespace" &>/dev/null || kubectl create namespace "$namespace"
+done
 
-if ! helm status -n argocd argocd &>/dev/null; then
-  helm install argocd "$(yq '.spec.sources[0].chart' argocd/app.yaml)" \
-    --repo "$(yq '.spec.sources[0].repoURL' argocd/app.yaml)" \
-    --version "$(yq '.spec.sources[0].targetRevision' argocd/app.yaml)" \
-    --values argocd/values.yaml \
-    --namespace "$(yq '.spec.destination.namespace' argocd/app.yaml)" \
-    --create-namespace \
-    --wait
-fi
+# the key sops-secrets-operator decrypts every *.sops.yaml with; recreated so a rotated key replaces it
+kubectl -n sops-secrets-operator delete secret sops-age --ignore-not-found
+kubectl -n sops-secrets-operator create secret generic sops-age \
+  --from-file=keys.txt="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
 
-if ! kubectl -n argocd get application root &>/dev/null; then
-  kubectl create -f root/application.yaml
-fi
+# Argo CD's chart alone; its manifests need other apps' CRDs, so Argo CD applies them later with the rest of the app
+kubectl kustomize --enable-helm argocd/charts | kubectl apply --server-side --force-conflicts -f -
+kubectl wait --for condition=established crd/applications.argoproj.io
+kubectl apply --server-side -f root/application.yaml

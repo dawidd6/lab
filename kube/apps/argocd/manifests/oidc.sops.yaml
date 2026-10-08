@@ -1,0 +1,27 @@
+# Argo CD's Authelia client secret ($argocd-oidc:clientSecret in its oidc.config)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: argocd-oidc
+spec:
+  secretTemplates:
+    - name: argocd-oidc
+      labels:
+        app.kubernetes.io/part-of: argocd
+      stringData:
+        clientSecret: ENC[AES256_GCM,data:FRSR8uKKp9TXaGAgsdpC5JXBfq9RK5LPRjZP2jJQwMydg52vntG1g9Z+Bfn0Y4BNhkwfjAB/XcqLqsAN5280fw==,iv:QhV3gwTLl6U4qr7eEItNY498Z+162uwCs9AmwhPYX/w=,tag:RcOgldz6uwylAjfH7D8Zfw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpQlFOVHQ4eFdyNytkb0pR
+        bHpLQ2lPVWhsYjBENkFqN2I5UFJILzhGZWw0CjNMQiswME8vM29yYjVZWWNaQ1k3
+        bXg5UnppajZhUkkzWTJ3enduRXJaTmMKLS0tIDJmcjFQYnNsOG1tN2s3STV1V1Js
+        aFJkKzMxTEl1MHk3NE1HYnlwU0gxZnMKwmB7gzSxRNmAWI90xFxAM3h0pt0TwKW5
+        vJpDRtdimGuZ7XZJOumuqTzSX0HgAkev/jH24PUij/zuVc/6j5IdMw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T08:05:27Z"
+  mac: ENC[AES256_GCM,data:JQPHmmBwQyAIoX/GA51MYEpo2Tc3eff6Yfyxb9wFyfzqWUd5wO7AueOOJ2zqnbSBMZSHPfz72kkPO8Ne9fodoKwvGWehPeKmmBK7QKILHCi6Eisqa5yFaS8u7xEur5AodAj4mGOibuFjDMYOqA4BaSq5z+siWmcG6wlweq2prK4=,iv:7TVf4sjP4tM9tw2V3MeQgQBTMioL7wJEIMK//NB59Xg=,tag:U6Zpoex+T63UlwUJejBTCA==,type:str]
+  version: 3.13.3

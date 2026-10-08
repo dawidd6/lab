@@ -1,0 +1,25 @@
+# the gateway's Authelia client for JDownloader (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: jdownloader-oidc
+spec:
+  secretTemplates:
+    - name: jdownloader-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:PQ3wC4llSLgiFu1QamiZb6mgiFCy38RUmaJ5aoCokIGPUVzPOemvhGHA37th6AJznJPuYj7taIQVNF1oqoO57A==,iv:eHZuH+uRQ+i6tm1o0wgvdIx1dzGv8bH38UIjwRx9q4g=,tag:NDc/SudTbC/wpIpXPKlYyA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxN2h5K1daeHlVbkxHSEtV
+        UUkwYzNLTFhrSkU4VUJsYmxqdFRhL20vT0FZCkRjZkIvc2g0a0V0WVBaT2ZDdjhL
+        ZWhUMWdkVHUvQjVNNjFFOHBkcTBlbjgKLS0tIG9tRmR4aEtYb2xMcUxPUW14eGNM
+        YW9QZ2ZDb0pBWHhvOVI4VlFHWTBiYlEKrmhySUSecbtHMrCyvPR8U1XR4w586xVN
+        MstQ5RKpQLVqq3wQ8pUVrcPyr5YbiVKraBMEJWAoeKltbNb+sO8Uag==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T08:05:28Z"
+  mac: ENC[AES256_GCM,data:6dW32apgPTC26PyIhvUtgVqwPu3hLQEaRQyb3u2XyFCprusL43MaAX++Npjk3tla/Us0BfwtxCwNPLmw73myRnXlimCUeTtOUto8TgPdaYRYN7Davr1n/WBjvWkiFk69NN7Bdo94adUPpaxc71SV0gK8zmsjzK/hdHtXJASa5EA=,iv:OI2EOw4O8WbKYOzpumX1KrikUYzfhFfy1dpTzb4hYdQ=,tag:zpQKqlfKAm6h+NeIcU9mgg==,type:str]
+  version: 3.13.3

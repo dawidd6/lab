@@ -1,0 +1,10 @@
+- glances: # the host's stats from Glances' API, in-cluster (glances/manifests/deployment.yaml)
+    url: http://glances.glances.svc:61208
+    version: 4
+    cpu: true
+    mem: true
+    cputemp: true
+    uptime: true
+    disk: /rootfs # the host's / as Glances sees it (glances/manifests/deployment.yaml)
+- search:
+    provider: duckduckgo

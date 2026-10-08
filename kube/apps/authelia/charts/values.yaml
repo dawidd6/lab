@@ -1,0 +1,70 @@
+pod:
+  kind: Deployment # the chart's default is a DaemonSet
+persistence:
+  enabled: true # /config: the SQLite database and notification.txt
+  storageClass: openebs-hostpath
+secret:
+  existingSecret: authelia # ../manifests/secret.sops.yaml; the chart mounts only its own keys at /secrets/internal
+  additionalSecrets:
+    authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets, users file
+configMap:
+  totp:
+    disable: true # no second factor
+  webauthn:
+    disable: true
+  access_control:
+    default_policy: one_factor # the chart sets two_factor, impossible without a second factor
+  authentication_backend:
+    file:
+      enabled: true
+      path: /secrets/authelia/users_database.yml # ../manifests/secret.sops.yaml (edit with: sops kube/apps/authelia/manifests/secret.sops.yaml)
+      watch: true
+  session:
+    cookies:
+      - domain: dawidd6.duckdns.org
+        subdomain: authelia
+  storage:
+    local:
+      enabled: true
+  notifier:
+    filesystem:
+      enabled: true # required; one-time codes (e.g. password reset) land in /config/notification.txt
+  identity_providers:
+    oidc:
+      enabled: true
+      jwks:
+        - key:
+            path: /secrets/authelia/oidc.jwk.RS256.pem
+      clients:
+        - client_id: argocd
+          client_name: Argo CD
+          client_secret:
+            path: /secrets/authelia/oidc.client.argocd
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://argocd.dawidd6.duckdns.org/auth/callback
+        - client_id: homepage
+          client_name: Homepage
+          client_secret:
+            path: /secrets/authelia/oidc.client.homepage
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://homepage.dawidd6.duckdns.org/oauth2/callback # homepage/manifests/securitypolicy.yaml
+        - client_id: jdownloader
+          client_name: JDownloader
+          client_secret:
+            path: /secrets/authelia/oidc.client.jdownloader
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/manifests/securitypolicy.yaml
+        - client_id: glances
+          client_name: Glances
+          client_secret:
+            path: /secrets/authelia/oidc.client.glances
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://glances.dawidd6.duckdns.org/oauth2/callback # glances/manifests/securitypolicy.yaml

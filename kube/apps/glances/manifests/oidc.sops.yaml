@@ -1,0 +1,25 @@
+# the gateway's Authelia client for Glances (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: glances-oidc
+spec:
+  secretTemplates:
+    - name: glances-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:ID7JGkO06DiPX0xan0NPksRcy9ArE7pOAAtLK9HEsZC5P4DfwtkpUX0U1WE1QWRswht+mNV9eXoqhgZD+YaWkQ==,iv:ZRRrrtbTPcdWRIO1SsFAplNfAJPSMTuc0yhtvxPx4kM=,tag:HmwKzWldi4nXeAiaJKJSkA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmNXJaZ0QrbnJ5cVlHMFBi
+        K2RTMS9mUVJGc3JYYmkyQ3AySE1EZFgvYVg4CnJGdFJEZURWNlgzQnNjdnFZbW5E
+        bkVmNng4WndPQmtwdEhBZVcxN1ZOYkUKLS0tIFZMUlZWcU5qN3c5ZVpSdGx6ZWF6
+        U3dUeUxEVG5UZkkxa2ZsdXhXdWt3K00K0gn+myXpE4E0TJS1m6Uxq4BFkTgCLPLO
+        Eee7vMQ+1mlnzaAOy4JZl3+hyjRmOm+dGh5V4LCUVVMerOyyEBBVLg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-08T08:05:28Z"
+  mac: ENC[AES256_GCM,data:4uXY9ocW+C5zpcCPOcjClwWKX7fFGd8kxGZ/WNqfTUngerUwlj6y9x5ba5Rd40/YBaX59nCf2nj7gNLgFV1Nyr8h0Sz8GTtN3KMTsKqQ0z12In9FcY/xKp9eFfqIALAXzwFnWb46ln/E2gmzV6cuZhQnBEeNdLGPvV4aqrsVgM4=,iv:USdgsFvxQye5N6R/cV5Y+39/WbOkh4yb1//AbvTPz1E=,tag:oW94OmabqRyWaIUTEG2nfQ==,type:str]
+  version: 3.13.3

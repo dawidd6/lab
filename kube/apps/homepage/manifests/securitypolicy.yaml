@@ -1,0 +1,24 @@
+# Homepage has no login of its own: the gateway asks Authelia first
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: homepage
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: homepage
+  oidc:
+    provider:
+      issuer: https://authelia.dawidd6.duckdns.org
+      # stated explicitly so Envoy Gateway never fetches (and caches a failure of) Authelia's discovery document,
+      # e.g. when it processes this policy while Authelia restarts
+      authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
+    clientID: homepage
+    clientSecret:
+      group: ""
+      kind: Secret
+      name: homepage-oidc # oidc.sops.yaml, key client-secret
+    redirectURL: https://homepage.dawidd6.duckdns.org/oauth2/callback
+    logoutPath: /logout
