@@ -31,6 +31,9 @@ configMaps:
             provider: duckduckgo
       services.yaml: |
         - Media:
+            - Jellyfin:
+                href: https://jellyfin.dawidd6.duckdns.org
+                icon: jellyfin.png
             - JDownloader:
                 href: https://jdownloader.dawidd6.duckdns.org
                 icon: jdownloader.png
