@@ -3,6 +3,7 @@ pod:
 persistence:
   enabled: true # /config: the SQLite database and notification.txt
   storageClass: internal
+  size: 1Gi
 secret:
   existingSecret: authelia # manifests/secret.sops.yaml; the chart mounts only its own keys at /secrets/internal
   additionalSecrets:
