@@ -68,6 +68,10 @@ route:
     hostnames:
       - homepage.dawidd6.duckdns.org
     rules:
-      - backendRefs:
+      - matches: # the API server's default, spelled out so Argo CD's diff matches the live route
+          - path:
+              type: PathPrefix
+              value: /
+        backendRefs:
           - identifier: homepage
             port: 3000

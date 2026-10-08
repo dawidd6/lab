@@ -37,6 +37,10 @@ route:
     hostnames:
       - jdownloader.dawidd6.duckdns.org
     rules:
-      - backendRefs:
+      - matches: # the API server's default, spelled out so Argo CD's diff matches the live route
+          - path:
+              type: PathPrefix
+              value: /
+        backendRefs:
           - identifier: jdownloader2
             port: 5800
