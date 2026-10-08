@@ -16,6 +16,8 @@ spec:
         revision: master
         files:
           - path: kube/apps/*/kustomization.yaml
+          - path: kube/apps/*/charts/kustomization.yaml # the generator's * also matches across /, so exclude charts/ explicitly
+            exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}'
