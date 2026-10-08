@@ -15,9 +15,7 @@ spec:
         repoURL: https://github.com/dawidd6/lab
         revision: master
         files:
-          - path: kube/apps/*/kustomization.yaml
-          - path: kube/apps/*/charts/kustomization.yaml # the generator's * also matches across /, so exclude charts/ explicitly
-            exclude: true
+          - path: kube/apps/*/kustomization.yaml # * stays within one directory (new globbing, argocd/charts/values.yaml)
   template:
     metadata:
       name: '{{ .path.basename }}'

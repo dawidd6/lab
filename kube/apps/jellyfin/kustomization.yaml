@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: media
 resources:
   - charts
-  - manifests/pvc.yaml
-  - manifests/route.yaml
+  - manifests

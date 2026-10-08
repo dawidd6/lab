@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: authelia
 resources:
   - charts
-  - manifests/route.yaml
-  - manifests/secret.sops.yaml
+  - manifests

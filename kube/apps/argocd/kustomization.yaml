@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: argocd
 resources:
   - charts
-  - manifests/oidc.sops.yaml
-  - manifests/route.yaml
+  - manifests

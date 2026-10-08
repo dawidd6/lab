@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: metallb
 resources:
   - charts
-  - manifests/ipaddresspool.yaml
-  - manifests/l2advertisement.yaml
+  - manifests

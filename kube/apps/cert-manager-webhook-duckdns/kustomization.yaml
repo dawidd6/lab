@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: cert-manager
 resources:
   - charts
-  - manifests/duckdns.sops.yaml
+  - manifests

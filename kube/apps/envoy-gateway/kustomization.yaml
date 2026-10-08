@@ -3,6 +3,4 @@ kind: Kustomization
 namespace: envoy-gateway
 resources:
   - charts
-  - manifests/gateway.yaml
-  - manifests/gatewayclass.yaml
-  - manifests/redirect.yaml
+  - manifests

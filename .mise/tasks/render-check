@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Render every app with kustomize"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube/apps"
+
+for app in */; do
+  app="${app%/}"
+  if [[ -f "$app/kustomization.yaml" ]]; then
+    echo -n "$app: "
+    if kubectl kustomize --enable-helm "$app" >/dev/null; then
+      echo 'ok'
+    else
+      echo 'fail'
+    fi
+  fi
+done

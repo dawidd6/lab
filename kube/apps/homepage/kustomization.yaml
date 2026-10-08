@@ -9,8 +9,4 @@ configMapGenerator:
       - configs/services.yaml
       - configs/bookmarks.yaml
 resources:
-  - manifests/deployment.yaml
-  - manifests/oidc.sops.yaml
-  - manifests/route.yaml
-  - manifests/securitypolicy.yaml
-  - manifests/service.yaml
+  - manifests
