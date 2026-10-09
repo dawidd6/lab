@@ -75,5 +75,7 @@ configMap:
             path: /secrets/authelia/oidc.client.grafana
           authorization_policy: one_factor # password only
           consent_mode: implicit
+          require_pkce: true # Grafana sends a PKCE challenge (use_pkce, victoria-metrics/values.yaml)
+          pkce_challenge_method: S256
           redirect_uris:
-            - https://grafana.dawidd6.duckdns.org/oauth2/callback # victoria-metrics/manifests/securitypolicy.yaml
+            - https://grafana.dawidd6.duckdns.org/login/generic_oauth # Grafana's own OIDC login (victoria-metrics/values.yaml)

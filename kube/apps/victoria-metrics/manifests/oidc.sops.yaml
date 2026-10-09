@@ -1,4 +1,4 @@
-# the gateway's Authelia client for Grafana (securitypolicy.yaml)
+# Grafana's Authelia client secret, read by Grafana itself (values.yaml, auth.generic_oauth)
 apiVersion: isindir.github.com/v1alpha3
 kind: SopsSecret
 metadata:
@@ -7,19 +7,19 @@ spec:
   secretTemplates:
     - name: grafana-oidc
       stringData:
-        client-secret: ENC[AES256_GCM,data:bU1z2+OGAz97V1PeM8KWRJYNgiu+CjvE+5MMv7s1/hu2NwM+Gk3N1GFQ1tv4K/AtO9b8pG+kVwXmc8J71+1HDdypNzOnYm1w,iv:nCv4Z+VUAPRR42QNlycuKyNciiN4566wUZNlSRla6l8=,tag:hFvtsopoWqkGaUPMsHpS6g==,type:str]
+        client-secret: ENC[AES256_GCM,data:gOa0M6TyyX1f9WYmWkwvAbaVX1+N7Hp1R+pG2w+Gt+IMTP8ZTXOUhMMFNqE7Kvb8iswoDJuhNxAliBH983vecd/+brxfn4nd,iv:VR84M3+v3SqIi7fx8vF+iEicFCHrDqltHU2NC/3cVfc=,tag:86WV9ERFlERirdZ9eOhASw==,type:str]
 sops:
   age:
     - enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXbTN1VHR1cFRHVXNzRi80
-        WE16cnd0Q3VncFFFT1pOTXhDU21JTisxNHl3Ck94N0FXcnpZUkc2cnF4eGVxT2o4
-        aW80M1gwa3liSVFocFJFcFYzYW9Ea2MKLS0tIEhMK0VuTTFlcDlBem9Oei9TV09k
-        L1k4OEkvWGZYWEpMTThhanVKYXJqR1UK0tzhORrPYuFtHeTUmQGsML6T9dA9pTpL
-        3D8W7JXUkuHG2aeeTuDmV2+CE8C6xeTg2A5/+YtHWUrnrZmfijFAUg==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBvbDNwRXZhdjB4VURYOWRZ
+        YlE2QUFkdmVmcE95WlJnK2ZuTkR2SWQxemtRCkVOUk1TdWFuSmQ3Y1hXRVh0L1Jl
+        bGtGVFNxWXhXbWR3UFArb1oyR1NmTEUKLS0tIGdBdDIrSFc5dkEyM2Rkdk9mR2RX
+        SkVPVlNPcnpkd3Q1RFZ3UHlISlBCcFUKUNIfzVMRmVHQGrDTJB0i7F+2IJ0U1B7C
+        9O94WwpbSe8yOw8ru9Bc63hiSeEPTlM4BUEby9NCx0QBz15crGYr9g==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
   encrypted_regex: ^(data|stringData)$
-  lastmodified: "2026-10-08T15:10:16Z"
-  mac: ENC[AES256_GCM,data:tIAa87Sa7uP6r2OPeQ5cw6uq01ncYjWyntHDdAlBguYTnSDaxIFJeiJ2C0deT3Lc9XL5x1tSnSOzAQ5/3VT7oyywy0z1rU9UU0kwBy3lwovQXiTjBxsEuPUyLJVXu2Vv7PJTxPzahUSE6xt+eyZsqVHt5KmMVN74eHEMH1QBSf0=,iv:R0AnQEkdRrv9zOlEJRYkbEIkZhbywXYEINNJBH0nX00=,tag:hRiExO4AI38iX/vbXT/jCQ==,type:str]
+  lastmodified: "2026-10-09T14:12:32Z"
+  mac: ENC[AES256_GCM,data:jj9qUU2Yh7ZDmVyGsyTECtSwA5q65zVHi+y28KZX2W3cMWFMufUIpwgXe/99spCY54ITqBjhk5wXA9yLQysB8DOflhawOgKp3gSKGmjXcqQi4z2GQ7vRw9pbLbg55pbo0vJrAP1KNl2hEkd8VqasftRB+aml3MZLs4+JHYw5XBc=,iv:5Wzg6wWo0pZekyqV5/ruEzQTxe/1cYQAMzLiXrfUWqM=,tag:Z2bYcte49WEyuIZ8EYZGJg==,type:str]
   version: 3.13.3

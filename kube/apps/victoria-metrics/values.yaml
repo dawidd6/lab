@@ -30,14 +30,32 @@ victoria-metrics-operator:
 grafana:
   admin:
     existingSecret: grafana-admin # manifests/admin.sops.yaml; set so the chart doesn't generate a new password on every render
+  envValueFrom:
+    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: # Grafana's Authelia client secret (manifests/oidc.sops.yaml)
+      secretKeyRef:
+        name: grafana-oidc
+        key: client-secret
   grafana.ini:
     server:
       root_url: https://grafana.dawidd6.duckdns.org
-    # login happens at the gateway (manifests/securitypolicy.yaml): whoever gets past Authelia is Grafana's admin
     auth:
-      disable_login_form: true
+      disable_login_form: true # Authelia only, no Grafana passwords
     auth.basic:
       enabled: false
-    auth.anonymous:
+    # log in through Authelia (its grafana client); members of admins become Grafana admins, everyone else viewers
+    auth.generic_oauth:
       enabled: true
-      org_role: Admin
+      name: Authelia
+      icon: signin
+      client_id: grafana
+      scopes: openid profile email groups
+      auth_url: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      token_url: https://authelia.dawidd6.duckdns.org/api/oidc/token
+      api_url: https://authelia.dawidd6.duckdns.org/api/oidc/userinfo
+      auth_style: InHeader # client_secret_basic, Authelia's default for clients
+      use_pkce: true
+      auto_login: true # straight to Authelia, no Grafana login page
+      login_attribute_path: preferred_username
+      name_attribute_path: name
+      groups_attribute_path: groups
+      role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
