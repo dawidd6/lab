@@ -1,11 +1,21 @@
-name: check
+name: Check
+
 on:
-  push:
   pull_request:
+  push:
+    branches:
+      - master
+
 jobs:
   check:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: jdx/mise-action@v5
-      - run: mise run render-check
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@v5 # zizmor: ignore[unpinned-uses]
+
+      - run: mise run ci-check

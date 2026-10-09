@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Render every app's charts with its values.yaml, and validate them and its manifests/ against the schemas"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/kube/apps"
+
+find . -type f -name '*.yaml' -and -not -name '*values.yaml' -and -not -name '*app.yaml' -print0 | xargs -0 kubeconform \
+  -schema-location default \
+  -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
