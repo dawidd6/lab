@@ -1,5 +1,6 @@
 # VictoriaMetrics (metrics from node-exporter, kube-state-metrics, the kubelet) and Grafana with its dashboards;
 # node-exporter's hwmon metrics include CPU, NVMe and board temperatures (node_hwmon_temp_celsius)
+fullnameOverride: victoria-metrics # instead of victoria-metrics-victoria-metrics-k8s-stack
 vmsingle:
   spec:
     retentionPeriod: "1" # months

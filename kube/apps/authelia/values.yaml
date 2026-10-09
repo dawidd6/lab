@@ -76,4 +76,4 @@ configMap:
           authorization_policy: one_factor # password only
           consent_mode: implicit
           redirect_uris:
-            - https://grafana.dawidd6.duckdns.org/oauth2/callback # monitoring/manifests/securitypolicy.yaml
+            - https://grafana.dawidd6.duckdns.org/oauth2/callback # victoria-metrics/manifests/securitypolicy.yaml

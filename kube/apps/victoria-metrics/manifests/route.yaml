@@ -20,6 +20,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: monitoring-grafana
+          name: victoria-metrics-grafana
           port: 80
           weight: 1

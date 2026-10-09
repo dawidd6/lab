@@ -25,9 +25,9 @@ config:
       conditions: ["[STATUS] == 200"]
     - name: Grafana
       group: internal
-      url: http://monitoring-grafana.monitoring.svc/api/health
+      url: http://victoria-metrics-grafana.victoria-metrics.svc/api/health
       conditions: ["[STATUS] == 200"]
     - name: VictoriaMetrics
       group: internal
-      url: http://vmsingle-monitoring-victoria-metrics-k8s-stack.monitoring.svc:8428/health # the operator's Service for the VMSingle
+      url: http://vmsingle-victoria-metrics.victoria-metrics.svc:8428/health # the operator's Service for the VMSingle
       conditions: ["[STATUS] == 200"]
