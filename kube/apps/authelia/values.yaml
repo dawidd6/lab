@@ -16,6 +16,12 @@ configMap:
   access_control:
     default_policy: one_factor # the chart sets two_factor, impossible without a second factor
   authentication_backend:
+    # the users file is a read-only Secret (manifests/secret.sops.yaml), so Authelia can't save new passwords:
+    # change them there instead, and don't offer links that would only fail
+    password_reset:
+      disable: true
+    password_change:
+      disable: true
     file:
       enabled: true
       path: /secrets/authelia/users_database.yml # manifests/secret.sops.yaml (edit from kube/: sops apps/authelia/manifests/secret.sops.yaml)
