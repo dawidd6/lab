@@ -8,4 +8,4 @@ spec:
   sources:
     - repoURL: ghcr.io/openebs/charts
       chart: openebs
-      targetRevision: 4.6.1
+      targetRevision: 4.6.2
