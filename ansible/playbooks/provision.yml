@@ -13,40 +13,25 @@
       become: true
       ansible.builtin.shell:
         cmd: set -o pipefail && curl -fsSL https://tailscale.com/install.sh | sh
-        executable: /bin/bash
         creates: /usr/bin/tailscale
 
-    # logs in on the first run (showing a link to open) and applies the settings on every run; --reset makes these
-    # flags the whole configuration. The host's own address is the gateway's (MetalLB pool), through which every
-    # HTTPRoute is served, so *.dawidd6.duckdns.org (resolving to it) works from the tailnet too; plus Tailscale SSH
     - name: Bring up Tailscale
       become: true
       ansible.builtin.command: tailscale up --reset --advertise-routes={{ ansible_facts.default_ipv4.address }}/32 --ssh
-      async: 600 # on the first run it blocks until the login link is used
+      async: 600
       poll: 0
       changed_when: false
 
-    - name: Wait until Tailscale is up or shows a login link
+    - name: Wait for Tailscale to come up or ask for a login
       become: true
       ansible.builtin.command: tailscale status --json
-      register: tailscale_status
-      until: >-
-        (tailscale_status.stdout | default('{}', true) | from_json).BackendState | default('') == 'Running'
-        or (tailscale_status.stdout | default('{}', true) | from_json).AuthURL | default('') | length > 0
+      register: tailscale
+      until: (tailscale.stdout | from_json).BackendState == 'Running' or (tailscale.stdout | from_json).AuthURL != ''
       retries: 30
       delay: 1
       changed_when: false
 
-    - name: Wait for the login in the browser
-      when: (tailscale_status.stdout | from_json).BackendState != 'Running'
+    - name: Log in to the tailnet
+      when: (tailscale.stdout | from_json).BackendState != 'Running'
       ansible.builtin.pause:
-        prompt: "Log {{ inventory_hostname }} in to the tailnet: {{ (tailscale_status.stdout | from_json).AuthURL }} (then press Enter)"
-
-    - name: Check that Tailscale is up
-      become: true
-      ansible.builtin.command: tailscale status --json
-      register: tailscale_status
-      until: (tailscale_status.stdout | default('{}', true) | from_json).BackendState | default('') == 'Running'
-      retries: 30
-      delay: 2
-      changed_when: false
+        prompt: "Open {{ (tailscale.stdout | from_json).AuthURL }} to add {{ inventory_hostname }} to the tailnet, then press Enter"
