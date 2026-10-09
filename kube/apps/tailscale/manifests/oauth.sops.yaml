@@ -8,8 +8,8 @@ spec:
     secretTemplates:
         - name: operator-oauth
           stringData:
-            client_id: ENC[AES256_GCM,data:guvddlZ45B0YT9qxf+HR0S0=,iv:Bemji5VBjskmuxdmVptjjZazfvctX58EnkH9p58WMTk=,tag:RfRh9gxZjIGV889LQUyHZA==,type:str]
-            client_secret: ENC[AES256_GCM,data:Xv4Dkw8PFO/VdvzpLDdLzFNPcYczvlLbe6syGMRtv9j/pr5N15fCz5wbwub/to76HgZYbaUEcoA0mZQBOAE=,iv:sCnzjDLMtTCMILxMoz2cx89oizNWU5Jn/DztSQ1lFa4=,tag:19E3aWz13QPSEnRSeB6mKw==,type:str]
+            client_id: ENC[AES256_GCM,data:g8Hnxr0USEAJPN5UgmajP/s=,iv:snYNo6ZGRCk2FyOB4gRnOtZnG7pRjkRy/bwhXY9B9pg=,tag:jq38sBTL0R6irvTzRRVxUg==,type:str]
+            client_secret: ENC[AES256_GCM,data:hjzaZXX1ddtgD69LLcBfbJoxGT7gj2quIkbd9BczUCsVT+fTpmHAT7Zli4c7Xh0yPfuM71UEVfriGqgsWIJs0Q==,iv:aAG/PCl7m+4aXi1bxpl6KWI7WuQ5UrpnmQCGUUxeUe8=,tag:Gzz3WT0JIzCw43iK1q9DNg==,type:str]
 sops:
     age:
         - enc: |
@@ -22,6 +22,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-09T13:14:42Z"
-    mac: ENC[AES256_GCM,data:89J2jlqH0+jJ186Zf5omi3LxpOuUQ0MHnNUceHg5892GwAklS7x1sV+hDHxhq2pCu0Tz+l7ZgEHlHmLgJbMpwDw2nzZlb3IPlH5EhvfcVsBopbAajuse7Dhm0mBcBX85VEEwxsLRku/VbKPt+13t8k/Znt9TLExWQ/65rEEQS0g=,iv:2fFWsILc41/0ViE7bjsE+hCFRk/Yex8q150BxU10ELI=,tag:TSDHjpCOATERsIqaLg5xoA==,type:str]
+    lastmodified: "2026-10-09T13:26:09Z"
+    mac: ENC[AES256_GCM,data:fMYIIoxFYveVrSKHbaG0COtZ2QJ4VHYfR01CYRwXtITuXJ7hzg7dymIBaU/rzo25ucYTSu9tnU1Djq5FzPL+8MREIDYiLI/RN4zNeuTebuFezyNOkSeOjmK+i07E6rjo8VMzlzHGRJ4wB3txmfB3kXLuoMEH8Rv1sIxqjc+Xzwg=,iv:JYJgNs9EkXha4cJx5RUcxVPnr2yXgmuQgNKSsuYhKFo=,tag:3O9nl9t0Tq2isBu2BFhbWg==,type:str]
     version: 3.13.3
