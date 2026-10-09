@@ -2,7 +2,10 @@
 # apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+metadata:
+  name: volsync
 spec:
+  project: default
   destination:
     namespace: volsync
   sources:

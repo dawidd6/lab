@@ -4,6 +4,10 @@ set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
 
-find . -type f -name '*.yaml' -and -not -name '*values.yaml' -and -not -name '*app.yaml' -print0 | xargs -0 kubeconform \
+find . -type f -wholename '*.yaml' -and -not -wholename '*/values.yaml' -print0 | xargs -0 kubeconform \
+  -strict \
+  -summary \
+  -verbose \
+  -cache /tmp \
   -schema-location default \
   -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
