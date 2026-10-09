@@ -44,6 +44,7 @@ spec:
           chart: {{ .chart }}
           targetRevision: {{ .targetRevision }}
           helm:
+            ignoreMissingValueFiles: true # a removed app can still be rendered (chart defaults) to run its pre-delete hooks
             valueFiles:
               - $repo/{{ $path }}/values.yaml
       {{- end }}
