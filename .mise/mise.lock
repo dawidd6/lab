@@ -63,6 +63,67 @@ url_api = "https://api.github.com/repos/argoproj/argo-cd/releases/assets/6166369
 [tools.argocd."platforms.windows-x64".provenance.slsa]
 url = "https://github.com/argoproj/argo-cd/releases/download/v3.5.4/argocd-cli.intoto.jsonl"
 
+[[tools."github:authelia/authelia"]]
+version = "4.39.28"
+backend = "github:authelia/authelia"
+specifiers = ["latest"]
+
+[tools."github:authelia/authelia"."platforms.linux-arm64"]
+checksum = "sha256:089f3f8bdcba962024e15283811256cea28032d1cdccc56cf4e4c1b284022faa"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570195675"
+
+[tools."github:authelia/authelia"."platforms.linux-arm64".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.linux-arm64-musl"]
+checksum = "sha256:7c4e6537f575f70b25af19a8695635b51510eacb4c6fd8b5a6338262af4baae4"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570196004"
+
+[tools."github:authelia/authelia"."platforms.linux-arm64-musl".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.linux-x64"]
+checksum = "sha256:e8ad9ff965cbf3b93138945e13cb4b7874c999c254772b2bb77952863177699c"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570195627"
+
+[tools."github:authelia/authelia"."platforms.linux-x64".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.linux-x64-musl"]
+checksum = "sha256:ce2526b633ce3eec06680fae2f26060dc8cef3a92cdbc376410b28bcca6c97e1"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-linux-amd64-musl.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570195720"
+
+[tools."github:authelia/authelia"."platforms.linux-x64-musl".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.macos-arm64"]
+checksum = "sha256:2009c5f499f92179c0b4c8a3185a8bc4f3e1666d169818d382242103c09a380f"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-public_html.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570196067"
+
+[tools."github:authelia/authelia"."platforms.macos-arm64".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.macos-x64"]
+checksum = "sha256:4c3a2d234fdd36acdae82ea40c9656cf59d17c0b3e4da8b0ca1e8eb2201ca84c"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-freebsd-amd64.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570196038"
+
+[tools."github:authelia/authelia"."platforms.macos-x64".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
+[tools."github:authelia/authelia"."platforms.windows-x64"]
+checksum = "sha256:4c3a2d234fdd36acdae82ea40c9656cf59d17c0b3e4da8b0ca1e8eb2201ca84c"
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-freebsd-amd64.tar.gz"
+url_api = "https://api.github.com/repos/authelia/authelia/releases/assets/570196038"
+
+[tools."github:authelia/authelia"."platforms.windows-x64".provenance.slsa]
+url = "https://github.com/authelia/authelia/releases/download/v4.39.28/authelia.intoto.jsonl"
+
 [[tools.helm]]
 version = "4.3.0"
 backend = "aqua:helm/helm"
