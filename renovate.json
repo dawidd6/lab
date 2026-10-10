@@ -4,11 +4,20 @@
   "argocd": {
     "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
   },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "description": "charts are pinned without v (cert-manager tags its chart with v)",
       "matchManagers": ["argocd"],
       "extractVersion": "^v?(?<version>.*)$"
+    },
+    {
+      "description": "mise tools are all \"latest\", so only lock file maintenance (mise lock --bump) updates mise.lock correctly; per-tool updates would only rewrite the version line",
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "enabled": false
     }
   ]
 }
