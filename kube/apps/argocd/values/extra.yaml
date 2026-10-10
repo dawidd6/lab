@@ -1,0 +1,4 @@
+routes:
+  argocd:
+    hostname: argocd.dawidd6.duckdns.org
+    service: argocd-server

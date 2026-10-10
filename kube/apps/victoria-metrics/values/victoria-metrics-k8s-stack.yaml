@@ -29,9 +29,9 @@ victoria-metrics-operator:
       enabled: true # cert-manager issues the webhook's certificate; otherwise the chart generates a new one on every render
 grafana:
   admin:
-    existingSecret: grafana-admin # manifests/admin.sops.yaml; set so the chart doesn't generate a new password on every render
+    existingSecret: grafana-admin # secrets/admin.sops.yaml; set so the chart doesn't generate a new password on every render
   envValueFrom:
-    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: # Grafana's Authelia client secret (manifests/oidc.sops.yaml)
+    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: # Grafana's Authelia client secret (secrets/oidc.sops.yaml)
       secretKeyRef:
         name: grafana-oidc
         key: client-secret

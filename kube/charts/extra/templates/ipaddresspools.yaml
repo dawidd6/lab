@@ -1,0 +1,16 @@
+{{- range $name, $pool := .Values.ipAddressPools }}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: {{ $name }}
+spec:
+  addresses:
+    {{- toYaml $pool.addresses | nindent 4 }}
+---
+# announces the pool's addresses on the local network (ARP)
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: {{ $name }}
+{{- end }}

@@ -1,0 +1,22 @@
+# name: {hostname, service, port}: an HTTPRoute on the envoy gateway's https listener; service defaults to the name,
+# port to 80
+routes: {}
+# name: {route, provider, redirectURL}: OIDC login in front of a route (route defaults to the name); the name is the
+# client ID too, and the client secret is Secret <name>-oidc (secrets/oidc.sops.yaml, key client-secret)
+securityPolicies: {}
+# name: {pvc, schedule, user}: restic backup of a volume to the repository in Secret <name>-backup
+# (secrets/backup.sops.yaml)
+backups: {}
+# name: {storageClass, size}: a ReadWriteOnce volume
+persistentVolumeClaims: {}
+# name: {controllerName}
+gatewayClasses: {}
+# name: {className, hostname, certificate, clusterIssuer}: http (redirected to https) and https listeners, the https
+# certificate from cert-manager
+gateways: {}
+# name: {server, webhook}: an ACME issuer solving DNS-01 challenges with a cert-manager webhook
+clusterIssuers: {}
+# name: {addresses}: a MetalLB pool, announced over L2
+ipAddressPools: {}
+# name: {provisioner, parameters}: Retain, expandable, bound where the pod lands
+storageClasses: {}

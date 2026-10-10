@@ -1,0 +1,12 @@
+routes:
+  gatus:
+    hostname: gatus.dawidd6.duckdns.org
+securityPolicies:
+  gatus: # Gatus has no login of its own
+    provider:
+      issuer: https://authelia.dawidd6.duckdns.org
+      # stated explicitly so Envoy Gateway never fetches (and caches a failure of) Authelia's discovery document,
+      # e.g. when it processes this policy while Authelia restarts
+      authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
+    redirectURL: https://gatus.dawidd6.duckdns.org/oauth2/callback

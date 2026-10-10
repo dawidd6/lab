@@ -1,0 +1,13 @@
+routes:
+  jellyfin:
+    hostname: jellyfin.dawidd6.duckdns.org
+    port: 8096
+backups:
+  jellyfin: # nightly, to Backblaze B2
+    pvc: jellyfin-config
+    schedule: "20 3 * * *"
+    user: 0
+persistentVolumeClaims:
+  media: # downloads, shared with JDownloader
+    storageClass: internal
+    size: 1Gi

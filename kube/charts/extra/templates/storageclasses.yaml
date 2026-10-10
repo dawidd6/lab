@@ -1,0 +1,13 @@
+{{- range $name, $class := .Values.storageClasses }}
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ $name }}
+provisioner: {{ $class.provisioner }}
+parameters:
+  {{- toYaml $class.parameters | nindent 2 }}
+reclaimPolicy: Retain # a deleted PVC keeps its data
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer # the volume is created on the node the pod lands on
+{{- end }}

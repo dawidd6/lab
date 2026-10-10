@@ -1,0 +1,8 @@
+storageClasses:
+  # volumes as logical volumes in the host's LVM volume group kubevg (create it first: vgcreate kubevg <disk>);
+  # internal (values/openebs.yaml) stays the hostpath class on the system disk
+  external:
+    provisioner: local.csi.openebs.io # OpenEBS LVM LocalPV
+    parameters:
+      vgpattern: ^kubevg$ # exactly kubevg; vgpattern replaces volgroup, which the driver plans to deprecate
+      fsType: ext4

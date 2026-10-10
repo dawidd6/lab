@@ -1,8 +1,9 @@
 # the ApplicationSet behind every app, this one included
 # every apps/<name>/app.yaml becomes an Application named <name>: its charts and namespace from app.yaml, each chart's
-# values from values/<chart>.yaml, its manifests/, plus everything every app shares (below). To remove an app, delete
-# its app.yaml first and the rest of the directory only once the app is gone: deleting it still renders values/ and
-# manifests/ (e.g. for a chart's pre-delete hooks); renaming one is the same, in two steps
+# values from values/<chart>.yaml, kube/charts/extra with values/extra.yaml, its secrets/, plus everything every app
+# shares (below). To remove an app, delete its app.yaml first and the rest of the directory only once the app is gone:
+# deleting it still renders values/ and secrets/ (e.g. for a chart's pre-delete hooks); renaming one is the same, in
+# two steps
 applicationsets:
   apps:
     namespace: argocd
@@ -37,7 +38,8 @@ applicationsets:
             - CreateNamespace=true
             - ServerSideApply=true
             - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs
-    # sources is a list (app.yaml's chart sources plus this directory), which plain template strings can't build
+    # sources is a list (app.yaml's charts, kube/charts/extra and this directory), which plain template strings can't
+    # build
     templatePatch: |
       {{- $path := .path.path }}
       spec:
@@ -50,10 +52,16 @@ applicationsets:
               valueFiles:
                 - $repo/{{ $path }}/values/{{ .chart }}.yaml
         {{- end }}
-          - repoURL: https://github.com/dawidd6/lab # the app's manifests/, and $repo for its values/
+          - repoURL: https://github.com/dawidd6/lab # kube/charts/extra: the app's routes, backups and the like
+            targetRevision: master
+            path: kube/charts/extra
+            helm:
+              valueFiles:
+                - $repo/{{ $path }}/values/extra.yaml
+          - repoURL: https://github.com/dawidd6/lab # the app's secrets/, and $repo for its values/
             targetRevision: master
             path: {{ $path }}
             ref: repo
             directory:
               recurse: true
-              include: 'manifests/*.yaml' # only the app's own manifests
+              include: 'secrets/*.yaml' # only the app's own secrets

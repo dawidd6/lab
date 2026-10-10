@@ -1,7 +1,7 @@
 configs:
   cm:
     url: https://argocd.dawidd6.duckdns.org
-    # Argo CD only takes this as a string; the client secret comes from manifests/oidc.sops.yaml
+    # Argo CD only takes this as a string; the client secret comes from secrets/oidc.sops.yaml
     oidc.config: |
       name: Authelia
       issuer: https://authelia.dawidd6.duckdns.org

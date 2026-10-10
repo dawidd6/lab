@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-#MISE description="Render every app's charts with its values/, and validate them and its manifests/ against the schemas"
+#MISE description="Render every app's charts with its values/, and validate them and its files against the schemas"
 set -euo pipefail
 
-cd "$MISE_PROJECT_ROOT/kube/apps"
+cd "$MISE_PROJECT_ROOT/kube"
 
-find . -type f -wholename '*.yaml' -and -not -wholename '*/values/*' -print0 | xargs -0 kubeconform \
+for app in apps/*; do
+  rm -rf "/tmp/lab--ci-check/$app"
+  mkdir -p "/tmp/lab--ci-check/$app"
+  helm template charts/extra --values "$app/values/extra.yaml" >"/tmp/lab--ci-check/$app/extra.yaml"
+done
+
+find apps /tmp/lab--ci-check -type f -wholename '*.yaml' -and -not -wholename '*/values/*' -print0 | xargs -0 kubeconform \
   -strict \
   -summary \
   -verbose \

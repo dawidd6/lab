@@ -25,22 +25,6 @@ persistence:
     globalMounts:
       - path: /config
   output: # downloads, shared with Jellyfin
-    existingClaim: media # jellyfin/manifests/pvc.yaml
+    existingClaim: media # jellyfin/values/extra.yaml
     globalMounts:
       - path: /output
-route:
-  jdownloader2:
-    parentRefs:
-      - name: envoy
-        namespace: envoy-gateway
-        sectionName: https
-    hostnames:
-      - jdownloader.dawidd6.duckdns.org
-    rules:
-      - matches: # the API server's default, spelled out so Argo CD's diff matches the live route
-          - path:
-              type: PathPrefix
-              value: /
-        backendRefs:
-          - identifier: jdownloader2
-            port: 5800

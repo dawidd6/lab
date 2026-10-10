@@ -1,0 +1,10 @@
+clusterIssuers:
+  letsencrypt:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    webhook:
+      groupName: acme.duckdns.org # must match the webhook chart's groupName
+      solverName: duckdns
+      config:
+        apiTokenSecretRef:
+          name: duckdns
+          key: token

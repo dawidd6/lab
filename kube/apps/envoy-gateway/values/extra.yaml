@@ -1,0 +1,9 @@
+gatewayClasses:
+  envoy:
+    controllerName: gateway.envoyproxy.io/gatewayclass-controller
+gateways:
+  envoy:
+    className: envoy
+    hostname: "*.dawidd6.duckdns.org"
+    certificate: dawidd6-duckdns-org-tls
+    clusterIssuer: letsencrypt

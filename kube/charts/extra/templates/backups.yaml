@@ -1,0 +1,25 @@
+{{- range $name, $backup := .Values.backups }}
+---
+# restic backup of a volume to the repository in Secret <name>-backup; restore with a ReplicationDestination
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: {{ $name }}
+spec:
+  sourcePVC: {{ $backup.pvc }}
+  trigger:
+    schedule: {{ $backup.schedule | quote }}
+  restic:
+    repository: {{ $name }}-backup
+    copyMethod: Direct # openebs hostpath has no snapshots, so the mover reads the live volume
+    cacheStorageClassName: internal # no default StorageClass in this cluster
+    pruneIntervalDays: 7
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 6
+    moverSecurityContext: # the user that owns the volume's files
+      runAsUser: {{ $backup.user }}
+      runAsGroup: {{ $backup.user }}
+      fsGroup: {{ $backup.user }}
+{{- end }}

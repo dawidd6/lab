@@ -8,7 +8,7 @@ localpv-provisioner:
 engines:
   local:
     lvm:
-      enabled: true # the external StorageClass (manifests/storageclass.yaml)
+      enabled: true # the external StorageClass (values/extra.yaml)
     hostpath:
       enabled: true
     zfs:

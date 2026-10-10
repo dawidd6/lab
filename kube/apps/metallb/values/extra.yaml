@@ -1,0 +1,4 @@
+ipAddressPools:
+  default:
+    addresses:
+      - 192.168.1.109/32 # the node's own IP (kube-proxy in iptables mode)

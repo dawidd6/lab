@@ -6,7 +6,7 @@ controllers:
           repository: ghcr.io/gethomepage/homepage
           tag: v2.4.0
         env:
-          HOMEPAGE_ALLOWED_HOSTS: homepage.dawidd6.duckdns.org # route below
+          HOMEPAGE_ALLOWED_HOSTS: homepage.dawidd6.duckdns.org # the route in values/extra.yaml
 service:
   homepage:
     controller: homepage
@@ -57,19 +57,3 @@ persistence:
         subPath: services.yaml
       - path: /app/config/bookmarks.yaml
         subPath: bookmarks.yaml
-route:
-  homepage:
-    parentRefs:
-      - name: envoy
-        namespace: envoy-gateway
-        sectionName: https
-    hostnames:
-      - homepage.dawidd6.duckdns.org
-    rules:
-      - matches: # the API server's default, spelled out so Argo CD's diff matches the live route
-          - path:
-              type: PathPrefix
-              value: /
-        backendRefs:
-          - identifier: homepage
-            port: 3000

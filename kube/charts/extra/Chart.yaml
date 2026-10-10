@@ -1,0 +1,4 @@
+# what an app needs besides its upstream chart (except secrets, which stay plain files in the app's secrets/)
+apiVersion: v2
+name: extra
+version: 0.0.0

@@ -1,0 +1,4 @@
+routes:
+  grafana:
+    hostname: grafana.dawidd6.duckdns.org
+    service: victoria-metrics-grafana

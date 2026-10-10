@@ -1,0 +1,8 @@
+routes:
+  authelia:
+    hostname: authelia.dawidd6.duckdns.org
+backups:
+  authelia: # nightly, to Backblaze B2
+    pvc: authelia
+    schedule: "0 3 * * *"
+    user: 0

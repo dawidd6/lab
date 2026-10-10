@@ -5,7 +5,7 @@ persistence:
   storageClass: internal
   size: 1Gi
 secret:
-  existingSecret: authelia # manifests/secret.sops.yaml; the chart mounts only its own keys at /secrets/internal
+  existingSecret: authelia # secrets/secret.sops.yaml; the chart mounts only its own keys at /secrets/internal
   additionalSecrets:
     authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets, users file
 configMap:
@@ -16,7 +16,7 @@ configMap:
   access_control:
     default_policy: one_factor # the chart sets two_factor, impossible without a second factor
   authentication_backend:
-    # the users file is a read-only Secret (manifests/secret.sops.yaml), so Authelia can't save new passwords:
+    # the users file is a read-only Secret (secrets/secret.sops.yaml), so Authelia can't save new passwords:
     # change them there instead, and don't offer links that would only fail
     password_reset:
       disable: true
@@ -24,7 +24,7 @@ configMap:
       disable: true
     file:
       enabled: true
-      path: /secrets/authelia/users_database.yml # manifests/secret.sops.yaml (edit from kube/: sops apps/authelia/manifests/secret.sops.yaml)
+      path: /secrets/authelia/users_database.yml # secrets/secret.sops.yaml (edit from kube/: sops apps/authelia/secrets/secret.sops.yaml)
       watch: true
   session:
     cookies:
@@ -58,7 +58,7 @@ configMap:
           authorization_policy: one_factor # password only
           consent_mode: implicit
           redirect_uris:
-            - https://homepage.dawidd6.duckdns.org/oauth2/callback # homepage/manifests/securitypolicy.yaml
+            - https://homepage.dawidd6.duckdns.org/oauth2/callback # homepage/values/extra.yaml
         - client_id: jdownloader
           client_name: JDownloader
           client_secret:
@@ -66,7 +66,7 @@ configMap:
           authorization_policy: one_factor # password only
           consent_mode: implicit
           redirect_uris:
-            - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/manifests/securitypolicy.yaml
+            - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/values/extra.yaml
         - client_id: gatus
           client_name: Gatus
           client_secret:
@@ -74,7 +74,7 @@ configMap:
           authorization_policy: one_factor # password only
           consent_mode: implicit
           redirect_uris:
-            - https://gatus.dawidd6.duckdns.org/oauth2/callback # gatus/manifests/securitypolicy.yaml
+            - https://gatus.dawidd6.duckdns.org/oauth2/callback # gatus/values/extra.yaml
         - client_id: grafana
           client_name: Grafana
           client_secret:

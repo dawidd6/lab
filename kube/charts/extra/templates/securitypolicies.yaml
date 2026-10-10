@@ -1,0 +1,23 @@
+{{- range $name, $policy := .Values.securityPolicies }}
+---
+# for apps without a login of their own: the gateway asks the OIDC provider first
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ $name }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ $policy.route | default $name }}
+  oidc:
+    provider:
+      {{- toYaml $policy.provider | nindent 6 }}
+    clientID: {{ $name }}
+    clientSecret:
+      group: ""
+      kind: Secret
+      name: {{ $name }}-oidc
+    redirectURL: {{ $policy.redirectURL }}
+    logoutPath: /logout
+{{- end }}
