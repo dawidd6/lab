@@ -1,4 +1,4 @@
-# read by root/applicationset.yaml: its charts (with values/<chart>.yaml) plus manifests/, and what every app shares
+# read by the ApplicationSet in argocd-apps/values/argocd-apps.yaml: its charts (with values/<chart>.yaml), manifests/
 # apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
