@@ -1,6 +1,7 @@
 # every apps/<name>/app.yaml becomes an Application named <name>: its charts and namespace from app.yaml, their values
-# from values.yaml next to it, its manifests/, plus everything every app shares (below); removing the directory deletes
-# what it deployed
+# from values.yaml next to it, its manifests/, plus everything every app shares (below). To remove an app, delete its
+# app.yaml first and the rest of the directory only once the app is gone: deleting it still renders values.yaml and
+# manifests/ (e.g. for a chart's pre-delete hooks); renaming one is the same, in two steps
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -44,7 +45,6 @@ spec:
           chart: {{ .chart }}
           targetRevision: {{ .targetRevision }}
           helm:
-            ignoreMissingValueFiles: true # a removed app can still be rendered (chart defaults) to run its pre-delete hooks
             valueFiles:
               - $repo/{{ $path }}/values.yaml
       {{- end }}
