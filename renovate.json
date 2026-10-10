@@ -4,6 +4,9 @@
   "argocd": {
     "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
   },
+  "helm-values": {
+    "managerFilePatterns": ["/^kube/apps/[^/]+/values/[^/]+\\.yaml$/"]
+  },
   "lockFileMaintenance": {
     "enabled": true
   },

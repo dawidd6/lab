@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Give the cluster the age key, install Argo CD and the root app (which then deploys everything)"
+#MISE description="Give the cluster the age key, install Argo CD and its ApplicationSet (which then deploys everything)"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
@@ -11,16 +11,24 @@ if ! kubectl -n sops-secrets-operator get secret sops-age &>/dev/null; then
     --from-file=keys.txt="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
 fi
 
-if ! helm status -n argocd argocd &>/dev/null; then
+if ! kubectl -n argocd get deployment argocd-server &>/dev/null; then
   helm install argocd "$(yq '.spec.sources[0].chart' argocd/app.yaml)" \
     --repo "$(yq '.spec.sources[0].repoURL' argocd/app.yaml)" \
     --version "$(yq '.spec.sources[0].targetRevision' argocd/app.yaml)" \
-    --values argocd/values.yaml \
+    --values argocd/values/argo-cd.yaml \
     --namespace argocd \
     --create-namespace \
     --wait
 fi
 
-if ! kubectl -n argocd get application root &>/dev/null; then
-  kubectl create -f root/application.yaml
+# the ApplicationSet (argocd-apps); it then generates every app, Argo CD's and its own included
+if ! kubectl -n argocd get applicationset apps &>/dev/null; then
+  helm install argocd-apps "$(yq '.spec.sources[0].chart' argocd-apps/app.yaml)" \
+    --repo "$(yq '.spec.sources[0].repoURL' argocd-apps/app.yaml)" \
+    --version "$(yq '.spec.sources[0].targetRevision' argocd-apps/app.yaml)" \
+    --values argocd-apps/values/argocd-apps.yaml \
+    --namespace argocd
 fi
+
+# Argo CD manages both from now on: drop Helm's release records (only those; the resources stay) so none goes stale
+kubectl -n argocd delete secret --selector owner=helm --ignore-not-found

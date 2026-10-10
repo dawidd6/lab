@@ -1,0 +1,59 @@
+# the ApplicationSet behind every app, this one included
+# every apps/<name>/app.yaml becomes an Application named <name>: its charts and namespace from app.yaml, each chart's
+# values from values/<chart>.yaml, its manifests/, plus everything every app shares (below). To remove an app, delete
+# its app.yaml first and the rest of the directory only once the app is gone: deleting it still renders values/ and
+# manifests/ (e.g. for a chart's pre-delete hooks); renaming one is the same, in two steps
+applicationsets:
+  apps:
+    namespace: argocd
+    additionalAnnotations:
+      # it generates this very app (argocd-apps), which renders it: if that app is ever deleted or pruned, keep the
+      # ApplicationSet (and with it every app) instead of deleting it in the cascade
+      argocd.argoproj.io/sync-options: Delete=false,Prune=false
+    goTemplate: true
+    goTemplateOptions:
+      - missingkey=error
+    generators:
+      - git:
+          repoURL: https://github.com/dawidd6/lab
+          revision: master
+          files:
+            - path: kube/apps/*/app.yaml
+    template:
+      metadata:
+        name: '{{ .path.basename }}'
+      spec:
+        project: default
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: '{{ .spec.destination.namespace }}'
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          retry:
+            limit: -1
+          syncOptions:
+            - CreateNamespace=true
+            - ServerSideApply=true
+            - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs
+    # sources is a list (app.yaml's chart sources plus this directory), which plain template strings can't build
+    templatePatch: |
+      {{- $path := .path.path }}
+      spec:
+        sources:
+        {{- range .spec.sources }}
+          - repoURL: {{ .repoURL }}
+            chart: {{ .chart }}
+            targetRevision: {{ .targetRevision }}
+            helm:
+              valueFiles:
+                - $repo/{{ $path }}/values/{{ .chart }}.yaml
+        {{- end }}
+          - repoURL: https://github.com/dawidd6/lab # the app's manifests/, and $repo for its values/
+            targetRevision: master
+            path: {{ $path }}
+            ref: repo
+            directory:
+              recurse: true
+              include: 'manifests/*.yaml' # only the app's own manifests

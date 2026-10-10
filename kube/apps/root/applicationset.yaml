@@ -1,6 +1,6 @@
-# every apps/<name>/app.yaml becomes an Application named <name>: its charts and namespace from app.yaml, their values
-# from values.yaml next to it, its manifests/, plus everything every app shares (below). To remove an app, delete its
-# app.yaml first and the rest of the directory only once the app is gone: deleting it still renders values.yaml and
+# every apps/<name>/app.yaml becomes an Application named <name>: its charts and namespace from app.yaml, each chart's
+# values from values/<chart>.yaml, its manifests/, plus everything every app shares (below). To remove an app, delete
+# its app.yaml first and the rest of the directory only once the app is gone: deleting it still renders values/ and
 # manifests/ (e.g. for a chart's pre-delete hooks); renaming one is the same, in two steps
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -46,9 +46,9 @@ spec:
           targetRevision: {{ .targetRevision }}
           helm:
             valueFiles:
-              - $repo/{{ $path }}/values.yaml
+              - $repo/{{ $path }}/values/{{ .chart }}.yaml
       {{- end }}
-        - repoURL: https://github.com/dawidd6/lab # the app's manifests/, and $repo for its values.yaml
+        - repoURL: https://github.com/dawidd6/lab # the app's manifests/, and $repo for its values/
           targetRevision: master
           path: {{ $path }}
           ref: repo

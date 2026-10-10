@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-#MISE description="Render every app's charts with its values.yaml, and validate them and its manifests/ against the schemas"
+#MISE description="Render every app's charts with its values/, and validate them and its manifests/ against the schemas"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/kube/apps"
 
-find . -type f -wholename '*.yaml' -and -not -wholename '*/values.yaml' -print0 | xargs -0 kubeconform \
+find . -type f -wholename '*.yaml' -and -not -wholename '*/values/*' -print0 | xargs -0 kubeconform \
   -strict \
   -summary \
   -verbose \

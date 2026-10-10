@@ -3,12 +3,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: victoria-metrics
+  name: argocd-apps
 spec:
   project: default
   destination:
-    namespace: victoria-metrics
+    namespace: argocd
   sources:
-    - repoURL: https://victoriametrics.github.io/helm-charts/
-      chart: victoria-metrics-k8s-stack
-      targetRevision: 0.95.2
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argocd-apps # Argo's chart for declaring ApplicationSets in values (values/argocd-apps.yaml)
+      targetRevision: 2.0.6
