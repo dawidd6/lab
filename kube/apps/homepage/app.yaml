@@ -1,4 +1,3 @@
-# read by the ApplicationSet in argocd-apps/values/argocd-apps.yaml: its charts (with values/<chart>.yaml), secrets/
 # apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application

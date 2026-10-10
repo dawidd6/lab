@@ -24,6 +24,8 @@ configMap:
       disable: true
     file:
       enabled: true
+      # passwords in it are argon2id hashes, not encrypted (authelia crypto hash generate argon2, from mise); the file
+      # as a whole is encrypted with sops (age) in git
       path: /secrets/authelia/users_database.yml # secrets/secret.sops.yaml (edit from kube/: sops apps/authelia/secrets/secret.sops.yaml)
       watch: true
   session:

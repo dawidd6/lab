@@ -12,7 +12,6 @@ k0sctl = "latest"
 kubectl = "latest"
 yq = "latest"
 kubeconform = "latest"
-"github:authelia/authelia" = "latest" # authelia crypto hash, for mise run authelia-password
-python = { version = "latest", postinstall = "python -m pip install ansible==14.4.0 ansible-lint==26.9.0" }
-"npm:@ansible/ansible-language-server" = "latest"
+"github:authelia/authelia" = "latest" # authelia crypto hash generate argon2, for a user's password hash
+python = { version = "3.14", postinstall = "python -m pip install ansible ansible-lint" }
 zizmor = "latest"
