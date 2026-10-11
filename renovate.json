@@ -2,13 +2,13 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "argocd": {
-    "managerFilePatterns": ["/^kube/apps/[^/]+/app\\.yaml$/"]
+    "managerFilePatterns": ["/\\.yaml$/"]
+  },
+  "kubernetes": {
+    "managerFilePatterns": ["/\\.yaml$/"]
   },
   "helm-values": {
-    "managerFilePatterns": ["/^kube/apps/[^/]+/values/[^/]+\\.yaml$/"]
-  },
-  "lockFileMaintenance": {
-    "enabled": true
+    "managerFilePatterns": ["/\\.yaml$/"]
   },
   "packageRules": [
     {
@@ -17,10 +17,10 @@
       "extractVersion": "^v?(?<version>.*)$"
     },
     {
-      "description": "mise tools are all \"latest\", so only lock file maintenance (mise lock --bump) updates mise.lock correctly; per-tool updates would only rewrite the version line",
+      "description": "ansible-core supports Python only up to 3.14",
       "matchManagers": ["mise"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "enabled": false
+      "matchPackageNames": ["python"],
+      "allowedVersions": "<3.15"
     }
   ]
 }

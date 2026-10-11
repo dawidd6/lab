@@ -1,1 +1,1 @@
-# chart defaults: the operator behind every app's backups in values/extra.yaml (restic to Backblaze B2)
+# chart defaults: the operator behind every app's backups in values/extra.yaml (rclone to RustFS)

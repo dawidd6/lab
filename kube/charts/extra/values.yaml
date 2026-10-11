@@ -4,8 +4,8 @@ routes: {}
 # name: {route, provider, redirectURL}: OIDC login in front of a route (route defaults to the name); the name is the
 # client ID too, and the client secret is Secret <name>-oidc (secrets/oidc.sops.yaml, key client-secret)
 securityPolicies: {}
-# name: {pvc, schedule, user}: restic backup of a volume to the repository in Secret <name>-backup
-# (secrets/backup.sops.yaml)
+# name: {pvc, schedule, user}: copies a volume's files to the bucket <name>, created with versioning on, with the
+# rclone.conf in Secret <name>-backup (secrets/backup.sops.yaml)
 backups: {}
 # name: {storageClass, size}: a ReadWriteOnce volume
 persistentVolumeClaims: {}

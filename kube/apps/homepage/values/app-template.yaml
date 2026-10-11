@@ -42,6 +42,9 @@ configMaps:
             - Authelia:
                 href: https://authelia.dawidd6.duckdns.org
                 icon: authelia.png
+            - RustFS:
+                href: https://rustfs.dawidd6.duckdns.org/rustfs/console/ # the bare host answers with an S3 error
+                icon: rustfs.png
       bookmarks.yaml: |
         [] # none; without this file Homepage writes its sample bookmarks
 persistence:
