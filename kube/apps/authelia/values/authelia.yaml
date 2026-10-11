@@ -1,3 +1,4 @@
+theme: auto
 pod:
   kind: Deployment # the chart's default is a DaemonSet
 persistence:
