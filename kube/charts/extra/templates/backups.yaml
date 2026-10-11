@@ -1,7 +1,7 @@
 {{- range $name, $backup := .Values.backups }}
 ---
-# copies a volume's files with rclone to the bucket <name>, whose versioning keeps the older copies; Secret <name>-backup
-# holds the rclone.conf (section backup); restore with a ReplicationDestination
+# copies a volume's files with rclone to its bucket, which keeps older versions of overwritten and deleted files; Secret
+# <name>-backup holds the rclone.conf (section backup); restore with a ReplicationDestination
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
@@ -13,21 +13,22 @@ spec:
   rclone:
     rcloneConfig: {{ $name }}-backup
     rcloneConfigSection: backup
-    rcloneDestPath: {{ $name }}
+    rcloneDestPath: {{ $backup.bucket }}
     copyMethod: Direct # openebs hostpath has no snapshots, so the mover reads the live volume
     moverSecurityContext: # the user that owns the volume's files
       runAsUser: {{ $backup.user }}
       runAsGroup: {{ $backup.user }}
       fsGroup: {{ $backup.user }}
 ---
-# creates the bucket if it's missing and keeps versioning on, so overwritten and deleted files stay as older versions;
-# runs after every sync of the app
+# creates the bucket if it's missing (so a new app's first restore finds it, empty) and expires older versions of
+# changed and deleted files after 30 days; runs with every sync of the app, alongside the rest (a PostSync hook would
+# wait for the app, which waits for its restore)
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ $name }}-backup-bucket
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   backoffLimit: 20 # until the S3 server answers
@@ -39,7 +40,7 @@ spec:
           image: docker.io/rclone/rclone:1.75.2
           command: [sh, -c]
           args:
-            - rclone mkdir backup:{{ $name }} && rclone backend versioning backup:{{ $name }} Enabled
+            - rclone mkdir backup:{{ $backup.bucket }} && rclone backend lifecycle backup:{{ $backup.bucket }} -o daysFromHidingToDeleting=30
           env:
             - name: RCLONE_CONFIG
               value: /config/rclone.conf # the backup's own (Secret <name>-backup)

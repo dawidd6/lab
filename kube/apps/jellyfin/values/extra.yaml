@@ -3,8 +3,9 @@ routes:
     hostname: jellyfin.dawidd6.duckdns.org
     port: 8096
 backups:
-  jellyfin: # nightly, to RustFS (bucket jellyfin)
+  jellyfin: # nightly, to Backblaze B2
     pvc: jellyfin-config
+    bucket: dawidd6-lab-jellyfin # B2 bucket names are global, hence the prefix
     schedule: "20 3 * * *"
     user: 0
 persistentVolumeClaims:
