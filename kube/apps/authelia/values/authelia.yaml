@@ -39,9 +39,23 @@ configMap:
   notifier:
     filesystem:
       enabled: true # required; one-time codes (e.g. password reset) land in /config/notification.txt
+  definitions:
+    user_attributes:
+      rustfs_policy: # the RustFS policy a user gets (RustFS's built-in ones): admins manage it, anyone else only reads
+        expression: '"admins" in groups ? "consoleAdmin" : "readonly"'
   identity_providers:
     oidc:
       enabled: true
+      # RustFS reads claims only from the ID token, and takes a roles claim's values as the names of its policies
+      claims_policies:
+        rustfs:
+          id_token: [email, preferred_username, roles]
+          custom_claims:
+            roles:
+              attribute: rustfs_policy
+      scopes:
+        rustfs:
+          claims: [roles]
       jwks:
         - key:
             path: /secrets/authelia/oidc.jwk.RS256.pem
@@ -88,3 +102,16 @@ configMap:
           pkce_challenge_method: S256
           redirect_uris:
             - https://grafana.dawidd6.duckdns.org/login/generic_oauth # Grafana's own OIDC login (victoria-metrics/values.yaml)
+        - client_id: rustfs
+          client_name: RustFS
+          client_secret:
+            path: /secrets/authelia/oidc.client.rustfs
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          require_pkce: true # RustFS always sends a PKCE challenge
+          pkce_challenge_method: S256
+          token_endpoint_auth_method: client_secret_post # RustFS sends its secret in the request body
+          claims_policy: rustfs
+          scopes: [openid, profile, email, rustfs]
+          redirect_uris:
+            - https://rustfs.dawidd6.duckdns.org/rustfs/admin/v3/oidc/callback/default # rustfs/values/rustfs.yaml
