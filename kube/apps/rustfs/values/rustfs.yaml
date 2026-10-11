@@ -1,0 +1,15 @@
+mode:
+  standalone:
+    enabled: true # one pod with one data volume; distributed mode spreads data over several nodes
+  distributed:
+    enabled: false
+secret:
+  existingSecret: rustfs-admin # secrets/admin.sops.yaml: the admin's access key and secret key, also the console login
+config:
+  rustfs:
+    obs_log_directory: "" # logs only to stdout, so no logs volume
+ingress:
+  enabled: false # the console route is in values/extra.yaml
+storageclass:
+  name: internal
+  dataStorageSize: 1Gi

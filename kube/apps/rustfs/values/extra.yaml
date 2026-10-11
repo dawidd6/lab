@@ -1,0 +1,5 @@
+routes:
+  rustfs: # the web console, with its own login (secrets/admin.sops.yaml)
+    hostname: rustfs.dawidd6.duckdns.org
+    service: rustfs-svc
+    port: 9001
