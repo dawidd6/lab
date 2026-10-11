@@ -1,4 +1,3 @@
-theme: auto
 pod:
   kind: Deployment # the chart's default is a DaemonSet
 persistence:
@@ -10,6 +9,7 @@ secret:
   additionalSecrets:
     authelia: {} # the same secret, all keys, at /secrets/authelia: the JWK, client secrets, users file
 configMap:
+  theme: auto
   totp:
     disable: true # no second factor
   webauthn:
