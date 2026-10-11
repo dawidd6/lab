@@ -19,7 +19,7 @@
     {
       "description": "ansible-core supports Python only up to 3.14",
       "matchManagers": ["mise"],
-      "matchPackageNames": ["python"],
+      "matchDepNames": ["python"],
       "allowedVersions": "<3.15"
     }
   ]
