@@ -16,12 +16,17 @@ service:
       http: # the web UI (noVNC)
         port: 5800
 persistence:
-  config: # JDownloader's settings
+  config: # JDownloader's settings and download lists (cfg/), the only part kept and backed up
     type: persistentVolumeClaim
     suffix: config # keeps the existing claim's name, jdownloader2-config (the chart names a sole claim just jdownloader2)
     storageClass: internal
     accessMode: ReadWriteOnce
     size: 1Gi
+    globalMounts:
+      - path: /config/cfg
+        subPath: cfg
+  install: # the rest of /config: JDownloader itself, its updates, logs and caches, set up again on every start
+    type: emptyDir
     globalMounts:
       - path: /config
   output: # downloads, shared with Jellyfin
