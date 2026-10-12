@@ -40,7 +40,7 @@ spec:
           image: docker.io/rclone/rclone:1.75.2
           command: [sh, -c]
           args:
-            - rclone mkdir backup:{{ $backup.bucket }} && rclone backend lifecycle backup:{{ $backup.bucket }} -o daysFromHidingToDeleting=30
+            - 'rclone mkdir backup:{{ $backup.bucket }} && rclone backend lifecycle backup:{{ $backup.bucket }} -o daysFromHidingToDeleting=30'
           env:
             - name: RCLONE_CONFIG
               value: /config/rclone.conf # the backup's own (Secret <name>-backup)

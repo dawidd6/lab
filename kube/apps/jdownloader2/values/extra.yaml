@@ -12,9 +12,3 @@ securityPolicies:
       authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
       tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
     redirectURL: https://jdownloader.dawidd6.duckdns.org/oauth2/callback
-backups:
-  jdownloader2: # nightly, to Backblaze B2
-    pvc: jdownloader2-config
-    bucket: dawidd6-lab-jdownloader2 # B2 bucket names are global, hence the prefix
-    schedule: "40 3 * * *"
-    user: 568

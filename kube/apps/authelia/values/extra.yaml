@@ -1,9 +1,3 @@
 routes:
   authelia:
     hostname: authelia.dawidd6.duckdns.org
-backups:
-  authelia: # nightly, to Backblaze B2
-    pvc: authelia
-    bucket: dawidd6-lab-authelia # B2 bucket names are global, hence the prefix
-    schedule: "0 3 * * *"
-    user: 0
