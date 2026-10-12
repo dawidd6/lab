@@ -25,8 +25,8 @@ persistence:
     globalMounts:
       - path: /config/cfg
         subPath: cfg
-  app: # the rest of /config: JDownloader itself, its updates, logs and caches, set up again on every start; listed
-    # (and so mounted) before config, which would otherwise be hidden under it
+  app: # the rest of /config: JDownloader itself, its updates, logs and caches, set up again on every start; named so it
+    # sorts (and so mounts) before config, which would otherwise be hidden under it
     type: emptyDir
     globalMounts:
       - path: /config
