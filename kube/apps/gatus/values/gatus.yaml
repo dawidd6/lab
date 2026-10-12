@@ -39,3 +39,8 @@ config:
       group: internal
       url: http://rustfs-svc.rustfs.svc:9000/health # the S3 endpoint the backups write to
       conditions: ["[STATUS] == 200"]
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: internal
