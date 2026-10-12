@@ -10,4 +10,4 @@ spec:
   sources:
     - repoURL: https://victoriametrics.github.io/helm-charts/
       chart: victoria-metrics-k8s-stack
-      targetRevision: 0.95.2
+      targetRevision: 0.96.0
