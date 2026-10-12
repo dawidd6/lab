@@ -14,7 +14,7 @@ spec:
     rcloneConfig: {{ $name }}-backup
     rcloneConfigSection: backup
     rcloneDestPath: {{ $backup.bucket }}
-    copyMethod: Direct # openebs hostpath has no snapshots, so the mover reads the live volume
+    copyMethod: Direct # local-path has no snapshots, so the mover reads the live volume
     moverSecurityContext: # the user that owns the volume's files
       runAsUser: {{ $backup.user }}
       runAsGroup: {{ $backup.user }}

@@ -9,6 +9,32 @@
         commands: ALL
         nopassword: true
 
+    - name: Mount the USB drive (the ext4 filesystem labelled external) at /data/external
+      become: true
+      ansible.posix.mount:
+        path: /data/external
+        src: LABEL=external
+        fstype: ext4
+        opts: nofail,x-systemd.device-timeout=10s # boot without the drive instead of hanging
+        state: mounted
+
+    - name: Create k0s's systemd drop-in directory
+      become: true
+      ansible.builtin.file:
+        path: /etc/systemd/system/k0scontroller.service.d
+        state: directory
+        mode: "0755"
+
+    - name: Start k0s only with the USB drive mounted, so nothing writes to an empty /data/external on the system disk
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/k0scontroller.service.d/require-external.conf
+        content: |
+          [Unit]
+          RequiresMountsFor=/data/external
+        mode: "0644"
+      notify: Reload systemd # the drop-in applies from k0s's next start
+
     - name: Install Tailscale
       become: true
       ansible.builtin.shell:
@@ -35,3 +61,9 @@
       when: (tailscale.stdout | from_json).BackendState != 'Running'
       ansible.builtin.pause:
         prompt: "Open {{ (tailscale.stdout | from_json).AuthURL }} to add {{ inventory_hostname }} to the tailnet, then press Enter"
+
+  handlers:
+    - name: Reload systemd
+      become: true
+      ansible.builtin.systemd_service:
+        daemon_reload: true

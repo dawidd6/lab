@@ -18,5 +18,3 @@ gateways: {}
 clusterIssuers: {}
 # name: {addresses}: a MetalLB pool, announced over L2
 ipAddressPools: {}
-# name: {provisioner, parameters}: Retain, expandable, bound where the pod lands
-storageClasses: {}

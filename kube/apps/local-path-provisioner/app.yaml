@@ -1,0 +1,13 @@
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-path-provisioner
+spec:
+  project: default
+  destination:
+    namespace: local-path-provisioner
+  sources:
+    - repoURL: https://charts.containeroo.ch
+      chart: local-path-provisioner # Rancher's chart, republished in a Helm repository
+      targetRevision: 0.0.38
