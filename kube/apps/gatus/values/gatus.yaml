@@ -1,5 +1,8 @@
-# status of everything in the cluster; history is kept in memory (no persistence), so it starts over on restart
+# status of everything in the cluster, its history in SQLite on the volume (persistence) so it survives restarts
 config:
+  storage:
+    type: sqlite # the default, memory, keeps history only until a restart
+    path: /data/data.db # the volume
   endpoints:
     # public, through the gateway: the site answers and its certificate is valid for 2 more weeks
     - name: Argo CD
