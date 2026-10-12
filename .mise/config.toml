@@ -4,7 +4,7 @@ KUBECONFIG = "{{config_root}}/kube/.config"
 [tools]
 sops = "3.13.3"
 helm = "4.3.0"
-argocd = "3.5.4"
+argocd = "3.5.5"
 k0sctl = "0.33.1"
 kubectl = "1.37.1"
 yq = "4.54.1"
