@@ -14,9 +14,6 @@ configs:
     policy.csv: g, admins, role:admin # the admins group in Authelia's users file
   params:
     server.insecure: true # TLS ends at the gateway
-    # compare with what the API server would make of each object (defaults included), not with Argo CD's own rendering:
-    # otherwise fields the API server fills in, like a StatefulSet's volumeClaimTemplates[].status, look like drift
-    controller.diff.server.side: true
 dex:
   enabled: false
 notifications:
