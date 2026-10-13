@@ -17,6 +17,10 @@ config:
       group: public
       url: https://jellyfin.dawidd6.duckdns.org/health
       conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+    - name: Nextcloud
+      group: public
+      url: https://nextcloud.dawidd6.duckdns.org/status.php
+      conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
     - name: RustFS
       group: public
       url: https://rustfs.dawidd6.duckdns.org/rustfs/console/ # the console (the bare host answers with an S3 error)

@@ -29,6 +29,9 @@ configMaps:
             - JDownloader:
                 href: https://jdownloader.dawidd6.duckdns.org
                 icon: jdownloader.png
+            - Nextcloud:
+                href: https://nextcloud.dawidd6.duckdns.org
+                icon: nextcloud.png
         - Cluster:
             - Argo CD:
                 href: https://argocd.dawidd6.duckdns.org
