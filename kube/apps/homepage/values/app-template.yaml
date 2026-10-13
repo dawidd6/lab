@@ -1,5 +1,7 @@
 controllers:
   homepage:
+    serviceAccount:
+      identifier: homepage # for the kubernetes widget (widgets.yaml), allowed to read nodes and their metrics (rbac)
     containers:
       homepage:
         image:
@@ -7,6 +9,26 @@ controllers:
           tag: v2.5.0
         env:
           HOMEPAGE_ALLOWED_HOSTS: homepage.dawidd6.duckdns.org # the route in values/extra.yaml
+serviceAccount:
+  homepage: {}
+rbac:
+  roles:
+    homepage:
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          resources: [nodes]
+          verbs: [get, list]
+        - apiGroups: [metrics.k8s.io]
+          resources: [nodes]
+          verbs: [get, list]
+  bindings:
+    homepage:
+      type: ClusterRoleBinding
+      roleRef:
+        identifier: homepage
+      subjects:
+        - identifier: homepage
 service:
   homepage:
     controller: homepage
@@ -18,7 +40,19 @@ configMaps:
     data:
       settings.yaml: |
         title: Lab
+      kubernetes.yaml: |
+        mode: cluster # through the pod's service account
+        ingress: false # no service discovery, just the kubernetes widget
       widgets.yaml: |
+        - kubernetes:
+            cluster:
+              show: true
+              cpu: true
+              memory: true
+              showLabel: true
+              label: server
+            nodes:
+              show: false # the only node is the cluster
         - search:
             provider: duckduckgo
       services.yaml: |
@@ -39,6 +73,36 @@ configMaps:
                 href: https://privatebin.dawidd6.duckdns.org
                 icon: privatebin.png
         - Cluster:
+            - Server:
+                icon: mdi-server
+                description: temperatures and free space (node-exporter, via VictoriaMetrics)
+                widget:
+                  type: prometheusmetric
+                  url: http://vmsingle-victoria-metrics.victoria-metrics.svc:8428
+                  refreshInterval: 30000
+                  metrics:
+                    - label: CPU
+                      query: max(node_hwmon_temp_celsius{chip="platform_coretemp_0"})
+                      format:
+                        type: number
+                        suffix: " °C"
+                        options:
+                          maximumFractionDigits: 0
+                    - label: NVMe
+                      query: max(node_hwmon_temp_celsius{chip="nvme_nvme0"})
+                      format:
+                        type: number
+                        suffix: " °C"
+                        options:
+                          maximumFractionDigits: 0
+                    - label: Internal free
+                      query: node_filesystem_avail_bytes{mountpoint="/"} # /data/internal is on the system disk
+                      format:
+                        type: bytes
+                    - label: USB free
+                      query: node_filesystem_avail_bytes{mountpoint="/data/external"}
+                      format:
+                        type: bytes
             - Argo CD:
                 href: https://argocd.dawidd6.duckdns.org
                 icon: argo-cd.png
@@ -48,6 +112,9 @@ configMaps:
             - Gatus:
                 href: https://gatus.dawidd6.duckdns.org
                 icon: gatus.png
+                widget:
+                  type: gatus
+                  url: http://gatus.gatus.svc
             - Authelia:
                 href: https://authelia.dawidd6.duckdns.org
                 icon: authelia.png
@@ -65,6 +132,8 @@ persistence:
         subPath: settings.yaml
       - path: /app/config/widgets.yaml
         subPath: widgets.yaml
+      - path: /app/config/kubernetes.yaml
+        subPath: kubernetes.yaml
       - path: /app/config/services.yaml
         subPath: services.yaml
       - path: /app/config/bookmarks.yaml
