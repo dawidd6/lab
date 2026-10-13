@@ -1,0 +1,13 @@
+routes:
+  pairdrop:
+    hostname: pairdrop.dawidd6.duckdns.org
+    port: 3000
+securityPolicies:
+  pairdrop: # PairDrop has no login of its own, and would otherwise relay anyone's transfers
+    provider:
+      issuer: https://authelia.dawidd6.duckdns.org
+      # stated explicitly so Envoy Gateway never fetches (and caches a failure of) Authelia's discovery document,
+      # e.g. when it processes this policy while Authelia restarts
+      authorizationEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/authorization
+      tokenEndpoint: https://authelia.dawidd6.duckdns.org/api/oidc/token
+    redirectURL: https://pairdrop.dawidd6.duckdns.org/oauth2/callback

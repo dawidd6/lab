@@ -76,6 +76,14 @@ configMap:
           consent_mode: implicit
           redirect_uris:
             - https://homepage.dawidd6.duckdns.org/oauth2/callback # homepage/values/extra.yaml
+        - client_id: pairdrop
+          client_name: PairDrop
+          client_secret:
+            path: /secrets/authelia/oidc.client.pairdrop
+          authorization_policy: one_factor # password only
+          consent_mode: implicit
+          redirect_uris:
+            - https://pairdrop.dawidd6.duckdns.org/oauth2/callback # pairdrop/values/extra.yaml
         - client_id: jdownloader
           client_name: JDownloader
           client_secret:

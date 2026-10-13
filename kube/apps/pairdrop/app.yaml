@@ -1,0 +1,13 @@
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pairdrop
+spec:
+  project: default
+  destination:
+    namespace: pairdrop
+  sources:
+    - repoURL: ghcr.io/bjw-s-labs/helm
+      chart: app-template # a generic chart for any container image (PairDrop has no chart of its own)
+      targetRevision: 5.3.0

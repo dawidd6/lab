@@ -32,6 +32,9 @@ configMaps:
             - Nextcloud:
                 href: https://nextcloud.dawidd6.duckdns.org
                 icon: nextcloud.png
+            - PairDrop:
+                href: https://pairdrop.dawidd6.duckdns.org
+                icon: pairdrop.png
         - Cluster:
             - Argo CD:
                 href: https://argocd.dawidd6.duckdns.org

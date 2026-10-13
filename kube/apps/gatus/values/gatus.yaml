@@ -30,6 +30,10 @@ config:
       group: internal
       url: tcp://homepage.homepage.svc:3000 # it only answers requests for its public host
       conditions: ["[CONNECTED] == true"]
+    - name: PairDrop
+      group: internal
+      url: http://pairdrop.pairdrop.svc:3000
+      conditions: ["[STATUS] == 200"]
     - name: JDownloader
       group: internal
       url: http://jdownloader2.media.svc:5800
