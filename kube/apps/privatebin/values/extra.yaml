@@ -1,3 +1,7 @@
 routes:
   privatebin:
     hostname: privatebin.dawidd6.duckdns.org
+persistentVolumeClaims:
+  privatebin: # the pastes (values/privatebin.yaml)
+    storageClass: internal
+    size: 1Gi

@@ -1,7 +1,10 @@
 # pastebin whose pastes are encrypted in the browser: the server only stores ciphertext, the key is in the link; public
 # (no Authelia), so links work for anyone they're sent to
-controller:
-  kind: StatefulSet # the chart keeps pastes on a volume only through a StatefulSet's volume template
-  pvc:
-    storageClass: internal
-    requests: 1Gi
+extraVolumes: # the pastes, on the PVC from values/extra.yaml; as a StatefulSet, the chart's own volume template would look
+  # permanently out of sync in Argo CD (the API server adds fields to it)
+  - name: storage
+    persistentVolumeClaim:
+      claimName: privatebin
+extraVolumeMounts:
+  - name: storage
+    mountPath: /srv/data # the chart's datapath
