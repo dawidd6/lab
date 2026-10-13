@@ -35,6 +35,9 @@ configMaps:
             - PairDrop:
                 href: https://pairdrop.dawidd6.duckdns.org
                 icon: pairdrop.png
+            - PrivateBin:
+                href: https://privatebin.dawidd6.duckdns.org
+                icon: privatebin.png
         - Cluster:
             - Argo CD:
                 href: https://argocd.dawidd6.duckdns.org

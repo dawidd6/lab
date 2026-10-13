@@ -21,6 +21,10 @@ config:
       group: public
       url: https://nextcloud.dawidd6.duckdns.org/status.php
       conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+    - name: PrivateBin
+      group: public
+      url: https://privatebin.dawidd6.duckdns.org
+      conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
     - name: RustFS
       group: public
       url: https://rustfs.dawidd6.duckdns.org/rustfs/console/ # the console (the bare host answers with an S3 error)

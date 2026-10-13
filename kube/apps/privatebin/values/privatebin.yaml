@@ -1,0 +1,7 @@
+# pastebin whose pastes are encrypted in the browser: the server only stores ciphertext, the key is in the link; public
+# (no Authelia), so links work for anyone they're sent to
+controller:
+  kind: StatefulSet # the chart keeps pastes on a volume only through a StatefulSet's volume template
+  pvc:
+    storageClass: internal
+    requests: 1Gi
