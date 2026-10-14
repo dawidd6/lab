@@ -29,6 +29,8 @@ spec:
                   NTFY_CACHE_FILE: /var/lib/ntfy/cache.db # message history, so phones catch up after being offline
                   NTFY_AUTH_FILE: /var/lib/ntfy/user.db
                   NTFY_AUTH_DEFAULT_ACCESS: deny-all # nothing without logging in or a token
+                  NTFY_ENABLE_LOGIN: true # the web app's login, as dawid
+                  NTFY_REQUIRE_LOGIN: true # the web app shows nothing before it, since nothing is public anyway
                   NTFY_AUTH_ACCESS: lab:lab:wo # the lab user (Grafana, with its token) may only publish to the topic lab
                   NTFY_UPSTREAM_BASE_URL: https://ntfy.sh # instant delivery to the iOS app (ntfy.sh only sees message IDs)
                 envFrom:
