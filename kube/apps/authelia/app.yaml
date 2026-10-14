@@ -125,6 +125,17 @@ spec:
                   pkce_challenge_method: S256
                   redirect_uris:
                     - https://grafana.dawidd6.duckdns.org/login/generic_oauth # Grafana's own OIDC login (victoria-metrics/app.yaml)
+                - client_id: gotify
+                  client_name: Gotify
+                  client_secret:
+                    path: /secrets/authelia/oidc.client.gotify
+                  authorization_policy: one_factor # password only
+                  consent_mode: implicit
+                  require_pkce: true # Gotify always sends a PKCE challenge
+                  pkce_challenge_method: S256
+                  redirect_uris:
+                    - https://gotify.dawidd6.duckdns.org/auth/oidc/callback # the web UI (gotify/app.yaml)
+                    - gotify://oidc/callback # the Android app
                 - client_id: rustfs
                   client_name: RustFS
                   client_secret:

@@ -126,9 +126,9 @@ spec:
                         widget:
                           type: gatus
                           url: http://gatus.gatus.svc
-                    - ntfy:
-                        href: https://ntfy.dawidd6.duckdns.org
-                        icon: ntfy.png
+                    - Gotify:
+                        href: https://gotify.dawidd6.duckdns.org
+                        icon: gotify.png
                     - Authelia:
                         href: https://authelia.dawidd6.duckdns.org
                         icon: authelia.png

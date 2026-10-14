@@ -50,9 +50,9 @@ spec:
               secretKeyRef:
                 name: grafana-oidc
                 key: client-secret
-            NTFY_TOKEN: # the token of ntfy's lab user, for alerting's contact point (manifests/ntfy.sops.yaml)
+            GOTIFY_TOKEN: # the token of Gotify's Grafana app, for alerting's contact point (manifests/gotify.sops.yaml)
               secretKeyRef:
-                name: grafana-ntfy
+                name: grafana-gotify
                 key: token
           grafana.ini:
             server:
@@ -78,27 +78,27 @@ spec:
               name_attribute_path: name
               groups_attribute_path: groups
               role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
-          # alerts to ntfy's topic lab (ntfy/app.yaml). Grafana fills in $VARIABLES from its environment and the chart runs
-          # all this through Helm's tpl, so the rules hold neither: thresholds are in the queries, and the message lists
-          # the alert's labels (app, mountpoint, pod...) by itself
+          # alerts to Gotify (gotify/app.yaml), as its Grafana app. Grafana fills in $VARIABLES from its environment and the
+          # chart runs all this through Helm's tpl, so the rules hold neither: thresholds are in the queries, and the
+          # message lists the alert's labels (app, mountpoint, pod...) by itself
           alerting:
             contactpoints.yaml:
               apiVersion: 1
               contactPoints:
                 - orgId: 1
-                  name: ntfy
+                  name: gotify
                   receivers:
-                    - uid: ntfy
+                    - uid: gotify
                       type: webhook
                       settings:
-                        url: http://ntfy.ntfy.svc/lab?template=grafana # ntfy's built-in template for Grafana's alerts
+                        url: http://gotify.gotify.svc/message # Gotify takes the title and message of Grafana's payload
                         authorization_scheme: Bearer
-                        authorization_credentials: $NTFY_TOKEN
+                        authorization_credentials: $GOTIFY_TOKEN
             policies.yaml:
               apiVersion: 1
               policies:
                 - orgId: 1
-                  receiver: ntfy
+                  receiver: gotify
             rules.yaml:
               apiVersion: 1
               groups:
