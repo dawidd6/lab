@@ -7,7 +7,32 @@ spec:
   project: default
   destination:
     namespace: argocd
-  sources:
-    - repoURL: https://argoproj.github.io/argo-helm
-      chart: argo-cd
-      targetRevision: 10.10.3
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 10.10.3
+    helm:
+      valuesObject:
+        configs:
+          cm:
+            url: https://argocd.dawidd6.duckdns.org
+            # Argo CD only takes this as a string; the client secret comes from manifests/oidc.sops.yaml
+            oidc.config: |
+              name: Authelia
+              issuer: https://authelia.dawidd6.duckdns.org
+              clientID: argocd
+              clientSecret: $argocd-oidc:clientSecret
+              requestedScopes: [openid, profile, email, groups]
+              enableUserInfoGroups: true # Authelia sends groups in userinfo, not in the ID token
+              userInfoPath: /api/oidc/userinfo
+          rbac:
+            policy.csv: g, admins, role:admin # the admins group in Authelia's users file
+          params:
+            server.insecure: true # TLS ends at the gateway
+        dex:
+          enabled: false
+        controller:
+          metrics:
+            enabled: true # apps' sync and health, for Grafana's alerts (victoria-metrics/app.yaml); manifests/vmservicescrape.yaml
+        notifications:
+          enabled: false # alerts come from Grafana instead

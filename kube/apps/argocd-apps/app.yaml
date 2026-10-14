@@ -7,7 +7,60 @@ spec:
   project: default
   destination:
     namespace: argocd
-  sources:
-    - repoURL: https://argoproj.github.io/argo-helm
-      chart: argocd-apps # Argo's chart for declaring ApplicationSets in values (values/argocd-apps.yaml)
-      targetRevision: 2.0.6
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argocd-apps # Argo's chart for declaring ApplicationSets in values (below)
+    targetRevision: 2.0.6
+    helm:
+      valuesObject:
+        # the ApplicationSet behind every app, this one included
+        # every apps/<name>/app.yaml becomes an Application named <name>: its chart, namespace and the chart's values
+        # (spec.source.helm.valuesObject) from app.yaml, its manifests/, plus everything every app shares (below). The
+        # values live in the Application itself, so deleting an app's directory deletes the app in one go, pre-delete
+        # hooks included
+        applicationsets:
+          apps:
+            namespace: argocd
+            additionalAnnotations:
+              # it generates this very app (argocd-apps), which renders it: if that app is ever deleted or pruned, keep the
+              # ApplicationSet (and with it every app) instead of deleting it in the cascade
+              argocd.argoproj.io/sync-options: Delete=false,Prune=false
+            goTemplate: true
+            goTemplateOptions:
+              - missingkey=error
+            generators:
+              - git:
+                  repoURL: https://github.com/dawidd6/lab
+                  revision: master
+                  files:
+                    - path: kube/apps/*/app.yaml
+            template:
+              metadata:
+                name: '{{ .path.basename }}'
+              spec:
+                project: default
+                destination:
+                  server: https://kubernetes.default.svc
+                  namespace: '{{ .spec.destination.namespace }}'
+                syncPolicy:
+                  automated:
+                    prune: true
+                    selfHeal: true
+                  retry:
+                    limit: -1
+                  syncOptions:
+                    - CreateNamespace=true
+                    - ServerSideApply=true
+                    - SkipDryRunOnMissingResource=true # CRs whose CRDs another app or this app's chart installs
+                sources:
+                  - repoURL: '{{ .spec.source.repoURL }}'
+                    chart: '{{ .spec.source.chart }}'
+                    targetRevision: '{{ .spec.source.targetRevision }}'
+                    helm:
+                      values: '{{ toYaml .spec.source.helm.valuesObject }}' # as text: template fields are strings
+                  - repoURL: https://github.com/dawidd6/lab
+                    targetRevision: master
+                    path: kube/apps # not the app's own directory, which a deleted app no longer has
+                    directory:
+                      recurse: true
+                      include: '{{ .path.basename }}/manifests/*.yaml' # only the app's own manifests

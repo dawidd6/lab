@@ -12,10 +12,10 @@ if ! kubectl -n sops-secrets-operator get secret sops-age &>/dev/null; then
 fi
 
 if ! kubectl -n argocd get deployment argocd-server &>/dev/null; then
-  helm install argocd "$(yq '.spec.sources[0].chart' argocd/app.yaml)" \
-    --repo "$(yq '.spec.sources[0].repoURL' argocd/app.yaml)" \
-    --version "$(yq '.spec.sources[0].targetRevision' argocd/app.yaml)" \
-    --values argocd/values/argo-cd.yaml \
+  yq '.spec.source.helm.valuesObject' argocd/app.yaml | helm install argocd "$(yq '.spec.source.chart' argocd/app.yaml)" \
+    --repo "$(yq '.spec.source.repoURL' argocd/app.yaml)" \
+    --version "$(yq '.spec.source.targetRevision' argocd/app.yaml)" \
+    --values - \
     --namespace argocd \
     --create-namespace \
     --wait
@@ -23,10 +23,10 @@ fi
 
 # the ApplicationSet (argocd-apps); it then generates every app, Argo CD's and its own included
 if ! kubectl -n argocd get applicationset apps &>/dev/null; then
-  helm install argocd-apps "$(yq '.spec.sources[0].chart' argocd-apps/app.yaml)" \
-    --repo "$(yq '.spec.sources[0].repoURL' argocd-apps/app.yaml)" \
-    --version "$(yq '.spec.sources[0].targetRevision' argocd-apps/app.yaml)" \
-    --values argocd-apps/values/argocd-apps.yaml \
+  yq '.spec.source.helm.valuesObject' argocd-apps/app.yaml | helm install argocd-apps "$(yq '.spec.source.chart' argocd-apps/app.yaml)" \
+    --repo "$(yq '.spec.source.repoURL' argocd-apps/app.yaml)" \
+    --version "$(yq '.spec.source.targetRevision' argocd-apps/app.yaml)" \
+    --values - \
     --namespace argocd
 fi
 

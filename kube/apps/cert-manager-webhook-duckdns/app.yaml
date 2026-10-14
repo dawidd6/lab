@@ -7,7 +7,14 @@ spec:
   project: default
   destination:
     namespace: cert-manager
-  sources:
-    - repoURL: ghcr.io/cobexer/charts
-      chart: cert-manager-webhook-duckdns
-      targetRevision: 2.0.0
+  source:
+    repoURL: ghcr.io/cobexer/charts
+    chart: cert-manager-webhook-duckdns
+    targetRevision: 2.0.0
+    helm:
+      valuesObject:
+        certManager:
+          namespace: cert-manager # grants cert-manager's service account access to the solver
+        secret:
+          existingSecret: true
+          existingSecretName: duckdns # manifests/duckdns.sops.yaml

@@ -1,8 +1,0 @@
-routes:
-  jellyfin:
-    hostname: jellyfin.dawidd6.duckdns.org
-    port: 8096
-persistentVolumeClaims:
-  media: # downloads, shared with JDownloader; on the USB drive
-    storageClass: external
-    size: 1Gi

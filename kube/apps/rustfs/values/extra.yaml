@@ -1,5 +1,0 @@
-routes:
-  rustfs: # the web console: log in through Authelia, or with the admin keys (secrets/admin.sops.yaml)
-    hostname: rustfs.dawidd6.duckdns.org
-    service: rustfs-svc
-    port: 9001

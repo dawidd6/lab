@@ -7,7 +7,15 @@ spec:
   project: default
   destination:
     namespace: media
-  sources:
-    - repoURL: https://jellyfin.github.io/jellyfin-helm
-      chart: jellyfin
-      targetRevision: 3.2.0
+  source:
+    repoURL: https://jellyfin.github.io/jellyfin-helm
+    chart: jellyfin
+    targetRevision: 3.2.0
+    helm:
+      valuesObject:
+        persistence:
+          media:
+            existingClaim: media # manifests/pvc.yaml
+          config:
+            storageClass: internal
+            size: 1Gi

@@ -7,7 +7,19 @@ spec:
   project: default
   destination:
     namespace: privatebin
-  sources:
-    - repoURL: https://privatebin.github.io/helm-chart
-      chart: privatebin
-      targetRevision: 0.23.6
+  source:
+    repoURL: https://privatebin.github.io/helm-chart
+    chart: privatebin
+    targetRevision: 0.23.6
+    helm:
+      valuesObject:
+        # pastebin whose pastes are encrypted in the browser: the server only stores ciphertext, the key is in the link; public
+        # (no Authelia), so links work for anyone they're sent to
+        extraVolumes: # the pastes, on the PVC from manifests/pvc.yaml; as a StatefulSet, the chart's own volume template would look
+          # permanently out of sync in Argo CD (the API server adds fields to it)
+          - name: storage
+            persistentVolumeClaim:
+              claimName: privatebin
+        extraVolumeMounts:
+          - name: storage
+            mountPath: /srv/data # the chart's datapath

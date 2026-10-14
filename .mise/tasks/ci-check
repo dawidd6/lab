@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Render every app's charts with its values/, and validate them and its files against the schemas"
+#MISE description="Lint the Ansible playbooks, and validate every app's files against the schemas"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/ansible"
@@ -8,12 +8,7 @@ ansible-lint -v
 
 cd "$MISE_PROJECT_ROOT/kube"
 
-rendered="$(mktemp -d)"
-for app in apps/*; do
-  helm template charts/extra --values "$app/values/extra.yaml"
-done >"$rendered/extra.yaml"
-
-find apps "$rendered" -type f -wholename '*.yaml' -and -not -wholename '*/values/*' -print0 | xargs -0 kubeconform \
+find apps -type f -name '*.yaml' -print0 | xargs -0 kubeconform \
   -strict \
   -summary \
   -verbose \

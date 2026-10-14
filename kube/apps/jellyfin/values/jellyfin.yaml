@@ -1,6 +1,0 @@
-persistence:
-  media:
-    existingClaim: media # values/extra.yaml
-  config:
-    storageClass: internal
-    size: 1Gi

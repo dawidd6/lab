@@ -7,7 +7,31 @@ spec:
   project: default
   destination:
     namespace: nextcloud
-  sources:
-    - repoURL: https://nextcloud.github.io/helm/
-      chart: nextcloud
-      targetRevision: 9.4.0
+  source:
+    repoURL: https://nextcloud.github.io/helm/
+    chart: nextcloud
+    targetRevision: 9.4.0
+    helm:
+      valuesObject:
+        nextcloud:
+          host: nextcloud.dawidd6.duckdns.org # the route in manifests/route.yaml
+          existingSecret:
+            enabled: true
+            secretName: nextcloud-admin # manifests/admin.sops.yaml: the admin account created on first start
+          extraEnv:
+            - name: TRUSTED_PROXIES
+              value: 10.244.0.0/16 # the pod network: requests arrive from the gateway's Envoy pods
+        phpClientHttpsFix:
+          enabled: true # TLS ends at the gateway, so tell Nextcloud to generate https:// links
+        internalDatabase:
+          enabled: true # SQLite in the main volume; fine for a few users
+        persistence:
+          enabled: true # /var/www/html: Nextcloud itself, its config and the SQLite database
+          storageClass: internal
+          size: 1Gi
+          nextcloudData:
+            enabled: true # the users' files, on the USB drive
+            storageClass: external
+            size: 1Gi
+        cronjob:
+          enabled: true # background jobs every 5 minutes, as Nextcloud recommends

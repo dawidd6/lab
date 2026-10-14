@@ -7,7 +7,101 @@ spec:
   project: default
   destination:
     namespace: gatus
-  sources:
-    - repoURL: https://twin.github.io/helm-charts
-      chart: gatus
-      targetRevision: 1.5.0
+  source:
+    repoURL: https://twin.github.io/helm-charts
+    chart: gatus
+    targetRevision: 1.5.0
+    helm:
+      valuesObject:
+        # status of everything in the cluster, its history in SQLite on the volume (persistence) so it survives restarts
+        config:
+          storage:
+            type: sqlite # the default, memory, keeps history only until a restart
+            path: /data/data.db # the volume
+          # to ntfy's topic lab (ntfy/app.yaml), like Grafana's alerts, so Grafana or VictoriaMetrics being down is noticed too
+          alerting:
+            ntfy:
+              url: http://ntfy.ntfy.svc
+              topic: lab
+              token: ${NTFY_TOKEN} # the lab user's token (env below)
+              priority: 4
+              default-alert:
+                send-on-resolved: true # also when it's back up
+          endpoints:
+            # public, through the gateway: the site answers and its certificate is valid for 2 more weeks
+            - name: Argo CD
+              group: public
+              url: https://argocd.dawidd6.duckdns.org
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: Authelia
+              group: public
+              url: https://authelia.dawidd6.duckdns.org/api/health
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: Jellyfin
+              group: public
+              url: https://jellyfin.dawidd6.duckdns.org/health
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: Nextcloud
+              group: public
+              url: https://nextcloud.dawidd6.duckdns.org/status.php
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: ntfy
+              group: public
+              url: https://ntfy.dawidd6.duckdns.org/v1/health
+              conditions: ["[STATUS] == 200", "[BODY].healthy == true", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: PrivateBin
+              group: public
+              url: https://privatebin.dawidd6.duckdns.org
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            - name: RustFS
+              group: public
+              url: https://rustfs.dawidd6.duckdns.org/rustfs/console/ # the console (the bare host answers with an S3 error)
+              conditions: ["[STATUS] == 200", "[CERTIFICATE_EXPIRATION] > 336h"]
+              alerts: [{type: ntfy}]
+            # behind Authelia at the gateway, so checked on their in-cluster Services
+            - name: Homepage
+              group: internal
+              url: tcp://homepage.homepage.svc:3000 # it only answers requests for its public host
+              conditions: ["[CONNECTED] == true"]
+              alerts: [{type: ntfy}]
+            - name: PairDrop
+              group: internal
+              url: http://pairdrop.pairdrop.svc:3000
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: JDownloader
+              group: internal
+              url: http://jdownloader2.media.svc:5800
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: Grafana
+              group: internal
+              url: http://victoria-metrics-grafana.victoria-metrics.svc/api/health
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: VictoriaMetrics
+              group: internal
+              url: http://vmsingle-victoria-metrics.victoria-metrics.svc:8428/health # the operator's Service for the VMSingle
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: RustFS S3
+              group: internal
+              url: http://rustfs-svc.rustfs.svc:9000/health # the S3 endpoint the backups write to
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+        env:
+          NTFY_TOKEN: # manifests/ntfy.sops.yaml
+            valueFrom:
+              secretKeyRef:
+                name: gatus-ntfy
+                key: token
+        persistence:
+          enabled: true
+          size: 1Gi
+          storageClassName: internal

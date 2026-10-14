@@ -7,7 +7,10 @@ spec:
   project: default
   destination:
     namespace: volsync
-  sources:
-    - repoURL: https://backube.github.io/helm-charts
-      chart: volsync
-      targetRevision: 0.16.0
+  source:
+    repoURL: https://backube.github.io/helm-charts
+    chart: volsync
+    targetRevision: 0.16.0
+    helm:
+      # chart defaults: the operator behind VolSync backups (ReplicationSources in an app's manifests/; none right now)
+      valuesObject: {}

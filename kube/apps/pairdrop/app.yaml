@@ -7,7 +7,26 @@ spec:
   project: default
   destination:
     namespace: pairdrop
-  sources:
-    - repoURL: ghcr.io/bjw-s-labs/helm
-      chart: app-template # a generic chart for any container image (PairDrop has no chart of its own)
-      targetRevision: 5.3.0
+  source:
+    repoURL: ghcr.io/bjw-s-labs/helm
+    chart: app-template # a generic chart for any container image (PairDrop has no chart of its own)
+    targetRevision: 5.3.0
+    helm:
+      valuesObject:
+        # AirDrop-like file sharing in the browser (Snapdrop's maintained successor); files go device to device, nothing is
+        # stored here
+        controllers:
+          pairdrop:
+            containers:
+              pairdrop:
+                image:
+                  repository: ghcr.io/schlagmichdoch/pairdrop
+                  tag: v1.11.2
+                env:
+                  WS_FALLBACK: "true" # relay through this server when devices can't connect directly (e.g. different networks)
+        service:
+          pairdrop:
+            controller: pairdrop
+            ports:
+              http:
+                port: 3000

@@ -1,4 +1,0 @@
-routes:
-  nextcloud: # Nextcloud's own login (its sync clients can't go through an OIDC gateway)
-    hostname: nextcloud.dawidd6.duckdns.org
-    port: 8080

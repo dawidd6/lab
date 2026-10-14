@@ -7,7 +7,9 @@ spec:
   project: default
   destination:
     namespace: envoy-gateway
-  sources:
-    - repoURL: docker.io/envoyproxy
-      chart: gateway-helm
-      targetRevision: 1.9.2
+  source:
+    repoURL: docker.io/envoyproxy
+    chart: gateway-helm
+    targetRevision: 1.9.2
+    helm:
+      valuesObject: {}

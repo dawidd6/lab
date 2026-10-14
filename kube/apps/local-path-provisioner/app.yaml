@@ -7,7 +7,28 @@ spec:
   project: default
   destination:
     namespace: local-path-provisioner
-  sources:
-    - repoURL: https://charts.containeroo.ch
-      chart: local-path-provisioner # Rancher's chart, republished in a Helm repository
-      targetRevision: 0.0.38
+  source:
+    repoURL: https://charts.containeroo.ch
+    chart: local-path-provisioner # Rancher's chart, republished in a Helm repository
+    targetRevision: 0.0.38
+    helm:
+      valuesObject:
+        nodePathMap: [] # replaced by storageClassConfigs
+        storageClassConfigs:
+          internal:
+            storageClass: &class
+              create: true
+              defaultVolumeType: hostPath
+              reclaimPolicy: Retain # a deleted PVC keeps its data
+              volumeBindingMode: WaitForFirstConsumer
+              pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/" # the same directory again after a cluster rebuild
+            nodePathMap:
+              - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+                paths:
+                  - /data/internal # on the system disk
+          external:
+            storageClass: *class
+            nodePathMap:
+              - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+                paths:
+                  - /data/external # the USB drive's mount point (ansible/playbooks/provision.yml)
