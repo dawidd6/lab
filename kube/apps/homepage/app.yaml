@@ -126,6 +126,9 @@ spec:
                         widget:
                           type: gatus
                           url: http://gatus.gatus.svc
+                    - Backrest:
+                        href: https://backrest.dawidd6.duckdns.org
+                        icon: backrest.png
                     - Gotify:
                         href: https://gotify.dawidd6.duckdns.org
                         icon: gotify.png

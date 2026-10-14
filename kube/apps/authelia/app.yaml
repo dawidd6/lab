@@ -99,6 +99,14 @@ spec:
                   consent_mode: implicit
                   redirect_uris:
                     - https://pairdrop.dawidd6.duckdns.org/oauth2/callback # pairdrop/manifests/securitypolicy.yaml
+                - client_id: backrest
+                  client_name: Backrest
+                  client_secret:
+                    path: /secrets/authelia/oidc.client.backrest
+                  authorization_policy: one_factor # password only
+                  consent_mode: implicit
+                  redirect_uris:
+                    - https://backrest.dawidd6.duckdns.org/oauth2/callback # backrest/manifests/securitypolicy.yaml
                 - client_id: jdownloader
                   client_name: JDownloader
                   client_secret:

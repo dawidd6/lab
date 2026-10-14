@@ -1,0 +1,25 @@
+# the gateway's Authelia client secret for Backrest (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: backrest-oidc
+spec:
+  secretTemplates:
+    - name: backrest-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:obURxB2BsPtBZ83+e2rX/YT8keO/VGQDfXHnrsYTl0gkqYg960j4t5Ef4mmBiCOOh2hSs7MrGfNbGDwsu5udjz3dhjuiAG5J,iv:QXL0MuexcGibxqPlcIfhCmTiAfelO442uSwMxqMZd0c=,tag:PZ0E0q+WZyE5es6i6FK/0g==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzeTVuanhlSGJ4OVZ1RGtH
+        c0d5aWZRcVZadkdhaVNIb0lrU1g1RUxrUmh3CjkycG50SjJEb1pra1ZkQjFIV1Nx
+        QVVlYmpXMjl5T1RjQ0JvZGFoL0tEUWMKLS0tIDRyODJNY3pqR0g3U2I3WUx5TUdX
+        VEhCT21adlozdHNaM3F5bmxxdnhoRjgKkY5sU6bjbYtGA7imFgxKocSO30La23wJ
+        vzCcFBN1wphvftfV+DijeeTBMWd0eXaF0wMRFXYHgjcHsw9/kJvAiw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-14T18:46:13Z"
+  mac: ENC[AES256_GCM,data:7YjgsjEXH8i45b5WHwSnHD65z4kpbv3hiLryH0kAQNUQ+3OVI7nkZbqF3Q1D8d5zFLdsFBqjdg8YdVVXdjbEpWWYD6/b/lUt7QUoGzjDLO644plpiHLcfROyPw3BY+MmLEPh0//hvCqLaYxg8tS/eDxnh+hfYYAa+MJWeDjTOaI=,iv:rUBKva7Lp2WG/kzIR8s88uKvzh6I+ymskcT60ecVc4E=,tag:yZ8Kg9qbmLoQqg665oCtrQ==,type:str]
+  version: 3.13.3

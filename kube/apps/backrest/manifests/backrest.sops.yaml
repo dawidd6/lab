@@ -1,0 +1,26 @@
+# Backrest's config.json (all its settings: repository, plan, schedule, retention; edit with sops) and the restic repository's password (app.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: backrest
+spec:
+  secretTemplates:
+    - name: backrest
+      stringData:
+        config.json: ENC[AES256_GCM,data:ESCrNJ20z8XnDIETqVjGYKzGjKQYqdriY72ysyfeql0VNlNpsgzw4wcmhuCw5mqQFlpU+H0doBBlqUFawGqiCpwIHB/Z03M9xQZ7Soa0ImgKni1RPql+DXfOoAHIaYqx72sWHRjBhZvNvVDaDBfcDF64XxRmRUQ9yDCVSqGMDroZ8XlHy0M9boSa2Z/h64hv7fEHIJaBF3nL3pnOaeDSqz36G2xAPG0JuBqUZ3gIfjMx48enyubY/sPZomcRZYRlcTlX+4lU56esgdP1hBGcgXXEx+WeVHn9duZcKEAKJS5AN6mxSJXd3q6FjDyOGpOYyO8OK66iifJ0VcxYz3n5mtHKt1cm80hsWzqN9R3CAvIZwLRPS445lViT0sN5/4lMvAqRyawmtQoXZhtbPy/1eEouWGv7Pi5yjL84doL/afVzBGGydUybqUfpfHaUQNzi6yKC72lfCz2Qp8IF9M049JnaWg7XJ6ct4dupIwX4ZD7PsD2mnHNakw9cOzOkcu6puIOJnOsr6tqPYCShlz0tA4j4mYPXSw6QIozLGAJ38XCy1s37v/vceqNlMwVGdNae5SHgimTjcsn6P2TTOTrzJOa6eKxuLYqPHpURMATQrHb8FtJXEyzomw6ey+IwwOvEGKTGi894M3iIhOwS2PXmBoJ9tGVBitg4WHJXTTFkk8uO/yAP5tEJ7RInuu1jHks5qsLadQ+JqL7IYP7P0UPCkGCqghCD0vvJqbqrO1hr+kfZboExz2kp5YNo/7u4gkOQT+dbAdCKgw7Yddxp/q3VlINpvTSbmhWX2bmw6cogV9ImX2B/3AALynlRZP5Ay8RiacVVIQexpal+a3rZ1AScawd0NqYUBxTXS710XG9QNule1UV8661ZPNnepf3jnkdpuJVqlFymDzUdkWW8VW4Xjs+kDJ7gOV61/AEQqmd4aEm5SO972rrl32iyequsFuzoaFNrW8uDC85HDWhGLjkXFOtjaq9YIUacY7OLAwdfPI13p+k5tCtU3CpI2R8d71GuKugMyObIt7bQKwlzqRnmELhmDmdD7+lIQLOde7GYSaRhBPY2T1DcP2v+wYX/BmjLYWfk5pkiqGAHjQgosPOG0eYVjIX33RSYU/agzQ2WptIsLybFdqfO8+ZIKzwuxU306EfrZ/Q/4+4SeHC4UzxL+Iri0M3d3+mSA4m+3zZQ+xbMgc7PuGul9jl3a5bXTcKRU0RXnmik3mdez2zAvZ8RlWSLPUX0Mx95CUT328jBfJNsI6YolYX/SG9VqmJHvcQ1D2ZRoAf0W6NrFy4VIiKHL/zOEzFKuj4rV+HzgLP25e+2r8eru5Ewz/6AnPYo5IBkQHqqxvU0o6gxFz/y4sD0PmDHEgaeIX0QCHGaUBLwtfq1px8Ek2EPZeUYjOf1pnC+SdtcLc/t8J7SV+vjMsO7XQbRvWJKVhj6j8XK8HewSI9CkHaa80KSGoH9sbtdduaDMlleAJ1CPvNEO7My1HSVpMn5NgWZB2r3NyPaEpfHS6NOt8NWlVlCZKiG5V+1uDRTnQV7n+oWKcEr2NRGhGjk9ho4t7VDus2BIl4cEzNW1A70SMMAT9bRK+zx+MwHR+2idX9210Xe3tOm5Lf+u5tn6t/ziFXz3c13iCBJihcVvLLp2nvUSADaM1eHE6XWWSPcQXbV/2+zhRfK09k=,iv:CBkRYxOOEdSMm6XzWGc5laTRUhF5+OR4hsSvbg2jhc0=,tag:YXGckpKmmgrfv1uMbf+waA==,type:str]
+        RESTIC_PASSWORD: ENC[AES256_GCM,data:gUX0iCsvLIHcJCdV4gYXMszqw+76Zt8wxFJWDK1SRlxzZBaQ75hcH3bpluxBQrY28YtqY84SI+zO3wmjZvJFlg==,iv:zUymKbOrLbCbTt3GO+fHjOP++lidkQfRsFC+QqD9eg0=,tag:86a8pUpxMxQa28+6ZP1NWA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxeW9WdWFlVFRMQmc3MnR0
+        WWMyYTR2Wkw5Q28yUXJGdU5iOXBkTFZLMENNCi9nZk1VQTk3bHNYWVRwYlN5L0Ni
+        YXFxSGVOTXlXb2lzM25PUFhuYS9lSm8KLS0tIC9VdUlyOVdHc2dkUG5QaE1VWEhk
+        d0VFdHZGZ21Bdm1IZ0hRUU1Velc2U1UKDOX5j2uOiHCZTKD+tl7rChPnAF9NE7+7
+        S6B5p/Ac0SJM8gnFF4QWw55X82Q3v+w9YBUEbW7yLE9fWvDbntYovg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-14T18:46:13Z"
+  mac: ENC[AES256_GCM,data:GsttCK9e9iSWtZTF2foig70dyzFw/SUMz+xsmStZU4IIgAvGN4CXSC1KdgIfXld0pTTY+1QcPYpI61AObdbJa8gKqwMAQpS01Th+eCTSxslxlQV4S47/Yuhy3wyPgxL+xMn/Dlr0evrE18OhzxdQPjcu5sKVnXpo81PjAUZjcWM=,iv:9iw66/KJmF6TvZrkUj750q5217+GAW1cN8ztfebI3/4=,tag:2CTXlMIH112wNEV5JjrvWw==,type:str]
+  version: 3.13.3

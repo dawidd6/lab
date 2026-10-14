@@ -69,6 +69,11 @@ spec:
               url: tcp://homepage.homepage.svc:3000 # it only answers requests for its public host
               conditions: ["[CONNECTED] == true"]
               alerts: [{type: gotify}]
+            - name: Backrest
+              group: internal
+              url: http://backrest.backrest.svc:9898
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: gotify}]
             - name: PairDrop
               group: internal
               url: http://pairdrop.pairdrop.svc:3000
