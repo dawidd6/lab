@@ -27,6 +27,7 @@ spec:
                   NTFY_BASE_URL: https://ntfy.dawidd6.duckdns.org # manifests/route.yaml
                   NTFY_BEHIND_PROXY: true
                   NTFY_CACHE_FILE: /var/lib/ntfy/cache.db # message history, so phones catch up after being offline
+                  NTFY_CACHE_DURATION: 168h # for a week (default 12h), e.g. for the web app after a weekend away
                   NTFY_AUTH_FILE: /var/lib/ntfy/user.db
                   NTFY_AUTH_DEFAULT_ACCESS: deny-all # nothing without logging in or a token
                   NTFY_ENABLE_LOGIN: true # the web app's login, as dawid
