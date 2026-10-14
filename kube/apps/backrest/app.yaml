@@ -18,6 +18,10 @@ spec:
         # repository volume). All its settings (repository, plan with schedule and retention, no login of its own) are
         # its config.json in manifests/backrest.sops.yaml, read-only, so they change only here, not in the UI. The
         # repository is created once, after the first deploy: kubectl -n backrest exec deploy/backrest -- restic init
+        defaultPodOptions:
+          # restic records it in snapshots and locks: a fixed one keeps all snapshots in one group for the retention,
+          # and lets restic tell a killed pod's lock is stale (autoUnlock in config.json)
+          hostname: backrest
         controllers:
           backrest:
             containers:
