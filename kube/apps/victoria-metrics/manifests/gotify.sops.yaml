@@ -1,0 +1,25 @@
+# the token of Gotify's Grafana app, for Grafana's alerting contact point (app.yaml, GOTIFY_TOKEN)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: grafana-gotify
+spec:
+  secretTemplates:
+    - name: grafana-gotify
+      stringData:
+        token: ENC[AES256_GCM,data:upUBcQpWuBcGUKX5pGgaSdqe765SLlC7t2baWX1SSyjqw3pbdaG/tKkQPgMFTenKmw==,iv:ADFmpDBD4tOFyU3py1iGu1EazPlwa5CW6cudNFevHN4=,tag:/5MzNORS8ClyRO7eHLYe+w==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmWHJRd2hCeG8wL1pyaGtw
+        cmFQbUt3Y2prRjlySVE1YlBQbGVmNkZHaWtrCjNWRlVIeEpZNUFLYWZpVWxuZ3pq
+        L2dpV2pwcXpYcWhUNkQ3dit2YVdBaE0KLS0tIDZZVlNadStlUWtjdHFYb29Wdjlm
+        UWFXeGNUYVZ5aDRJdDUyYms1ZUUwb1UKpBEssmkp5luwmpLipweh2lSy5VEp+m+f
+        a+MPwY/NFNG7tzGBKWjbsA//V9h+Ku0EJSt/yDlU7vOUhvH0M9Yi/g==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-14T18:29:22Z"
+  mac: ENC[AES256_GCM,data:W9mf5jWgB/Z+TQp5qgLDcRt8v6TYS6vCWte++sjcG9fKOJqEJkkTgAosiUUJwRzdNP2uJx7P26BJx6FwKIyYdMkUWFmJc2d/LoxtlAEjSU+rkYwtQKPQLYP9BJqXrq60l4ZP8ax3SqbcxP6A6ElSAjsFegTlroTSsth+m9T2EZs=,iv:bpk1gx5+exEyQNaIWfG+OeQdyV42ChZcV+bvpLDKers=,tag:aIaXojl7Pk/hLiRIkidpuQ==,type:str]
+  version: 3.13.3
