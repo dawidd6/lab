@@ -171,7 +171,7 @@ spec:
                             to: 0
                           datasourceUid: VictoriaMetrics
                           model:
-                            expr: kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"}
+                            expr: max_over_time(kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"}[5m]) # only there between restarts
                             instant: true
                         - refId: B
                           datasourceUid: __expr__
