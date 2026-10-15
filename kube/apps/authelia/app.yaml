@@ -61,8 +61,12 @@ spec:
           identity_providers:
             oidc:
               enabled: true
-              # RustFS reads claims only from the ID token, and takes a roles claim's values as the names of its policies
               claims_policies:
+                # Grafana maps its role from the first of ID token and userinfo that yields one: without groups in the
+                # ID token, its mapping (victoria-metrics/app.yaml) already settles on Viewer there
+                grafana:
+                  id_token: [email, preferred_username, name, groups]
+                # RustFS reads claims only from the ID token, and takes a roles claim's values as the names of its policies
                 rustfs:
                   id_token: [email, preferred_username, roles]
                   custom_claims:
@@ -155,6 +159,7 @@ spec:
                   consent_mode: implicit
                   require_pkce: true # Grafana sends a PKCE challenge (use_pkce, victoria-metrics/app.yaml)
                   pkce_challenge_method: S256
+                  claims_policy: grafana
                   redirect_uris:
                     - https://grafana.dawidd6.duckdns.org/login/generic_oauth # Grafana's own OIDC login (victoria-metrics/app.yaml)
                 - client_id: rustfs
