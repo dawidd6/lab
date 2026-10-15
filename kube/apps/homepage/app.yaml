@@ -129,9 +129,9 @@ spec:
                     - Backrest:
                         href: https://backrest.dawidd6.duckdns.org
                         icon: backrest.png
-                    - Gotify:
-                        href: https://gotify.dawidd6.duckdns.org
-                        icon: gotify.png
+                    - ntfy:
+                        href: https://ntfy.dawidd6.duckdns.org
+                        icon: ntfy.png
                     - Authelia:
                         href: https://authelia.dawidd6.duckdns.org
                         icon: authelia.png

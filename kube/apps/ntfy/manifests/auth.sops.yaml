@@ -1,0 +1,26 @@
+# ntfy's users (dawid, lab) and the lab user's token, read by ntfy (app.yaml) as NTFY_AUTH_USERS and NTFY_AUTH_TOKENS
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: ntfy-auth
+spec:
+  secretTemplates:
+    - name: ntfy-auth
+      stringData:
+        NTFY_AUTH_USERS: ENC[AES256_GCM,data:qM6AQyujUlXVHyfAJ1UMWqf23rjhyAWUiixykJRB6+ogLfjCCSadvqWKMDMK4TrxKkjuEnFRf1EVoEWMhLlF62yvCt3vI01cnxlqLSjzvCBHzdkn8spG+v2Iy1B/BC4u1BjnjxyvX7sT7UDTI/p+2UkNg5ypTe+PSjjNJGIxXRKLU/nDhQQNsbFczSU5jQ==,iv:4nG5RfSoX7ISI8/edw2cj+dxpOab9cJ8LjCJ07e2ImU=,tag:d/0/gJxZgSH6TPHf/9mKzA==,type:str]
+        NTFY_AUTH_TOKENS: ENC[AES256_GCM,data:sf5JP3UEqo56Lg0AuR7aq4dVzDe8TpBfTvkGEoBRI0CZIE7GnqBlIHBqHdI=,iv:VSVSa/4VCA1WkXIIVbw/0o+snhE5Yqh+rCoziI34Nl4=,tag:VSFYg8LzKvtnaeGYpYhQYA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmUjd5U3JkTGxtQkN2RE1u
+        cGdKMlNQb2trdjRsVWhwZlYwTzZDTHdaUFI0Ckl5QXNRVEJDYWZOZEloQStTWVpw
+        OEtnZG1EbjExVWdURmdjSW5TZUUzaVUKLS0tIHBFNG5VWTFtenlDZm01WmMzTXJ3
+        SUpMSVhTYkZTRG9jdWRnTGZOVVJhOTAKJtD/iUByBXWW0q9zgw6KPcheeLaUUhLU
+        W6hAFJe3pt7M5nGVw7f2uk3nHAPSNUOYt7dZCxyGTZ9jn4aI2CSrWg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-14T17:28:17Z"
+  mac: ENC[AES256_GCM,data:4+N/h5I4WA+TO/ZstRaKboCqQW+PbkP7h7hcCSOt5Nh+NZsIAQJQkxfmNAQdtw6rzlfviM5loobQnV9zDqUsKo6X3HdSIg9SW2WRwf/OrL8RZAQ8h2Ir74jyTih35U2rZXR5ICPNQNdeg6PxNYEQAVVtFWxuGkoNWBU/DtPqc/k=,iv:jmHytOuZDR/oVs8TkEvfwSmD3QWVvy1zcFHTQpZWb+4=,tag:fksYI4IWpZnvdKQuAafJ1Q==,type:str]
+  version: 3.13.3
