@@ -21,7 +21,7 @@ spec:
               ntfy:
                 image:
                   repository: docker.io/binwiederhier/ntfy
-                  tag: v2.30.0
+                  tag: v2.31.0
                 args: [serve]
                 env:
                   NTFY_BASE_URL: https://ntfy.dawidd6.duckdns.org # manifests/route.yaml
