@@ -1,0 +1,25 @@
+# the gateway's Authelia client secret for Radarr (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: radarr-oidc
+spec:
+  secretTemplates:
+    - name: radarr-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:MWG7X3x9ZLg7i8U8cghMQHjnwWcQb8i9uAH1bixiYyZXOm3YLVdJ2WJfPl4TSVeO0If4ZS8XFFvnm+kC47PK4SWOyMCZQWY8,iv:37X6ptzxNgcPm8zoGDR5TAEQETfvcgmZdVLNx/fGwPQ=,tag:l20xM79R9j1cW5yEoYWysw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSZlJpdnZoYS9KNEhEVXVY
+        N05LdEo1Tzg0RzFHVEZPYk5aK2NkVVhHREQ4CkhxaHdJMm0weXNzVlFTWlNGcERs
+        OVVBTUd6aUlxVjJWNjNQV1hHMExpRGcKLS0tIExPZUNuYTZWY0NtLzQ0K1dhREFn
+        a1lrTWxUOCtndk1FZ1dFVzNTM2FRcWcKVz7hFfThDmxAsQe76Z5QzQUaIs+ebWL6
+        JGV5BSNJDjqjyXF2kDR8ZVlrDLeV8cA0lGpPJgCL6RgXB7ByBsgvMw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-15T11:51:28Z"
+  mac: ENC[AES256_GCM,data:Ebzd2r9Z4UKZ2+iewQQtYpkM0CIJsfvmrx0epgUKol7aaTzZ4s8JxpUj21jdi1ThtFKWf6L7mOlsqCol0iROv/7oxZxA63SUBfj1uZwhR/QA36ZOY7odAOr5F/VcmJY1m1LLjVDhkTXtTRxKUGOHEiUtf1FmQcXANlaNFhrzqoM=,iv:bHAfErqzmFo2tnGGnXrzFEAqS+LCCAaAt6Esuk1gzeQ=,tag:3WB/017Oxko2RQXmoPPPsA==,type:str]
+  version: 3.13.3

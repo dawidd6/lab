@@ -1,0 +1,25 @@
+# the gateway's Authelia client secret for Sonarr (securitypolicy.yaml)
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: sonarr-oidc
+spec:
+  secretTemplates:
+    - name: sonarr-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:+o1kHnEjcN2/zvMQCaFqrrmSbBbTuZ0ypQ2GaiGudqkQ/IgnRC/5FarhPlUFOnHFD5DajkU9IHf/y8TPMVCytldFHdW8U4h3,iv:3WS5qffgh38v0MgHKPacDMzcinHs8j/LSa0vzV1QujI=,tag:uyX2mBW4yO0mmm65CPvQtg==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGK3RDMmo3Q3BCbnFoSWNm
+        RHdYeCtsYUllRk1HamRxeTN1akduOU4wdHlNCjRxQlhXS21QdUV3Qkx0RUN2YnFr
+        Ui9lUFo3VE9abmJiOEYwQU1OTTlzcE0KLS0tIDJTQmN0d1Q5aExtTlVCWkRwNGRX
+        T3lXV1Q3QUZsNks3MVB4d0hnZ2UvWm8KL7sEceM96yxNIAOFkRo2WHveRIRzvjJ4
+        IIgFsuSFLYiabPa1LVBi7C0Z/hIz4JZzY5lCo9DGTfaguVLSMfxQ2w==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-15T11:51:28Z"
+  mac: ENC[AES256_GCM,data:kfUp1XGu89DMxIRqtM+8ILdiTF9VzMhDJKGTW8kLcapLkQyaIqHz7C71E2b45TBE0IuJoqnIImJYdV5Aq2TBgaN5OrkaX+gQWchiJwh7mZbjadScpPQI7nq0k/ly+R8zOhivWKz2OpR2/HrVgYRemhUG1BEnRc+CPJxQfX1zWcc=,iv:I4LV+KnzDWvOMFjcb+MEsGkSqNA4Aq8jHMWLb+83/gs=,tag:ed75UJQ1Gb1u/9ue8CXcug==,type:str]
+  version: 3.13.3

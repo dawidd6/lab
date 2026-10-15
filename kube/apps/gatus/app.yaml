@@ -80,6 +80,21 @@ spec:
               url: http://pairdrop.pairdrop.svc:3000
               conditions: ["[STATUS] == 200"]
               alerts: [{type: ntfy}]
+            - name: Sonarr
+              group: internal
+              url: http://sonarr.media.svc:8989/ping
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: Radarr
+              group: internal
+              url: http://radarr.media.svc:7878/ping
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: Bazarr
+              group: internal
+              url: http://bazarr.media.svc:6767
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
             - name: JDownloader
               group: internal
               url: http://jdownloader2.media.svc:5800
@@ -88,6 +103,11 @@ spec:
             - name: Grafana
               group: internal
               url: http://victoria-metrics-grafana.victoria-metrics.svc/api/health
+              conditions: ["[STATUS] == 200"]
+              alerts: [{type: ntfy}]
+            - name: VictoriaLogs
+              group: internal
+              url: http://vlsingle-victoria-metrics.victoria-metrics.svc:9428/health
               conditions: ["[STATUS] == 200"]
               alerts: [{type: ntfy}]
             - name: VictoriaMetrics

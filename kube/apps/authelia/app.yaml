@@ -115,6 +115,30 @@ spec:
                   consent_mode: implicit
                   redirect_uris:
                     - https://jdownloader.dawidd6.duckdns.org/oauth2/callback # jdownloader2/manifests/securitypolicy.yaml
+                - client_id: sonarr
+                  client_name: Sonarr
+                  client_secret:
+                    path: /secrets/authelia/oidc.client.sonarr
+                  authorization_policy: one_factor # password only
+                  consent_mode: implicit
+                  redirect_uris:
+                    - https://sonarr.dawidd6.duckdns.org/oauth2/callback # sonarr/manifests/securitypolicy.yaml
+                - client_id: radarr
+                  client_name: Radarr
+                  client_secret:
+                    path: /secrets/authelia/oidc.client.radarr
+                  authorization_policy: one_factor # password only
+                  consent_mode: implicit
+                  redirect_uris:
+                    - https://radarr.dawidd6.duckdns.org/oauth2/callback # radarr/manifests/securitypolicy.yaml
+                - client_id: bazarr
+                  client_name: Bazarr
+                  client_secret:
+                    path: /secrets/authelia/oidc.client.bazarr
+                  authorization_policy: one_factor # password only
+                  consent_mode: implicit
+                  redirect_uris:
+                    - https://bazarr.dawidd6.duckdns.org/oauth2/callback # bazarr/manifests/securitypolicy.yaml
                 - client_id: gatus
                   client_name: Gatus
                   client_secret:

@@ -78,6 +78,15 @@ spec:
                     - JDownloader:
                         href: https://jdownloader.dawidd6.duckdns.org
                         icon: jdownloader.png
+                    - Sonarr:
+                        href: https://sonarr.dawidd6.duckdns.org
+                        icon: sonarr.png
+                    - Radarr:
+                        href: https://radarr.dawidd6.duckdns.org
+                        icon: radarr.png
+                    - Bazarr:
+                        href: https://bazarr.dawidd6.duckdns.org
+                        icon: bazarr.png
                     - Nextcloud:
                         href: https://nextcloud.dawidd6.duckdns.org
                         icon: nextcloud.png

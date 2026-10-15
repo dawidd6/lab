@@ -1,0 +1,46 @@
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bazarr
+spec:
+  project: default
+  destination:
+    namespace: media
+  source:
+    repoURL: ghcr.io/bjw-s-labs/helm
+    chart: app-template # a generic chart for any container image
+    targetRevision: 5.3.0
+    helm:
+      valuesObject:
+        # subtitles for Sonarr's series and Radarr's movies, saved next to the video files; set up in its UI
+        controllers:
+          bazarr:
+            containers:
+              bazarr:
+                image:
+                  repository: ghcr.io/linuxserver/bazarr
+                  tag: 1.6.2
+                env:
+                  # the image starts as root and runs Bazarr as this user, like JDownloader (jdownloader2/app.yaml)
+                  PUID: 568
+                  PGID: 568
+                  TZ: Europe/Warsaw
+        service:
+          bazarr:
+            controller: bazarr
+            ports:
+              http:
+                port: 6767
+        persistence:
+          config: # its settings and database
+            type: persistentVolumeClaim
+            storageClass: internal
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            globalMounts:
+              - path: /config
+          media: # shared with Jellyfin and JDownloader, at the same path as in Jellyfin
+            existingClaim: media # jellyfin/manifests/pvc.yaml
+            globalMounts:
+              - path: /media

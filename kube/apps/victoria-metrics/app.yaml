@@ -13,8 +13,9 @@ spec:
     targetRevision: 0.96.0
     helm:
       valuesObject:
-        # VictoriaMetrics (metrics from node-exporter, kube-state-metrics, the kubelet) and Grafana with its dashboards;
-        # node-exporter's hwmon metrics include CPU, NVMe and board temperatures (node_hwmon_temp_celsius)
+        # VictoriaMetrics (metrics from node-exporter, kube-state-metrics, the kubelet), VictoriaLogs (every pod's logs)
+        # and Grafana with its dashboards; node-exporter's hwmon metrics include CPU, NVMe and board temperatures
+        # (node_hwmon_temp_celsius)
         fullnameOverride: victoria-metrics # instead of victoria-metrics-victoria-metrics-k8s-stack
         vmsingle:
           spec:
@@ -24,6 +25,17 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
+        vlsingle: # VictoriaLogs, the logs' database
+          enabled: true
+          spec:
+            retentionPeriod: 14d
+            storage:
+              storageClassName: internal
+              resources:
+                requests:
+                  storage: 1Gi
+        vlagent: # collects every pod's logs on the node into VictoriaLogs
+          enabled: true
         # k0s runs these inside its own controller process: nothing to scrape, they'd only show as down
         kubeEtcd:
           enabled: false
@@ -43,6 +55,8 @@ spec:
             certManager:
               enabled: true # cert-manager issues the webhook's certificate; otherwise the chart generates a new one on every render
         grafana:
+          plugins:
+            - victoriametrics-logs-datasource # the stack adds its VictoriaLogs datasource only with this plugin
           admin:
             existingSecret: grafana-admin # manifests/admin.sops.yaml; set so the chart doesn't generate a new password on every render
           envValueFrom:

@@ -1,0 +1,47 @@
+# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+spec:
+  project: default
+  destination:
+    namespace: media
+  source:
+    repoURL: ghcr.io/bjw-s-labs/helm
+    chart: app-template # a generic chart for any container image
+    targetRevision: 5.3.0
+    helm:
+      valuesObject:
+        # TV series: finds, downloads and sorts episodes into the media volume; set up in its UI
+        controllers:
+          sonarr:
+            containers:
+              sonarr:
+                image:
+                  repository: ghcr.io/linuxserver/sonarr
+                  tag: 4.0.20.3014-ls328
+                env:
+                  # the image starts as root and runs Sonarr as this user, like JDownloader (jdownloader2/app.yaml)
+                  PUID: 568
+                  PGID: 568
+                  TZ: Europe/Warsaw
+                  SONARR__AUTH__METHOD: External # no login of its own: Authelia at the gateway (manifests/securitypolicy.yaml)
+        service:
+          sonarr:
+            controller: sonarr
+            ports:
+              http:
+                port: 8989
+        persistence:
+          config: # its settings and database
+            type: persistentVolumeClaim
+            storageClass: internal
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            globalMounts:
+              - path: /config
+          media: # shared with Jellyfin and JDownloader, at the same path as in Jellyfin
+            existingClaim: media # jellyfin/manifests/pvc.yaml
+            globalMounts:
+              - path: /media
