@@ -1,10 +1,10 @@
 name: Check
 
 on:
-  pull_request:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   check:
@@ -18,4 +18,4 @@ jobs:
 
       - uses: jdx/mise-action@v5 # zizmor: ignore[unpinned-uses]
 
-      - run: mise run ci-check
+      - run: mise perform-checks

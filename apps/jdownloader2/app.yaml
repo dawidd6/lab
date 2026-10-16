@@ -24,7 +24,7 @@ spec:
             size: 1Gi
           output: # the downloads, also Jellyfin's library (jellyfin/app.yaml mounts it by its name, jdownloader2-output)
             storageClass: external
-            size: 200Gi
+            size: 1Gi
             annotations:
               argocd.argoproj.io/sync-options: Prune=confirm,Delete=confirm # holds data: Argo CD asks before pruning or deleting it
         route:
