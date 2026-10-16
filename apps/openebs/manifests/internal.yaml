@@ -9,7 +9,7 @@ parameters:
   storage: lvm
   vgpattern: ^internal$ # exactly internal; replaces volgroup, which the driver plans to deprecate
   fsType: ext4
-  shared: "yes" # mountable by several pods on the node at once (both media apps; old and new pod during an update)
+  shared: "yes" # mountable by several pods on the node at once (the old and new pod during an update)
 reclaimPolicy: Retain # a deleted PVC keeps its logical volume
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true # grow a volume by raising its PVC's size
