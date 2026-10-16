@@ -33,7 +33,7 @@ spec:
                   repoURL: https://github.com/dawidd6/lab
                   revision: master
                   files:
-                    - path: kube/apps/*/app.yaml
+                    - path: apps/*/app.yaml
             template:
               metadata:
                 name: '{{ .path.basename }}'
@@ -60,7 +60,7 @@ spec:
                       values: '{{ toYaml .spec.source.helm.valuesObject }}' # as text: template fields are strings
                   - repoURL: https://github.com/dawidd6/lab
                     targetRevision: master
-                    path: kube/apps # not the app's own directory, which a deleted app no longer has
+                    path: apps
                     directory:
                       recurse: true
                       include: '{{ .path.basename }}/manifests/*.yaml' # only the app's own manifests
