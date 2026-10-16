@@ -1,0 +1,15 @@
+# volumes as logical volumes in the host's LVM volume group external, on the USB drive (made outside the cluster, e.g. by the OS
+# installer or vgcreate external <disk>)
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: external
+provisioner: local.csi.openebs.io
+parameters:
+  storage: lvm
+  vgpattern: ^external$ # exactly external; replaces volgroup, which the driver plans to deprecate
+  fsType: ext4
+  shared: "yes" # mountable by several pods on the node at once (both media apps; old and new pod during an update)
+reclaimPolicy: Retain # a deleted PVC keeps its logical volume
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true # grow a volume by raising its PVC's size

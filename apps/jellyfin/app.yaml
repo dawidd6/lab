@@ -18,4 +18,4 @@ spec:
             existingClaim: media # manifests/pvc.yaml
           config:
             storageClass: internal
-            size: 1Gi
+            size: 10Gi # metadata and images grow; enforced, and can grow

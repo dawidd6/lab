@@ -10,4 +10,4 @@ spec:
   storageClassName: external
   resources:
     requests:
-      storage: 1Gi
+      storage: 400Gi # of the external volume group's 465Gi; enforced, and can grow
