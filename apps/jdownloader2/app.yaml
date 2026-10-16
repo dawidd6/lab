@@ -27,6 +27,16 @@ spec:
             size: 200Gi
             annotations:
               argocd.argoproj.io/sync-options: Prune=confirm,Delete=confirm # holds data: Argo CD asks before pruning or deleting it
+        route:
+          main:
+            enabled: true
+            kind: HTTPRoute
+            parentRefs:
+              - name: envoy
+                namespace: envoy-gateway
+                sectionName: https # the gateway's https listener (envoy-gateway/manifests/gateway.yaml)
+            hostnames:
+              - jdownloader.dawidd6.duckdns.org
         workload:
           main:
             podSpec:

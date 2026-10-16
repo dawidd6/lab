@@ -19,3 +19,11 @@ spec:
           config:
             storageClass: internal
             size: 10Gi # metadata and images grow; enforced, and can grow
+        httpRoute:
+          enabled: true
+          parentRefs:
+            - name: envoy
+              namespace: envoy-gateway
+              sectionName: https # the gateway's https listener (envoy-gateway/manifests/gateway.yaml)
+          hostnames:
+            - jellyfin.dawidd6.duckdns.org

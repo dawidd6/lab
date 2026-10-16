@@ -20,6 +20,18 @@ spec:
             policy.csv: g, admins, role:admin # the admins group in Authelia's users file
           params:
             server.insecure: true # TLS ends at the gateway
+            # compare apps with what the API server would store, defaults included, so objects that leave defaults
+            # out (like the charts' routes) don't show as out of sync
+            controller.diff.server.side: true
+        server:
+          httproute:
+            enabled: true
+            parentRefs:
+              - name: envoy
+                namespace: envoy-gateway
+                sectionName: https # the gateway's https listener (envoy-gateway/manifests/gateway.yaml)
+            hostnames:
+              - argocd.dawidd6.duckdns.org
         dex:
           enabled: false
         controller:
