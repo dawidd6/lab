@@ -6,6 +6,6 @@ spec:
   hosts:
     - role: single
       openSSH:
-        address: server.lan
+        address: server
   k0s:
     version: v1.36.4+k0s.1

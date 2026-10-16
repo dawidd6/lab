@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Provision the server OS with Ansible"
-set -euo pipefail
-
-cd "$MISE_PROJECT_ROOT/ansible"
-
-ansible-playbook -K -v playbooks/provision.yml
