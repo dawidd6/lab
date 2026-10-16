@@ -10,4 +10,3 @@ kubectl = "1.37.1"
 yq = "4.54.1"
 kubeconform = "0.8.0"
 "github:authelia/authelia" = "4.39.28" # authelia crypto hash generate argon2, for a user's password hash
-python = { version = "3.14.8", postinstall = "python -m pip install ansible ansible-lint" }
