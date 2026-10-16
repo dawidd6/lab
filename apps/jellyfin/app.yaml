@@ -15,7 +15,7 @@ spec:
       valuesObject:
         persistence:
           media:
-            existingClaim: media # manifests/pvc.yaml
+            existingClaim: jdownloader2-output # JDownloader's downloads volume (jdownloader2/app.yaml)
           config:
             storageClass: internal
             size: 10Gi # metadata and images grow; enforced, and can grow

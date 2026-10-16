@@ -8,38 +8,29 @@ spec:
   destination:
     namespace: media
   source:
-    repoURL: ghcr.io/bjw-s-labs/helm
-    chart: app-template # a generic chart for any container image (JDownloader has no chart of its own)
-    targetRevision: 5.3.0
+    repoURL: oci.trueforge.org/truecharts
+    chart: jdownloader2
+    targetRevision: 23.0.0
     helm:
       valuesObject:
-        controllers:
-          jdownloader2:
-            containers:
-              jdownloader2:
-                image:
-                  repository: docker.io/jlesage/jdownloader-2
-                  tag: v26.09.1
-                env:
-                  # the image starts as root and runs JDownloader as this user; 568 owns the existing files in /config and /output
-                  USER_ID: 568
-                  GROUP_ID: 568
         service:
-          jdownloader2:
-            controller: jdownloader2
-            ports:
-              http: # the web UI (noVNC)
-                port: 5800
+          myjd: # My.JDownloader's direct connection, not used
+            enabled: false
+          vnc:
+            enabled: false
         persistence:
           config: # JDownloader's settings
-            type: persistentVolumeClaim
-            suffix: config # keeps the existing claim's name, jdownloader2-config (the chart names a sole claim just jdownloader2)
             storageClass: internal
-            accessMode: ReadWriteOnce
             size: 1Gi
-            globalMounts:
-              - path: /config
-          output: # downloads, shared with Jellyfin
-            existingClaim: media # jellyfin/manifests/pvc.yaml
-            globalMounts:
-              - path: /output
+          output: # the downloads, also Jellyfin's library (jellyfin/app.yaml mounts it by its name, jdownloader2-output)
+            storageClass: external
+            size: 200Gi
+            annotations:
+              argocd.argoproj.io/sync-options: Prune=confirm,Delete=confirm # holds data: Argo CD asks before pruning or deleting it
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                    WEB_FILE_MANAGER: "1" # the image's file manager in the web UI, for the folders mapped into it

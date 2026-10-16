@@ -21,5 +21,5 @@ spec:
         - group: ""
           kind: Service
           name: jdownloader2
-          port: 5800
+          port: 10054 # the chart's port for the web UI
           weight: 1
