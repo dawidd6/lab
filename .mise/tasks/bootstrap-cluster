@@ -2,9 +2,7 @@
 #MISE description="Install k0s on the server and write the kubeconfig"
 set -euo pipefail
 
-ssh -t server 'echo "%sudo ALL=NOPASSWD: ALL" | sudo tee /etc/sudoers.d/sudo-nopasswd'
-ssh -t server sudo timedatectl set-timezone Europe/Warsaw
-ssh -t server sudo localectl set-locale C
+ssh -t server 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
 
 k0sctl apply
 k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config"

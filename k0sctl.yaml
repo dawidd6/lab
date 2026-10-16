@@ -7,5 +7,10 @@ spec:
     - role: single
       openSSH:
         address: server
+      hooks:
+        apply:
+          before:
+            - sudo timedatectl set-timezone Europe/Warsaw
+            - sudo localectl set-locale C
   k0s:
     version: v1.36.4+k0s.1
