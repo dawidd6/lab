@@ -36,6 +36,7 @@ values:
 
 valuesExtras:
   httpRoutes:
-    - hostname: jdownloader.dawidd6.duckdns.org
+    - name: jdownloader2
+      hostname: jdownloader.dawidd6.duckdns.org
       service: jdownloader2
       port: 10054

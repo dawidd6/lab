@@ -25,6 +25,7 @@ values:
 
 valuesExtras:
   httpRoutes:
-    - hostname: argocd.dawidd6.duckdns.org
+    - name: argocd
+      hostname: argocd.dawidd6.duckdns.org
       service: argocd-server
       port: 80

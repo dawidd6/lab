@@ -21,6 +21,7 @@ values:
 
 valuesExtras:
   httpRoutes:
-    - hostname: jellyfin.dawidd6.duckdns.org
+    - name: jellyfin
+      hostname: jellyfin.dawidd6.duckdns.org
       service: jellyfin
       port: 8096
