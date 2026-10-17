@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Lint the Ansible playbooks, and validate every app's files against the schemas"
+#MISE description="Validate every app's files against the schemas"
 set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/apps"

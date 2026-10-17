@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sops-secret-operator
+  name: sops-secrets-operator
 spec:
   project: default
   destination:

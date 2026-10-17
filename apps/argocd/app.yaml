@@ -15,16 +15,11 @@ values:
   configs:
     cm:
       url: https://argocd.dawidd6.duckdns.org
-    rbac:
-      policy.csv: g, admins, role:admin
     params:
       server.insecure: true
       controller.diff.server.side: true
   dex:
     enabled: false
-  controller:
-    metrics:
-      enabled: true
   notifications:
     enabled: false
 

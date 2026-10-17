@@ -5,4 +5,4 @@ set -euo pipefail
 ssh -t server 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
 
 k0sctl apply
-k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config"
+(umask 077; k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config")
