@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: cert-manager
 spec:
-  project: default
-  destination:
-    namespace: cert-manager
   source:
     repoURL: quay.io/jetstack/charts
     chart: cert-manager

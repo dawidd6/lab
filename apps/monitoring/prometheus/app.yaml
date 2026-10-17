@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+spec:
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: prometheus
+    targetRevision: 29.37.0
+
+values:
+  server:
+    persistentVolume:
+      storageClass: internal
+      size: 1Gi
+  alertmanager:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+
+valuesExtras: {}

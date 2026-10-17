@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+spec:
+  source:
+    repoURL: https://grafana-community.github.io/helm-charts
+    chart: grafana
+    targetRevision: 14.0.1
+
+values:
+  testFramework:
+    enabled: false
+  env:
+    GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: "true"
+  grafana.ini:
+    auth:
+      disable_login_form: true
+    auth.anonymous:
+      enabled: true
+      org_role: Admin
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-server
+          isDefault: true
+        - name: Loki
+          type: loki
+          url: http://loki:3100
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: default
+          options:
+            path: /var/lib/grafana/dashboards/default
+  dashboards:
+    default:
+      node-exporter-full:
+        gnetId: 1860
+        revision: 45
+      kubernetes-global:
+        gnetId: 15757
+        revision: 43
+      kubernetes-namespaces:
+        gnetId: 15758
+        revision: 46
+      kubernetes-pods:
+        gnetId: 15760
+        revision: 41
+
+valuesExtras:
+  httpRoutes:
+    - name: grafana
+      hostname: grafana.dawidd6.duckdns.org
+      service: grafana
+      port: 80

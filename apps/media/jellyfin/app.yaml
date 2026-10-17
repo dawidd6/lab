@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: jellyfin
 spec:
-  project: default
-  destination:
-    namespace: media
   source:
     repoURL: https://jellyfin.github.io/jellyfin-helm
     chart: jellyfin

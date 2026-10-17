@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: metallb
 spec:
-  project: default
-  destination:
-    namespace: metallb
   source:
     repoURL: quay.io/metallb/chart
     chart: metallb

@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: envoy-gateway
 spec:
-  project: default
-  destination:
-    namespace: envoy-gateway
   source:
     repoURL: docker.io/envoyproxy
     chart: gateway-helm

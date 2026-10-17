@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: jdownloader2
 spec:
-  project: default
-  destination:
-    namespace: media
   source:
     repoURL: oci.trueforge.org/truecharts
     chart: jdownloader2

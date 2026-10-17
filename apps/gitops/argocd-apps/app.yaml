@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: argocd-apps
 spec:
-  project: default
-  destination:
-    namespace: argocd
   source:
     repoURL: https://argoproj.github.io/argo-helm
     chart: argocd-apps
@@ -14,7 +11,7 @@ spec:
 values:
   applicationsets:
     apps:
-      namespace: argocd
+      namespace: gitops
       additionalAnnotations:
         argocd.argoproj.io/sync-options: Delete=false,Prune=false
       goTemplate: true
@@ -25,15 +22,15 @@ values:
             repoURL: https://github.com/dawidd6/lab
             revision: master
             files:
-              - path: apps/*/app.yaml
+              - path: apps/*/*/app.yaml
       template:
         metadata:
-          name: '{{ .path.basename }}'
+          name: '{{ index .path.segments 2 }}'
         spec:
           project: default
           destination:
             server: https://kubernetes.default.svc
-            namespace: '{{ .spec.destination.namespace }}'
+            namespace: '{{ index .path.segments 1 }}'
           syncPolicy:
             automated:
               prune: true
@@ -60,6 +57,6 @@ values:
               path: apps
               directory:
                 recurse: true
-                include: '{{ .path.basename }}/*.sops.yaml'
+                include: '{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/*.sops.yaml'
 
 valuesExtras: {}

@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: cert-manager-webhook-duckdns
 spec:
-  project: default
-  destination:
-    namespace: cert-manager
   source:
     repoURL: ghcr.io/cobexer/charts
     chart: cert-manager-webhook-duckdns
@@ -13,7 +10,7 @@ spec:
 
 values:
   certManager:
-    namespace: cert-manager
+    namespace: gateway
   secret:
     existingSecret: true
     existingSecretName: duckdns

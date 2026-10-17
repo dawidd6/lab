@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: local-path-provisioner
 spec:
-  project: default
-  destination:
-    namespace: local-path-provisioner
   source:
     repoURL: https://charts.containeroo.ch
     chart: local-path-provisioner
