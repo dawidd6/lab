@@ -11,6 +11,12 @@ spec:
 values:
   testFramework:
     enabled: false
+  persistence:
+    enabled: true
+    storageClassName: internal
+    size: 1Gi
+  deploymentStrategy:
+    type: Recreate
   env:
     GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: "true"
   grafana.ini:
