@@ -7,6 +7,8 @@ spec:
     - role: single
       openSSH:
         address: server
+      installFlags:
+        - --profile=parallel-pulls
       hooks:
         apply:
           before:
@@ -17,3 +19,10 @@ spec:
             - findmnt /data/external || { sudo mkdir -p /data/external && sudo chattr +i /data/external && (sudo mount /data/external || true); }
   k0s:
     version: v1.36.4+k0s.1
+    config:
+      spec:
+        workerProfiles:
+          - name: parallel-pulls
+            values:
+              serializeImagePulls: false
+              maxParallelImagePulls: 5
