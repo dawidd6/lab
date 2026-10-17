@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-#MISE description="Install k0s on the server and write the kubeconfig"
+#MISE description="Install ArgoCD and Applications"
 set -euo pipefail
-
-ssh -t server 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
-
-k0sctl apply
-k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config"
 
 cd "$MISE_PROJECT_ROOT/apps"
 

@@ -12,5 +12,8 @@ spec:
           before:
             - sudo timedatectl set-timezone Europe/Warsaw
             - sudo localectl set-locale C
+            - grep -q LABEL=external /etc/fstab || echo 'LABEL=external /data/external auto x-systemd.required-by=k0scontroller.service,x-systemd.before=k0scontroller.service' | sudo tee -a /etc/fstab
+            - sudo systemctl daemon-reload
+            - findmnt /data/external >/dev/null || sudo mount --mkdir /data/external
   k0s:
     version: v1.36.4+k0s.1
