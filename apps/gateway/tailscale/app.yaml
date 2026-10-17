@@ -9,6 +9,9 @@ spec:
     targetRevision: 0.1.2
 
 values:
+  image:
+    repository: tailscale/tailscale
+    tag: v1.104.1
   authKey:
     existingSecret: tailscale
   tailscale:
