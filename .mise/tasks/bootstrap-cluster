@@ -9,28 +9,17 @@ k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config"
 
 cd "$MISE_PROJECT_ROOT/apps"
 
-if ! kubectl -n sops-secrets-operator get secret sops-age &>/dev/null; then
-    kubectl create namespace sops-secrets-operator
-    kubectl -n sops-secrets-operator create secret generic sops-age \
-        --from-file=keys.txt="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
-fi
+kubectl create namespace "$(yq '.spec.destination.namespace' sops-secrets-operator/app.yaml)" --dry-run=client -o yaml | kubectl apply --server-side -f -
+kubectl -n "$(yq '.spec.destination.namespace' sops-secrets-operator/app.yaml)" create secret generic "$(yq '.values.secretsAsFiles[0].secretName' sops-secrets-operator/app.yaml)" \
+    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
+    --dry-run=client -o yaml | kubectl apply --server-side -f -
 
-if ! kubectl -n argocd get deployment argocd-server &>/dev/null; then
-    yq '.values' argocd/app.yaml | helm install argocd "$(yq '.spec.source.chart' argocd/app.yaml)" \
-        --repo "$(yq '.spec.source.repoURL' argocd/app.yaml)" \
-        --version "$(yq '.spec.source.targetRevision' argocd/app.yaml)" \
-        --values - \
-        --namespace argocd \
-        --create-namespace \
-        --wait
-fi
-
-if ! kubectl -n argocd get applicationset apps &>/dev/null; then
-    yq '.values' argocd-apps/app.yaml | helm install argocd-apps "$(yq '.spec.source.chart' argocd-apps/app.yaml)" \
-        --repo "$(yq '.spec.source.repoURL' argocd-apps/app.yaml)" \
-        --version "$(yq '.spec.source.targetRevision' argocd-apps/app.yaml)" \
-        --values - \
-        --namespace argocd
-fi
-
-kubectl -n argocd delete secret --selector owner=helm --ignore-not-found
+for app in argocd argocd-apps; do
+    kubectl create namespace "$(yq '.spec.destination.namespace' $app/app.yaml)" --dry-run=client -o yaml | kubectl apply --server-side -f -
+    yq '.values' $app/app.yaml | helm template "$(yq '.metadata.name' $app/app.yaml)" "$(yq '.spec.source.chart' $app/app.yaml)" \
+        --repo "$(yq '.spec.source.repoURL' $app/app.yaml)" \
+        --version "$(yq '.spec.source.targetRevision' $app/app.yaml)" \
+        --namespace "$(yq '.spec.destination.namespace' $app/app.yaml)" \
+        --values - |
+        kubectl apply --server-side --field-manager=argocd-controller --namespace "$(yq '.spec.destination.namespace' $app/app.yaml)" -f -
+done
