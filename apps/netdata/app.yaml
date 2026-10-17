@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: netdata
+spec:
+  project: default
+  destination:
+    namespace: netdata
+  source:
+    repoURL: https://netdata.github.io/helmchart
+    chart: netdata
+    targetRevision: 3.7.176
+
+values:
+  ingress:
+    enabled: false
+  parent:
+    database:
+      storageclass: internal
+      volumesize: 1Gi
+    alarms:
+      storageclass: internal
+      volumesize: 1Gi
+  k8sState:
+    persistence:
+      storageclass: internal
+      volumesize: 1Gi
+  netdataOpentelemetry:
+    enabled: true
+    persistence:
+      storageclass: internal
+      volumesize: 1Gi
+  otel-collector:
+    enabled: true
+
+valuesExtras:
+  httpRoutes:
+    - name: netdata
+      hostname: netdata.dawidd6.duckdns.org
+      service: netdata
+      port: 19999
