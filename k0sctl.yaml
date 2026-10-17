@@ -12,8 +12,8 @@ spec:
           before:
             - sudo timedatectl set-timezone Europe/Warsaw
             - sudo localectl set-locale C
-            - grep -q ^LABEL=external /etc/fstab || echo 'LABEL=external /data/external auto umask=0,x-systemd.required-by=k0scontroller.service,x-systemd.before=k0scontroller.service 0 2' | sudo tee -a /etc/fstab
+            - grep -q ^LABEL=external /etc/fstab || echo 'LABEL=external /data/external auto umask=0,nofail 0 2' | sudo tee -a /etc/fstab
             - sudo systemctl daemon-reload
-            - findmnt /data/external >/dev/null || sudo mount --mkdir /data/external
+            - findmnt /data/external || { sudo mkdir -p /data/external && sudo chattr +i /data/external && (sudo mount /data/external || true); }
   k0s:
     version: v1.36.4+k0s.1
