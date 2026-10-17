@@ -1,4 +1,3 @@
-# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,7 +10,15 @@ spec:
     repoURL: quay.io/metallb/chart
     chart: metallb
     targetRevision: 0.16.1
-    helm:
-      valuesObject:
-        frrk8s:
-          enabled: false # BGP backend, only L2 is used
+
+values:
+  frrk8s:
+    enabled: false
+
+valuesExtras:
+  ipAddressPools:
+    - name: default
+      addresses:
+        - 192.168.1.109/32
+  l2Advertisements:
+    - name: default

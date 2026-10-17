@@ -1,4 +1,3 @@
-# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,11 +10,28 @@ spec:
     repoURL: quay.io/jetstack/charts
     chart: cert-manager
     targetRevision: 1.21.2
-    helm:
-      valuesObject:
-        crds:
-          enabled: true
-        config:
-          apiVersion: controller.config.cert-manager.io/v1alpha1
-          kind: ControllerConfiguration
-          enableGatewayAPI: true # issue certs from Gateway annotations
+
+values:
+  crds:
+    enabled: true
+  config:
+    apiVersion: controller.config.cert-manager.io/v1alpha1
+    kind: ControllerConfiguration
+    enableGatewayAPI: true
+
+valuesExtras:
+  clusterIssuers:
+    - name: letsencrypt
+      acme:
+        server: https://acme-v02.api.letsencrypt.org/directory
+        privateKeySecretRef:
+          name: letsencrypt-account-key
+        solvers:
+          - dns01:
+              webhook:
+                config:
+                  apiTokenSecretRef:
+                    key: token
+                    name: duckdns
+                groupName: acme.duckdns.org
+                solverName: duckdns

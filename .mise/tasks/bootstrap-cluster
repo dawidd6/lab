@@ -16,7 +16,7 @@ if ! kubectl -n sops-secrets-operator get secret sops-age &>/dev/null; then
 fi
 
 if ! kubectl -n argocd get deployment argocd-server &>/dev/null; then
-    yq '.spec.source.helm.valuesObject' argocd/app.yaml | helm install argocd "$(yq '.spec.source.chart' argocd/app.yaml)" \
+    yq '.values' argocd/app.yaml | helm install argocd "$(yq '.spec.source.chart' argocd/app.yaml)" \
         --repo "$(yq '.spec.source.repoURL' argocd/app.yaml)" \
         --version "$(yq '.spec.source.targetRevision' argocd/app.yaml)" \
         --values - \
@@ -26,7 +26,7 @@ if ! kubectl -n argocd get deployment argocd-server &>/dev/null; then
 fi
 
 if ! kubectl -n argocd get applicationset apps &>/dev/null; then
-    yq '.spec.source.helm.valuesObject' argocd-apps/app.yaml | helm install argocd-apps "$(yq '.spec.source.chart' argocd-apps/app.yaml)" \
+    yq '.values' argocd-apps/app.yaml | helm install argocd-apps "$(yq '.spec.source.chart' argocd-apps/app.yaml)" \
         --repo "$(yq '.spec.source.repoURL' argocd-apps/app.yaml)" \
         --version "$(yq '.spec.source.targetRevision' argocd-apps/app.yaml)" \
         --values - \

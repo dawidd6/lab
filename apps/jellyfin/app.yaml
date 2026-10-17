@@ -1,4 +1,3 @@
-# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,19 +10,17 @@ spec:
     repoURL: https://jellyfin.github.io/jellyfin-helm
     chart: jellyfin
     targetRevision: 3.2.0
-    helm:
-      valuesObject:
-        persistence:
-          media:
-            existingClaim: jdownloader2-output # JDownloader's downloads volume (jdownloader2/app.yaml)
-          config:
-            storageClass: internal
-            size: 1Gi
-        httpRoute:
-          enabled: true
-          parentRefs:
-            - name: envoy
-              namespace: envoy-gateway
-              sectionName: https # the gateway's https listener (envoy-gateway/manifests/gateway.yaml)
-          hostnames:
-            - jellyfin.dawidd6.duckdns.org
+
+values:
+  persistence:
+    media:
+      existingClaim: jdownloader2-output
+    config:
+      storageClass: internal
+      size: 1Gi
+
+valuesExtras:
+  httpRoutes:
+    - hostname: jellyfin.dawidd6.duckdns.org
+      service: jellyfin
+      port: 8096

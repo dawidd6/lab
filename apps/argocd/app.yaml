@@ -1,4 +1,3 @@
-# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,31 +10,26 @@ spec:
     repoURL: https://argoproj.github.io/argo-helm
     chart: argo-cd
     targetRevision: 10.10.5
-    helm:
-      valuesObject:
-        configs:
-          cm:
-            url: https://argocd.dawidd6.duckdns.org
-          rbac:
-            policy.csv: g, admins, role:admin # the admins group in Authelia's users file
-          params:
-            server.insecure: true # TLS ends at the gateway
-            # compare apps with what the API server would store, defaults included, so objects that leave defaults
-            # out (like the charts' routes) don't show as out of sync
-            controller.diff.server.side: true
-        server:
-          httproute:
-            enabled: true
-            parentRefs:
-              - name: envoy
-                namespace: envoy-gateway
-                sectionName: https # the gateway's https listener (envoy-gateway/manifests/gateway.yaml)
-            hostnames:
-              - argocd.dawidd6.duckdns.org
-        dex:
-          enabled: false
-        controller:
-          metrics:
-            enabled: true # apps' sync and health, for Grafana's alerts (victoria-metrics/app.yaml); manifests/vmservicescrape.yaml
-        notifications:
-          enabled: false # alerts come from Grafana instead
+
+values:
+  configs:
+    cm:
+      url: https://argocd.dawidd6.duckdns.org
+    rbac:
+      policy.csv: g, admins, role:admin
+    params:
+      server.insecure: true
+      controller.diff.server.side: true
+  dex:
+    enabled: false
+  controller:
+    metrics:
+      enabled: true
+  notifications:
+    enabled: false
+
+valuesExtras:
+  httpRoutes:
+    - hostname: argocd.dawidd6.duckdns.org
+      service: argocd-server
+      port: 80

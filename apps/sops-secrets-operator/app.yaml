@@ -1,4 +1,3 @@
-# apiVersion and kind only for Renovate's argocd manager, which reads charts from Application files
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,14 +10,15 @@ spec:
     repoURL: https://isindir.github.io/sops-secrets-operator
     chart: sops-secrets-operator
     targetRevision: 0.28.1
-    helm:
-      valuesObject:
-        # decrypts every app's *.sops.yaml (SopsSecret) with the age key that argocd-bootstrap puts in secret sops-age
-        secretsAsFiles:
-          - name: age
-            mountPath: /etc/sops-age
-            secretName: sops-age
-        extraEnv:
-          - name: SOPS_AGE_KEY_FILE
-            value: /etc/sops-age/keys.txt
-        defaultEnforceOwnership: true # adopt Secrets that already exist (e.g. after a restore) instead of refusing to touch them
+
+values:
+  secretsAsFiles:
+    - name: age
+      mountPath: /etc/sops-age
+      secretName: sops-age
+  extraEnv:
+    - name: SOPS_AGE_KEY_FILE
+      value: /etc/sops-age/keys.txt
+  defaultEnforceOwnership: true
+
+valuesExtras: {}
