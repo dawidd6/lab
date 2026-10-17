@@ -15,7 +15,7 @@ values:
   authKey:
     existingSecret: tailscale
   tailscale:
-    hostname: server
+    hostname: server-pod
     hostnameFromPodName: false
     advertiseExitNode: false
     routes:
