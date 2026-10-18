@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: jellyfin-oidc
+spec:
+  secretTemplates:
+    - name: jellyfin-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:ywiz5nhJC+1oUNw5+Wgw1Iog5QZIrvMdIEGdxEsSQxY7IBYPYMXa0FfC9Cik24ZRHhL6AcYgt3lqeUBKnjLtpw==,iv:EQSUQztxC5xYDvNb/YbPuaOCXf1nfeh7YMkrxmcjj7E=,tag:u9moDaGp25LRGc/qeUJlUw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaekVSVzA2VGJ2K29LcDkr
+        QjJRazc4RGM2dmpvTzliMDh5cCtIWFlFbkFNCm4ra0dmQlF4aUZXd2UrMnZqZStz
+        Zk5vTHZ4QjFRRTZLaEVpSE5pZmFmQ1EKLS0tIGxwL2wraHlZYlFOSy9hbVpsbkV0
+        UzBsTE5rem9YOVMrNXo4UG1iMTlxSWsKBRoNdOmxpiIa8ty8ZQR2d5iBUsnVanVL
+        gfFamzzkqsYY+0IpitFdqohJbf80skPE49eLTDpuHsn02c4LaY5KSQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T20:59:46Z"
+  mac: ENC[AES256_GCM,data:aGxX5UDCB3KTnZIBBafsnI1V3brP/R4y0GXrvyX3megqCFEZgsRSUav/L7bezmtNyQomaLeGkL3rry+w89rv0Td/QzD2xsQMCN+9lUokZpGemAEB6XqNedlz1ycN0BEsX5zTwwxenkjZS/GXtY+Z6JsnnFCerV7EdV6nKOUi26o=,iv:WG/XUIs4d/URNlVPXmOodMUqck9O7z19Ur6sb/aI2/A=,tag:fyj7cn75EehA4+x9yf8Unw==,type:str]
+  version: 3.13.3
