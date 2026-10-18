@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: pocket-id
+spec:
+  secretTemplates:
+    - name: pocket-id
+      stringData:
+        encryptionKey: ENC[AES256_GCM,data:+olfv24pU742sKiQiAQ0UM+MpG4lEBT6mMe2elVSjnx1BJqriaI19HOk1hl7q1/Xw3GK6yoOfKqk/QxAImWAjA==,iv:SZGycP344r11ykY4T4rIFmqeNsM2MIaYo1lFlQjrNNI=,tag:ubxnK1cEQbPxCXR8qQHPNA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBZc2RpVG1rUjE0NDFoVjly
+        R25sR2R4TE5zT2hFRVF1TnBFOEJFZjVoUVRNCko0SDZWUnhleUlFajBXdytGcU5R
+        ME5meE5aRkxVbXhBeUZUd0t6UkgxU2cKLS0tIGtCdHZEbWZsUUZabU1GWk1SUXN4
+        S0ZSY21kNzViWS9aK1VTbjhVTE02NWsKtHSat594M5HHHhXcaUSFmmNZUgTPc4Sz
+        32Bmny1ShlqZLdsNpAt+XmqIEh6+X1Csvh3j1ioULcENsFT5I9VgBA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T15:33:57Z"
+  mac: ENC[AES256_GCM,data:SkZNN/8i6IOKxmbBjUCVeZqiw0lssETLH2uCKAIg4neJOlHQBckKoEHa3ST/c+wWXgWiYWIuQ9qxMgwEcYx5TSGkBf3A8wFv9GNuJKsFGwwYYVRhGW73tfChLF+/LWsoWr1ewLQ95fgTBJLioU8rG4XHVvMrp7r+bZadTtxbRB4=,iv:UIFmmd/ABbo4UAPAVCVdzEDynqPZu9M7Onm9tYabovk=,tag:zL02KaoPUHlln8LK2qYMNQ==,type:str]
+  version: 3.13.3

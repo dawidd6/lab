@@ -42,7 +42,20 @@ valuesExtras:
       route: jdownloader2
       oidc:
         provider:
-          issuer: https://dex.dawidd6.duckdns.org
+          issuer: https://pocket-id.dawidd6.duckdns.org
         clientID: jdownloader2
         clientSecret:
           name: jdownloader2-oidc
+  oidcClients:
+    - name: jdownloader2
+      spec:
+        clientID: jdownloader2
+        callbackUrls:
+          - https://jdownloader.dawidd6.duckdns.org/oauth2/callback
+        allowedUserGroups:
+          - name: jdownloader2-users
+            namespace: auth
+        secret:
+          name: jdownloader2-oidc
+          keys:
+            clientSecret: client-secret

@@ -13,10 +13,11 @@ values:
     cm:
       url: https://argocd.dawidd6.duckdns.org
       oidc.config: |
-        name: GLAuth
-        issuer: https://dex.dawidd6.duckdns.org
+        name: Pocket ID
+        issuer: https://pocket-id.dawidd6.duckdns.org
         clientID: argocd
         clientSecret: $argocd-oidc:clientSecret
+        logoutURL: https://pocket-id.dawidd6.duckdns.org/api/oidc/end-session?id_token_hint={{token}}&post_logout_redirect_uri={{logoutRedirectURL}}
         requestedScopes: [openid, profile, email, groups]
     rbac:
       policy.csv: g, argocd-admins, role:admin
@@ -35,3 +36,21 @@ valuesExtras:
       hostname: argocd.dawidd6.duckdns.org
       service: argocd-server
       port: 80
+  oidcClients:
+    - name: argocd
+      spec:
+        clientID: argocd
+        callbackUrls:
+          - https://argocd.dawidd6.duckdns.org/auth/callback
+          - http://localhost:8085/auth/callback
+        logoutCallbackUrls:
+          - https://argocd.dawidd6.duckdns.org
+        allowedUserGroups:
+          - name: argocd-admins
+            namespace: auth
+        secret:
+          name: argocd-oidc
+          keys:
+            clientSecret: clientSecret
+          additionalLabels:
+            app.kubernetes.io/part-of: argocd

@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pocket-id
+spec:
+  source:
+    repoURL: ghcr.io/aclerici38/charts
+    chart: pocket-id-operator
+    targetRevision: 0.15.0
+
+values:
+  instance:
+    spec:
+      appUrl: https://pocket-id.dawidd6.duckdns.org
+      encryptionKey:
+        valueFrom:
+          secretKeyRef:
+            name: pocket-id
+            key: encryptionKey
+      persistence:
+        enabled: true
+        storageClass: internal
+        size: 1Gi
+  users:
+    - name: dawid
+      spec:
+        username:
+          value: dawid
+        email:
+          value: dawid@dawidd6.duckdns.org
+        admin: true
+  userGroups:
+    - name: argocd-admins
+      spec:
+        users:
+          userRefs:
+            - name: dawid
+    - name: jdownloader2-users
+      spec:
+        users:
+          userRefs:
+            - name: dawid
+
+valuesExtras:
+  httpRoutes:
+    - name: pocket-id
+      hostname: pocket-id.dawidd6.duckdns.org
+      service: pocket-id
+      port: 1411
