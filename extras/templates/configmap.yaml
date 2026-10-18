@@ -1,0 +1,12 @@
+{{- range .Values.configMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .name }}
+data:
+  {{- range $file, $content := .data }}
+  {{ $file }}: |
+    {{- toYaml $content | nindent 4 }}
+  {{- end }}
+{{- end }}

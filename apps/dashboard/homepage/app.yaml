@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homepage
+spec:
+  source:
+    repoURL: ghcr.io/m0nsterrr/helm-charts
+    chart: homepage
+    targetRevision: 5.6.0
+
+values:
+  image:
+    registry: ghcr.io
+    repository: gethomepage/homepage
+    tag: v2.6.0
+  config:
+    allowedHosts:
+      - homepage.dawidd6.duckdns.org
+  volumes:
+    - name: homepage-config
+      configMap:
+        name: homepage-config
+  volumeMounts:
+    - name: homepage-config
+      mountPath: /app/config/settings.yaml
+      subPath: settings.yaml
+    - name: homepage-config
+      mountPath: /app/config/services.yaml
+      subPath: services.yaml
+    - name: homepage-config
+      mountPath: /app/config/widgets.yaml
+      subPath: widgets.yaml
+    - name: homepage-config
+      mountPath: /app/config/kubernetes.yaml
+      subPath: kubernetes.yaml
+
+valuesExtras:
+  httpRoutes:
+    - name: homepage
+      hostname: homepage.dawidd6.duckdns.org
+      service: homepage
+      port: 80
+  configMaps:
+    - name: homepage-config
+      data:
+        settings.yaml:
+          title: Server
+          headerStyle: clean
+        kubernetes.yaml:
+          mode: cluster
+        widgets.yaml:
+          - kubernetes:
+              cluster:
+                show: true
+                cpu: true
+                memory: true
+                showLabel: true
+                label: server
+              nodes:
+                show: false
+          - datetime:
+              format:
+                dateStyle: long
+                timeStyle: short
+        services.yaml:
+          - Media:
+              - Jellyfin:
+                  href: https://jellyfin.dawidd6.duckdns.org
+                  icon: jellyfin.png
+              - JDownloader:
+                  href: https://jdownloader.dawidd6.duckdns.org
+                  icon: jdownloader.png
+          - GitOps:
+              - Argo CD:
+                  href: https://argocd.dawidd6.duckdns.org
+                  icon: argo-cd.png
+          - Observability:
+              - Grafana:
+                  href: https://grafana.dawidd6.duckdns.org
+                  icon: grafana.png
+          - Identity:
+              - tinyauth:
+                  href: https://tinyauth.dawidd6.duckdns.org
+                  icon: tinyauth.png
