@@ -12,6 +12,15 @@ values:
   configs:
     cm:
       url: https://argocd.dawidd6.duckdns.org
+      oidc.config: |
+        name: Pocket ID
+        issuer: https://pocket-id.dawidd6.duckdns.org
+        clientID: argocd
+        enablePKCEAuthentication: true
+        logoutURL: https://pocket-id.dawidd6.duckdns.org/api/oidc/end-session?id_token_hint={{token}}&post_logout_redirect_uri={{logoutRedirectURL}}
+        requestedScopes: [openid, profile, email, groups]
+    rbac:
+      policy.csv: g, argocd-admins, role:admin
     params:
       server.insecure: true
       controller.diff.server.side: true
