@@ -19,12 +19,28 @@ values:
     type: Recreate
   env:
     GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: "true"
+  envValueFrom:
+    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
+      secretKeyRef:
+        name: grafana-oidc
+        key: client_secret
   grafana.ini:
+    server:
+      root_url: https://grafana.dawidd6.duckdns.org
     auth:
       disable_login_form: true
-    auth.anonymous:
+    auth.generic_oauth:
       enabled: true
-      org_role: Admin
+      name: Pocket ID
+      client_id: grafana
+      scopes: openid email profile groups
+      auth_url: https://pocket-id.dawidd6.duckdns.org/authorize
+      token_url: https://pocket-id.dawidd6.duckdns.org/api/oidc/token
+      api_url: https://pocket-id.dawidd6.duckdns.org/api/oidc/userinfo
+      use_pkce: true
+      auto_login: true
+      allow_sign_up: true
+      role_attribute_path: contains(groups[*], 'grafana-admins') && 'Admin' || 'Viewer'
   datasources:
     datasources.yaml:
       apiVersion: 1
@@ -64,3 +80,14 @@ valuesExtras:
       hostname: grafana.dawidd6.duckdns.org
       service: grafana
       port: 80
+  oidcClients:
+    - name: grafana
+      spec:
+        clientID: grafana
+        callbackUrls:
+          - https://grafana.dawidd6.duckdns.org/login/generic_oauth
+        allowedUserGroups:
+          - name: grafana-admins
+            namespace: identity-system
+        secret:
+          name: grafana-oidc

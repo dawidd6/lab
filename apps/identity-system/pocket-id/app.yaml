@@ -43,6 +43,11 @@ values:
         users:
           userRefs:
             - name: dawid
+    - name: grafana-admins
+      spec:
+        users:
+          userRefs:
+            - name: dawid
 
 valuesExtras:
   httpRoutes:
