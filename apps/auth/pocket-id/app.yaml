@@ -21,6 +21,9 @@ values:
         enabled: true
         storageClass: internal
         size: 1Gi
+      userManagement:
+        allowUserSignups: disabled
+        allowOwnAccountEdit: false
   users:
     - name: dawid
       spec:
