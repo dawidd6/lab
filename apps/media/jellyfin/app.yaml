@@ -9,6 +9,9 @@ spec:
     targetRevision: 3.2.0
 
 values:
+  image:
+    repository: docker.io/jellyfin/jellyfin
+    tag: "12.2"
   persistence:
     media:
       existingClaim: jdownloader2-output
