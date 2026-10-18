@@ -4,12 +4,12 @@ set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT/apps"
 
-kubectl create namespace secret --dry-run=client -o yaml | kubectl apply --server-side -f -
-kubectl -n secret create secret generic "$(yq '.values.secretsAsFiles[0].secretName' secret/sops-secrets-operator/app.yaml)" \
-    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' secret/sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
+kubectl create namespace secrets-system --dry-run=client -o yaml | kubectl apply --server-side -f -
+kubectl -n secrets-system create secret generic "$(yq '.values.secretsAsFiles[0].secretName' secrets-system/sops-secrets-operator/app.yaml)" \
+    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' secrets-system/sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
     --dry-run=client -o yaml | kubectl apply --server-side -f -
 
-for app in gitops/argocd gitops/argocd-apps; do
+for app in gitops-system/argocd gitops-system/argocd-apps; do
     kubectl create namespace "${app%%/*}" --dry-run=client -o yaml | kubectl apply --server-side -f -
     yq '.values' $app/app.yaml | helm template "$(yq '.metadata.name' $app/app.yaml)" "$(yq '.spec.source.chart' $app/app.yaml)" \
         --repo "$(yq '.spec.source.repoURL' $app/app.yaml)" \

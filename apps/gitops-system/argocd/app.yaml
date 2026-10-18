@@ -47,7 +47,7 @@ valuesExtras:
           - https://argocd.dawidd6.duckdns.org
         allowedUserGroups:
           - name: argocd-admins
-            namespace: auth
+            namespace: identity-system
         secret:
           name: argocd-oidc
           keys:

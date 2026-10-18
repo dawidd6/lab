@@ -54,7 +54,7 @@ valuesExtras:
           - https://jdownloader.dawidd6.duckdns.org/oauth2/callback
         allowedUserGroups:
           - name: jdownloader2-users
-            namespace: auth
+            namespace: identity-system
         secret:
           name: jdownloader2-oidc
           keys:
