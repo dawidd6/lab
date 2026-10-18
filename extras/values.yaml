@@ -1,4 +1,5 @@
 clusterIssuers: []
+connectors: []
 gatewayClasses: []
 gateways: []
 httpRoutes: []
