@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pocket-id
+spec:
+  source:
+    repoURL: https://anza-labs.github.io/charts
+    chart: pocket-id
+    targetRevision: 2.2.2
+
+values:
+  host: pocket-id.dawidd6.duckdns.org
+  secret:
+    create: false
+  persistence:
+    data:
+      enabled: true
+      storageClass: internal
+      size: 1Gi
+
+valuesExtras:
+  httpRoutes:
+    - name: pocket-id
+      hostname: pocket-id.dawidd6.duckdns.org
+      service: pocket-id
+      port: 80
