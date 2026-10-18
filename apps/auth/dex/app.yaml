@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dex
+spec:
+  source:
+    repoURL: https://charts.dexidp.io
+    chart: dex
+    targetRevision: 0.26.0
+
+values:
+  envFrom:
+    - secretRef:
+        name: dex-clients
+  envVars:
+    - name: LDAP_BIND_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: lldap-credentials
+          key: dexPassword
+  config:
+    issuer: https://dex.dawidd6.duckdns.org
+    storage:
+      type: kubernetes
+      config:
+        inCluster: true
+    oauth2:
+      skipApprovalScreen: true
+    connectors:
+      - type: ldap
+        id: lldap
+        name: LLDAP
+        config:
+          host: lldap-ldap:3890
+          insecureNoSSL: true
+          bindDN: uid=dex,ou=people,dc=dawidd6,dc=duckdns,dc=org
+          bindPW: $LDAP_BIND_PASSWORD
+          usernamePrompt: Username
+          userSearch:
+            baseDN: ou=people,dc=dawidd6,dc=duckdns,dc=org
+            filter: (objectClass=person)
+            username: uid
+            idAttr: uid
+            emailAttr: mail
+            nameAttr: displayName
+            preferredUsernameAttr: uid
+          groupSearch:
+            baseDN: ou=groups,dc=dawidd6,dc=duckdns,dc=org
+            filter: (objectClass=groupOfUniqueNames)
+            userMatchers:
+              - userAttr: DN
+                groupAttr: member
+            nameAttr: cn
+    staticClients:
+      - id: argocd
+        name: Argo CD
+        secretEnv: ARGOCD_CLIENT_SECRET
+        redirectURIs:
+          - https://argocd.dawidd6.duckdns.org/auth/callback
+          - http://localhost:8085/auth/callback
+      - id: jdownloader
+        name: JDownloader
+        secretEnv: JDOWNLOADER_CLIENT_SECRET
+        redirectURIs:
+          - https://jdownloader.dawidd6.duckdns.org/oauth2/callback
+
+valuesExtras:
+  httpRoutes:
+    - name: dex
+      hostname: dex.dawidd6.duckdns.org
+      service: dex
+      port: 5556

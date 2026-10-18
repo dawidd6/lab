@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: jdownloader2-oidc
+spec:
+  secretTemplates:
+    - name: jdownloader2-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:fowsCzFg2r9aFhboqxpFFRScHtuhI7VS4qhFL3EKD7dPMC5ZHrr0CGdbTimLhdv9V+ztDfxz5zZksJwp8W/SHA==,iv:iIsD95kfnU/G51bsps5DNjECVgVKH1ewklkSsHatljE=,tag:qDqTGnt8oDbM6dWjbVkDNA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArZURPOEl0YjhERVBCQ3NV
+        YTYxTSsvOWRIbGRyR05QZnhSdUw5SHVzOEJBCnFWbDRLcnllWWdTdVk2VFhEaXR2
+        NE5FYnA4dFdTZW9KV1NHUUcwNDVhY1kKLS0tIG52UjIwT08xVHVlcE9iTTU5cndU
+        YUE4cXVFN3VqVWRqVkZ5cHBmSi9XOUEKOl+9rUPIoagRaR5VXIVVraZSa7phLPew
+        SYLUvhex1aRI9LU+/ROkSgX9uOj0Oh9ctYkgD4lzcs37syar8IJdIA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T14:31:36Z"
+  mac: ENC[AES256_GCM,data:aLEu1VvHg+kncsF/esvzOyzO9yu3iPTdUeAjzyILOVnIn55tgDj8cc3+B3vkk6rHzQEIdO8QPGVDWUFonZ26wWlwcVt6QSUWhp9pOEI1TJr4hTKr3RABpldPx5IyAioUUXPY5sV7qh72qJ9cToRItD0T3rLFeeHuvpeQBq/Bksg=,iv:ON+YYK+v7h42OJCcTTC5Uwx2CcN+PACsFxZQmYfgwJI=,tag:6rRseO1bvQX0WjP4FOe46g==,type:str]
+  version: 3.13.3

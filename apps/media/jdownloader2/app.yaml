@@ -37,3 +37,12 @@ valuesExtras:
       hostname: jdownloader.dawidd6.duckdns.org
       service: jdownloader2
       port: 10054
+  securityPolicies:
+    - name: jdownloader2
+      route: jdownloader2
+      oidc:
+        provider:
+          issuer: https://dex.dawidd6.duckdns.org
+        clientID: jdownloader
+        clientSecret:
+          name: jdownloader2-oidc

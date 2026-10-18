@@ -1,0 +1,27 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: lldap-credentials
+spec:
+  secretTemplates:
+    - name: lldap-credentials
+      stringData:
+        jwtSecret: ENC[AES256_GCM,data:niIMtBa7o8VyGtyepRcJzEZZAEt86gEEOS7+tfQXgdbrHNayeecO04VT5VJ/wydYmIRA2Qt2MzBhrBIbWYZVAA==,iv:ZvovRggYacFEvHMHTzmtT5xhGHk4+Pfg38AP/0LwjWY=,tag:pXjY6H0K48aU49lFhmOOnA==,type:str]
+        ldapUserPass: ENC[AES256_GCM,data:+HV1yXmvdJBUrAwuM9Ce10rVeTem5woEMY/NOlhwZCM=,iv:ZPODPUzsX7nOw5rWUhW7Zqe3po1srivPJFIBszMDyNs=,tag:3N9SSz1F+CTkLODv9PYk2w==,type:str]
+        keySeed: ENC[AES256_GCM,data:SsK7vxSIBtGEQVks9pRxvLDjzALg6gLOIi5TFT58Wg16sbCZG0q6eBB4ynzA58sUWhuKwdtbktCMmAiMdZk6wA==,iv:ZE72VxhVkO4VZJZu/rabhXNAdbLfSvOBers1go/ZPXs=,tag:xwhIW2BbYt1jxRyDA2rGyA==,type:str]
+        dexPassword: ENC[AES256_GCM,data:hccPDIvsYsq03PKmS2kD8KW4S1BW9fwRKzd4dng+5YOhtoe/Pl1EXZGpl20lHWvNl0nP3e9L+KZMsMCd2J9j1A==,iv:uNunyH6DjWP6kHenc4nEuoNk0VYdgqGbyZWOkCmCm/g=,tag:W/ZJwlwrBkDOfzOtiM7JkA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOTGlWZFhuV3MzUkFKdWFB
+        cVVPWGtVaXFzQStpbmlkRkNyWHpQYkZkQmw0Ckg5S28zQ04zeUtvSytZU1VaRm9H
+        VjN6ZG9IKzdtS015bWpZL0RuZEtNR2cKLS0tIFFtYlFpbmNibVFSZk5ubEtTVXkz
+        RmJsZ2RyLzdxdnZzWEN5aCsxNWxZV2sKeJs90CtYXBdBGxsFE+0dwk/L5ptycTWI
+        Ang1ljiVvawYRczwLx0Y34fzuBM4mP2ANTdrf3JtO2KjIBwm0xiGwA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T14:31:36Z"
+  mac: ENC[AES256_GCM,data:n2X36ymcXjJ1U1mcx32nRjeOyKY41pq4GQyPp+TlihWRqialdHmO/Owi+XLsK1Bipki19mH9mEXYQanIQ6xonN7ENQ3TOIVsWyjLYkUfaEM8ktNSgc8JX/ESU67vTgh8sv5BYvjGfGzuSNeaFL9V+7/3f9i+M8pnqodKu4A38ZI=,iv:+2PQ0fJ9VMD5Od9zXHkkm0WbRdR2Z0QTezGERvv/TZ0=,tag:3HeoiwWhpiIsevngM560ag==,type:str]
+  version: 3.13.3

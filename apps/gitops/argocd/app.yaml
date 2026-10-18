@@ -13,11 +13,10 @@ values:
     cm:
       url: https://argocd.dawidd6.duckdns.org
       oidc.config: |
-        name: Pocket ID
-        issuer: https://pocket-id.dawidd6.duckdns.org
+        name: LLDAP
+        issuer: https://dex.dawidd6.duckdns.org
         clientID: argocd
-        enablePKCEAuthentication: true
-        logoutURL: https://pocket-id.dawidd6.duckdns.org/api/oidc/end-session?id_token_hint={{token}}&post_logout_redirect_uri={{logoutRedirectURL}}
+        clientSecret: $argocd-oidc:clientSecret
         requestedScopes: [openid, profile, email, groups]
     rbac:
       policy.csv: g, argocd-admins, role:admin

@@ -1,0 +1,26 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: argocd-oidc
+spec:
+  secretTemplates:
+    - name: argocd-oidc
+      labels:
+        app.kubernetes.io/part-of: argocd
+      stringData:
+        clientSecret: ENC[AES256_GCM,data:5SaDmfZYcbgMpQX+2js0+YRUuBJ9KzsM7PrVJJwz8pUZJ/hAOY7opWJSL2qdBJHCLWCs7SHYHonfbkJVBiz2sA==,iv:s61ciUvIGD/NFFhzRJpxEQ6bMWvw32fhPDhuKW/H8ao=,tag:lZtdqaw8WaEarDCgkdS4SA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHRGFwUmhhT0JzdEpTQ01j
+        aS9wekpTaGcxazhWdXNqNFU5UVVYL2xLUTMwCmRIZHlzbjlRaUdveUNjTnIxR1ZO
+        MmFhVm8xNkF0V0ZORHpSelRZVmViTGMKLS0tIGh6RzFhQmIzeVM1MkxsN05mZ2Nk
+        T0JvOEFlcnk4S2c5aDZDQlA4RWo1bUkKIFOImJknLovi88v/4gSYxiF0XOkOd5r3
+        q9ycdh1Z/GHglJS/WZGJEZDrJGhwoPiky7KhJ1/l8FPQb3nl/HWDGQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T14:31:36Z"
+  mac: ENC[AES256_GCM,data:Vt380OPWmxIlcOA6tY1ycmw8mM6NN7bVPAqxSPtolTJkpajReL7pk/Mo61I49pj4XYql9XOwDNUbLY6VumacIPmqGGM+wun8LGm/TVVxxSqx7lNyEig3Sohe0azcwSAw7kWGAGvMj059PqyT5pjLqkWsVKTW1ECzLPPtMCw67c8=,iv:LtR5r8p50FkuI/aJvSbyOSiaZE1hcwp2j+/0pbK68uQ=,tag:c0uVQnataBuwf2vYMja2Yg==,type:str]
+  version: 3.13.3
