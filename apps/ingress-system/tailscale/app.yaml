@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tailscale
+spec:
+  source:
+    repoURL: https://harish2k01.github.io/helm-charts
+    chart: tailscale
+    targetRevision: 0.1.2
+
+values:
+  image:
+    repository: tailscale/tailscale
+    tag: v1.104.1
+  authKey:
+    existingSecret: tailscale
+  tailscale:
+    hostname: server-pod
+    hostnameFromPodName: false
+    advertiseExitNode: false
+    routes:
+      - 192.168.1.109/32
+  persistence:
+    storageClassName: internal
+    size: 1Gi
+
+valuesExtras: {}
