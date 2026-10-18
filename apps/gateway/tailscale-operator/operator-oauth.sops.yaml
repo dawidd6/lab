@@ -1,0 +1,25 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: operator-oauth
+spec:
+  secretTemplates:
+    - name: operator-oauth
+      stringData:
+        client_id: ENC[AES256_GCM,data:VS46OWtb6PyDLX943/3vib4=,iv:OurryA0nks8kPeZJwTUdnaetp5ytBTAtCyVcuKqrYgg=,tag:t6owgTpUvp2H2WCZ51NQxQ==,type:str]
+        client_secret: ENC[AES256_GCM,data:WdGjDx51X4ZEXai58h6X0d8f+sacv7Y/L5g7cfrndVUtdC+2JLaQSNK0s1/GKivmpy0wgCxVj+Wr2zq7f2VqTw==,iv:z+UlbRGlY+F0wfIj2S040Y8MfNuTk22DzAfHL9rvrao=,tag:IHGNcfMc1gwnRy9yRKLZ1w==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBiR3o3T2FYU0tKRXo3ZGl6
+        U2lTREpzOTNpaEhvRHBOck9CNFlUS2NjdEZnCjQ4ZWt4NUlUN3lrTlI2VVZsVDZU
+        RGtIOHBoVEdTa3ZrZGlOeXIwd05aR3MKLS0tIDg5MEpoUjdyZCtLM0tPTFVwYXpw
+        UnBpdHh6dTJHZjZPYlZzT0FubER1cEkK8ehxkrhCr6LrabalkH/R/YUkYAiOKsyW
+        cBOc/f16Yxo4jrYee0WFb6pU6Q3BLtXddCNYj2ae5IhysrGtmiHK+w==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-18T13:45:09Z"
+  mac: ENC[AES256_GCM,data:PA5x55BCQyUxcpE7lgSNMDZ57n3i515tDqBXDAGwbwssh4TRbYCZsquFjw1oAQ29gB0ebuKEuXxGWlxJWZSwpq+IAeqjbTMpLRZT0KSe5cVaM99m59htewaMMKnXFrUK3mKP219ZZ4sQ61B1mcC5phhzAMykn/rX+p3DqPVPGY0=,iv:H74Gz9FWjKqNlNseOdfmyW3OP82X/oll5tLLRGwbfGg=,tag:gTlzRS6eCGtoaoLx8fTWIQ==,type:str]
+  version: 3.13.3
