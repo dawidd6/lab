@@ -6,7 +6,7 @@ spec:
   secretTemplates:
     - name: tailscale
       stringData:
-        TS_AUTHKEY: ENC[AES256_GCM,data:Xx70cjW3sLpmtn1wH7M37VH49QHNCWCBH0TQoRMGFZMfW61KxjdTWPA0Yr68cnhMcGOt4c1ia8P22b4V70Q=,iv:WqdZFl8RYVlB3GqTqh/sRdckPHIQQeTbg9Xv2ZDIAZI=,tag:VT38vPuDvFja8bbDpK0D6Q==,type:str]
+        TS_AUTHKEY: ENC[AES256_GCM,data:eK2Q4EqGSdtyDVIxuHqeop9JaF6cnpgjKJpiQuXSjnNyklZAhqzKUcgfaj0XFo6zMteqejziv0CyFqWS2Q==,iv:mpwN/FbTu3b3j1HBIyv9QijL7KxhWHvsmHdTxsxB9j8=,tag:NYrf7kfHwZM9rWrcnsPi6Q==,type:str]
 sops:
   age:
     - enc: |
@@ -19,6 +19,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
   encrypted_regex: ^(data|stringData)$
-  lastmodified: "2026-10-18T13:53:03Z"
-  mac: ENC[AES256_GCM,data:iHUGrhu0CyEuM3rXzLyqhqEgK3se/ST3iKN0nEe78o828sJbO4xAVhRp6ZB7gA4dwnLAIXL3s40L/iBAqRDoeM1/GU8jPUrJzS8DKA39sHB/vsxhzj3OWNIVtJwDcgRj6t/UcY9J4exSLUZsjUpuc9d/blXAdDixdza4g8sy2bo=,iv:CUsf0XQ9tjn1Jo0iDaMCHYhxgda6fQzaQfLyX4jGyEY=,tag:B+5rpYx4wIDH5jZb3ppZoA==,type:str]
+  lastmodified: "2026-10-18T17:19:16Z"
+  mac: ENC[AES256_GCM,data:eps0fHSuUE2JWhHacuJo6RPvZVuuU4LosFHDtoUW6oPVvTmwqzpkRUZNO8xDer+QeiEBnhpBOcBvjNfI54efpQgrsmMUkEv9EC1IDB1KSSbHs45hxtQrIGho5fidIYELcEq8xms0a/Qxi86boMM7Kso+FgQmVtMtaq5MpgC9xtQ=,iv:+GruyDt3LPj8hgHcAK+nex2NNOCTrMW1qLhQFMiBsVs=,tag:ZXQRQ/bNyeKGBJGjjak8fA==,type:str]
   version: 3.13.3
