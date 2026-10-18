@@ -16,7 +16,7 @@ values:
     - name: LDAP_BIND_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: lldap-credentials
+          name: glauth-credentials
           key: dexPassword
   config:
     issuer: https://dex.dawidd6.duckdns.org
@@ -28,29 +28,29 @@ values:
       skipApprovalScreen: true
     connectors:
       - type: ldap
-        id: lldap
-        name: LLDAP
+        id: glauth
+        name: GLAuth
         config:
-          host: lldap-ldap:3890
+          host: glauth:3893
           insecureNoSSL: true
-          bindDN: uid=dex,ou=people,dc=dawidd6,dc=duckdns,dc=org
+          bindDN: cn=dex,ou=svcaccts,dc=server
           bindPW: $LDAP_BIND_PASSWORD
           usernamePrompt: Username
           userSearch:
-            baseDN: ou=people,dc=dawidd6,dc=duckdns,dc=org
-            filter: (objectClass=person)
-            username: uid
-            idAttr: uid
+            baseDN: ou=users,dc=server
+            filter: (objectClass=posixAccount)
+            username: cn
+            idAttr: uidNumber
             emailAttr: mail
-            nameAttr: displayName
-            preferredUsernameAttr: uid
+            nameAttr: cn
+            preferredUsernameAttr: cn
           groupSearch:
-            baseDN: ou=groups,dc=dawidd6,dc=duckdns,dc=org
+            baseDN: ou=groups,dc=server
             filter: (objectClass=groupOfUniqueNames)
             userMatchers:
               - userAttr: DN
-                groupAttr: member
-            nameAttr: cn
+                groupAttr: uniqueMember
+            nameAttr: ou
     staticClients:
       - id: argocd
         name: Argo CD
@@ -58,7 +58,7 @@ values:
         redirectURIs:
           - https://argocd.dawidd6.duckdns.org/auth/callback
           - http://localhost:8085/auth/callback
-      - id: jdownloader
+      - id: jdownloader2
         name: JDownloader
         secretEnv: JDOWNLOADER_CLIENT_SECRET
         redirectURIs:

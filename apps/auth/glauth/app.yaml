@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: glauth
+spec:
+  source:
+    repoURL: https://anza-labs.github.io/charts
+    chart: glauth
+    targetRevision: 1.0.2
+
+values:
+  secret:
+    value:
+      api:
+        enabled: false
+      backend:
+        baseDN: dc=server
+      groups:
+        - name: svcaccts
+          gidnumber: 5501
+        - name: argocd-admins
+          gidnumber: 5503
+      users:
+        - name: dex
+          uidnumber: 5001
+          primarygroup: 5501
+          passsha256: bde455c5142fbba1eac8984e3bd2e7abeb8b841120386d7ac132568da3b39029
+          capabilities:
+            - action: search
+              object: "*"
+        - name: dawidd6
+          givenname: Dawid
+          sn: Dziurla
+          mail: dawidd6@dawidd6.duckdns.org
+          uidnumber: 5002
+          primarygroup: 5503
+          passsha256: b42917d4e1e9dde9b90815b767ed2bc9643ba9e8dd2ad5c36cdab5e311c4e4e6
+
+valuesExtras: {}

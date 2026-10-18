@@ -43,6 +43,6 @@ valuesExtras:
       oidc:
         provider:
           issuer: https://dex.dawidd6.duckdns.org
-        clientID: jdownloader
+        clientID: jdownloader2
         clientSecret:
           name: jdownloader2-oidc

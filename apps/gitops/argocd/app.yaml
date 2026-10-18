@@ -13,7 +13,7 @@ values:
     cm:
       url: https://argocd.dawidd6.duckdns.org
       oidc.config: |
-        name: LLDAP
+        name: GLAuth
         issuer: https://dex.dawidd6.duckdns.org
         clientID: argocd
         clientSecret: $argocd-oidc:clientSecret
