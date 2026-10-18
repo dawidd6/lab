@@ -13,6 +13,9 @@ values:
     registry: ghcr.io
     repository: gethomepage/homepage
     tag: v2.6.0
+  extraEnvFrom:
+    - secretRef:
+        name: homepage-secrets
   config:
     allowedHosts:
       - homepage.dawidd6.duckdns.org
@@ -46,7 +49,17 @@ valuesExtras:
   configMaps:
     - name: homepage-config
       data:
-        bookmarks.yaml: []
+        bookmarks.yaml:
+          - Links:
+              - Lab repository:
+                  - href: https://github.com/dawidd6/lab
+                    icon: github.png
+              - Tailscale:
+                  - href: https://login.tailscale.com/admin/machines
+                    icon: tailscale.png
+              - DuckDNS:
+                  - href: https://www.duckdns.org
+                    icon: duckdns.png
         settings.yaml:
           title: Server
           headerStyle: clean
@@ -62,6 +75,16 @@ valuesExtras:
                 label: server
               nodes:
                 show: false
+          - openmeteo:
+              label: Warsaw
+              latitude: 52.2297
+              longitude: 21.0122
+              timezone: Europe/Warsaw
+              units: metric
+              cache: 5
+          - search:
+              provider: duckduckgo
+              target: _blank
           - datetime:
               format:
                 dateStyle: long
@@ -71,18 +94,83 @@ valuesExtras:
               - Jellyfin:
                   href: https://jellyfin.dawidd6.duckdns.org
                   icon: jellyfin.png
+                  siteMonitor: http://jellyfin.media:8096/health
+                  namespace: media
+                  app: jellyfin
+                  widget:
+                    type: jellyfin
+                    url: http://jellyfin.media:8096
+                    key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+                    enableBlocks: true
               - JDownloader:
                   href: https://jdownloader.dawidd6.duckdns.org
                   icon: jdownloader.png
+                  siteMonitor: http://jdownloader2.media:10054
+                  namespace: media
+                  app: jdownloader2
           - GitOps:
               - Argo CD:
                   href: https://argocd.dawidd6.duckdns.org
                   icon: argo-cd.png
+                  siteMonitor: http://argocd-server.gitops-system/healthz
+                  namespace: gitops-system
+                  app: argocd-server
+                  widget:
+                    type: argocd
+                    url: http://argocd-server.gitops-system
+                    key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
           - Observability:
               - Grafana:
                   href: https://grafana.dawidd6.duckdns.org
                   icon: grafana.png
+                  siteMonitor: http://grafana.observability-system/api/health
+                  namespace: observability-system
+                  app: grafana
+                  widget:
+                    type: grafana
+                    url: http://grafana.observability-system
+                    username: api_key
+                    password: "{{HOMEPAGE_VAR_GRAFANA_TOKEN}}"
+              - Prometheus:
+                  icon: prometheus.png
+                  namespace: observability-system
+                  app: prometheus
+                  widget:
+                    type: prometheus
+                    url: http://prometheus-server.observability-system
+              - Sensors:
+                  icon: prometheus.png
+                  widget:
+                    type: prometheusmetric
+                    url: http://prometheus-server.observability-system
+                    metrics:
+                      - label: CPU temperature
+                        query: max(node_hwmon_temp_celsius{chip=~".*coretemp.*"})
+                        format:
+                          type: number
+                          suffix: " °C"
+                          options:
+                            maximumFractionDigits: 0
+                      - label: USB drive free
+                        query: node_filesystem_avail_bytes{mountpoint="/data/external"}
+                        format:
+                          type: bytes
+                      - label: System disk free
+                        query: node_filesystem_avail_bytes{mountpoint="/"}
+                        format:
+                          type: bytes
           - Identity:
               - tinyauth:
                   href: https://tinyauth.dawidd6.duckdns.org
                   icon: tinyauth.png
+                  siteMonitor: http://tinyauth.identity-system/api/healthz
+                  namespace: identity-system
+                  app: tinyauth
+          - Ingress:
+              - Tailscale:
+                  href: https://login.tailscale.com/admin/machines
+                  icon: tailscale.png
+                  widget:
+                    type: tailscale
+                    deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+                    key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
