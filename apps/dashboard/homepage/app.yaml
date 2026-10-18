@@ -33,6 +33,9 @@ values:
     - name: homepage-config
       mountPath: /app/config/kubernetes.yaml
       subPath: kubernetes.yaml
+    - name: homepage-config
+      mountPath: /app/config/bookmarks.yaml
+      subPath: bookmarks.yaml
 
 valuesExtras:
   httpRoutes:
@@ -43,6 +46,7 @@ valuesExtras:
   configMaps:
     - name: homepage-config
       data:
+        bookmarks.yaml: []
         settings.yaml:
           title: Server
           headerStyle: clean
