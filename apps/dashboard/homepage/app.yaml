@@ -127,11 +127,6 @@ valuesExtras:
                   siteMonitor: http://grafana.observability-system/api/health
                   namespace: observability-system
                   app: grafana
-                  widget:
-                    type: grafana
-                    url: http://grafana.observability-system
-                    username: api_key
-                    password: "{{HOMEPAGE_VAR_GRAFANA_TOKEN}}"
               - Prometheus:
                   icon: prometheus.png
                   namespace: observability-system
@@ -139,19 +134,54 @@ valuesExtras:
                   widget:
                     type: prometheus
                     url: http://prometheus-server.observability-system
-              - Sensors:
+              - Temperatures:
                   icon: prometheus.png
                   widget:
                     type: prometheusmetric
                     url: http://prometheus-server.observability-system
                     metrics:
-                      - label: CPU temperature
-                        query: max(node_hwmon_temp_celsius{chip=~".*coretemp.*"})
+                      - label: CPU
+                        query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
                         format:
                           type: number
                           suffix: " °C"
                           options:
                             maximumFractionDigits: 0
+                      - label: NVMe
+                        query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Composite"})
+                        format:
+                          type: number
+                          suffix: " °C"
+                          options:
+                            maximumFractionDigits: 0
+                      - label: Memory
+                        query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Memory"})
+                        format:
+                          type: number
+                          suffix: " °C"
+                          options:
+                            maximumFractionDigits: 0
+                      - label: Ambient
+                        query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Ambient"})
+                        format:
+                          type: number
+                          suffix: " °C"
+                          options:
+                            maximumFractionDigits: 0
+              - Resources:
+                  icon: prometheus.png
+                  widget:
+                    type: prometheusmetric
+                    url: http://prometheus-server.observability-system
+                    metrics:
+                      - label: CPU
+                        query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
+                        format:
+                          type: percent
+                      - label: Memory
+                        query: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
+                        format:
+                          type: percent
                       - label: USB drive free
                         query: node_filesystem_avail_bytes{mountpoint="/data/external"}
                         format:
