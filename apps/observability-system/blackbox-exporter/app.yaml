@@ -10,5 +10,49 @@ spec:
 
 values:
   fullnameOverride: blackbox-exporter
+  podSecurityContext:
+    sysctls:
+      - name: net.ipv4.ping_group_range
+        value: "0 2147483647"
+  config:
+    modules:
+      http_jellyfin_health:
+        prober: http
+        timeout: 5s
+        http:
+          preferred_ip_protocol: ip4
+          fail_if_body_not_matches_regexp:
+            - ^Healthy$
+      http_grafana_health:
+        prober: http
+        timeout: 5s
+        http:
+          preferred_ip_protocol: ip4
+          fail_if_body_not_matches_regexp:
+            - '"database":\s*"ok"'
+      dns_duckdns:
+        prober: dns
+        timeout: 5s
+        dns:
+          query_name: dawidd6.duckdns.org
+          query_type: A
+          preferred_ip_protocol: ip4
+          valid_rcodes:
+            - NOERROR
+          validate_answer_rrs:
+            fail_if_not_matches_regexp:
+              - 192.168.1.109
+      tcp_ssh:
+        prober: tcp
+        timeout: 5s
+        tcp:
+          preferred_ip_protocol: ip4
+          query_response:
+            - expect: ^SSH-2.0-
+      icmp:
+        prober: icmp
+        timeout: 5s
+        icmp:
+          preferred_ip_protocol: ip4
 
 valuesExtras: {}
