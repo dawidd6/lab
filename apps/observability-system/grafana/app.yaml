@@ -61,6 +61,24 @@ values:
             path: /var/lib/grafana/dashboards/default
   dashboards:
     default:
+      envoy:
+        gnetId: 24459
+        revision: 3
+      fluent-bit:
+        gnetId: 18855
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+      loki:
+        gnetId: 17781
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+      prometheus:
+        gnetId: 19105
+        revision: 9
       argocd:
         gnetId: 14584
         revision: 1

@@ -9,6 +9,10 @@ spec:
     targetRevision: 0.58.3
 
 values:
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "2020"
+    prometheus.io/path: /api/v2/metrics/prometheus
   testFramework:
     enabled: false
   config:
