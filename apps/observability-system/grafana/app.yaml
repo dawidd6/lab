@@ -61,6 +61,18 @@ values:
             path: /var/lib/grafana/dashboards/default
   dashboards:
     default:
+      argocd:
+        gnetId: 14584
+        revision: 1
+      cert-manager:
+        gnetId: 20842
+        revision: 3
+      kubernetes-coredns:
+        gnetId: 15762
+        revision: 22
+      kubernetes-nodes:
+        gnetId: 15759
+        revision: 40
       node-exporter-full:
         gnetId: 1860
         revision: 45
