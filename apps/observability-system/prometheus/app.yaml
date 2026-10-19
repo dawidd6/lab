@@ -41,13 +41,13 @@ values:
           targets:
             - ns1.duckdns.org:53
         - labels:
+            module: dns_router_static
+          targets:
+            - 192.168.1.1:53
+        - labels:
             module: tcp_ssh
           targets:
             - 192.168.1.109:22
-        - labels:
-            module: icmp
-          targets:
-            - 192.168.1.109
       relabel_configs:
         - source_labels:
             - module
