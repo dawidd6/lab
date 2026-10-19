@@ -39,8 +39,7 @@ values:
         - labels:
             module: dns_duckdns
           targets:
-            - 1.1.1.1:53
-            - 8.8.8.8:53
+            - ns1.duckdns.org:53
         - labels:
             module: tcp_ssh
           targets:
@@ -48,9 +47,7 @@ values:
         - labels:
             module: icmp
           targets:
-            - 192.168.1.1
             - 192.168.1.109
-            - 1.1.1.1
       relabel_configs:
         - source_labels:
             - module
