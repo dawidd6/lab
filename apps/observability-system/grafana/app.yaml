@@ -70,6 +70,12 @@ values:
       kubernetes-namespaces:
         gnetId: 15758
         revision: 46
+      blackbox-exporter:
+        gnetId: 13659
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
       kubernetes-pods:
         gnetId: 15760
         revision: 41

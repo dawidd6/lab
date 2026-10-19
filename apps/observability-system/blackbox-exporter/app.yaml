@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: blackbox-exporter
+spec:
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: prometheus-blackbox-exporter
+    targetRevision: 11.20.0
+
+values:
+  fullnameOverride: blackbox-exporter
+
+valuesExtras: {}
