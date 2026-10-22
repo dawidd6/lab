@@ -11,5 +11,5 @@ kubectl -n secrets-system create secret generic "$(yq '.values.secretsAsFiles[0]
 
 kubectl create namespace gitops-system --dry-run=client -o yaml | kubectl apply --server-side -f -
 # separate applies: the ApplicationSet needs the CRD from the argocd release
-helmfile template -l name=argocd | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -
-helmfile template -l name=argocd-apps | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -
+helmfile template -q -l name=argocd | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -
+helmfile template -q -l name=argocd-apps | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -
