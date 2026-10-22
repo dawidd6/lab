@@ -6,7 +6,7 @@ spec:
   source:
     repoURL: https://harish2k01.github.io/helm-charts
     chart: tailscale
-    targetRevision: 0.1.2
+    targetRevision: 0.1.5
 
 values:
   image:
