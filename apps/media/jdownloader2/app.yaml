@@ -6,7 +6,7 @@ spec:
   source:
     repoURL: oci.trueforge.org/truecharts
     chart: jdownloader2
-    targetRevision: 23.0.0
+    targetRevision: 23.0.3
 
 values:
   service:
