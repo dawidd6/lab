@@ -49,7 +49,7 @@ values:
                 values: '{{ toYaml .values }}'
             - repoURL: https://github.com/dawidd6/lab
               targetRevision: master
-              path: extras
+              path: apps/_common
               helm:
                 values: '{{ toYaml .valuesExtras }}'
             - repoURL: https://github.com/dawidd6/lab
