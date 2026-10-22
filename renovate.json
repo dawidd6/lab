@@ -1,21 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "ignorePaths": ["extras/templates/**"],
-  "argocd": {
+  "flux": {
     "managerFilePatterns": ["/\\.yaml$/"]
   },
   "kubernetes": {
     "managerFilePatterns": ["/\\.yaml$/"]
-  },
-  "helm-values": {
-    "managerFilePatterns": ["/\\.yaml$/"]
-  },
-  "packageRules": [
-    {
-      "description": "charts are pinned without v (cert-manager tags its chart with v)",
-      "matchManagers": ["argocd"],
-      "extractVersion": "^v?(?<version>.*)$"
-    }
-  ]
+  }
 }

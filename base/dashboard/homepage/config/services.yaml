@@ -1,0 +1,111 @@
+- Media:
+    - Jellyfin:
+        href: https://jellyfin.${DOMAIN}
+        icon: jellyfin.png
+        siteMonitor: http://jellyfin.media:8096/health
+        namespace: media
+        app: jellyfin
+        widget:
+          type: jellyfin
+          version: 2
+          url: http://jellyfin.media:8096
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          enableBlocks: true
+    - JDownloader:
+        href: https://jdownloader.${DOMAIN}
+        icon: jdownloader.png
+        siteMonitor: http://jdownloader2.media:10054
+        namespace: media
+        app: jdownloader2
+- GitOps:
+    - Flux:
+        href: https://flux.${DOMAIN}
+        icon: flux-cd.png
+        siteMonitor: http://flux-operator.gitops-system:9080
+        namespace: gitops-system
+        app: flux-operator
+- Observability:
+    - Grafana:
+        href: https://grafana.${DOMAIN}
+        icon: grafana.png
+        siteMonitor: http://grafana.observability-system/api/health
+        namespace: observability-system
+        app: grafana
+    - Prometheus:
+        icon: prometheus.png
+        namespace: observability-system
+        app: prometheus
+        widget:
+          type: prometheus
+          url: http://prometheus-server.observability-system
+    - Temperatures:
+        icon: prometheus.png
+        widget:
+          type: prometheusmetric
+          url: http://prometheus-server.observability-system
+          metrics:
+            - label: CPU
+              query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
+              format:
+                type: number
+                suffix: " °C"
+                options:
+                  maximumFractionDigits: 0
+            - label: NVMe
+              query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Composite"})
+              format:
+                type: number
+                suffix: " °C"
+                options:
+                  maximumFractionDigits: 0
+            - label: Memory
+              query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Memory"})
+              format:
+                type: number
+                suffix: " °C"
+                options:
+                  maximumFractionDigits: 0
+            - label: Ambient
+              query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Ambient"})
+              format:
+                type: number
+                suffix: " °C"
+                options:
+                  maximumFractionDigits: 0
+    - Resources:
+        icon: prometheus.png
+        widget:
+          type: prometheusmetric
+          url: http://prometheus-server.observability-system
+          metrics:
+            - label: CPU
+              query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
+              format:
+                type: percent
+            - label: Memory
+              query: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
+              format:
+                type: percent
+            - label: USB drive free
+              query: node_filesystem_avail_bytes{mountpoint="/data/external"}
+              format:
+                type: bytes
+            - label: System disk free
+              query: node_filesystem_avail_bytes{mountpoint="/"}
+              format:
+                type: bytes
+- Identity:
+    - tinyauth:
+        href: https://tinyauth.${DOMAIN}
+        icon: tinyauth.png
+        siteMonitor: http://tinyauth.identity-system/api/healthz
+        namespace: identity-system
+        app: tinyauth
+- Ingress:
+    - Tailscale:
+        href: https://login.tailscale.com/admin/machines
+        icon: tailscale.png
+        widget:
+          type: tailscale
+          deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+          key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"

@@ -1,0 +1,30 @@
+image:
+  registry: ghcr.io
+  repository: gethomepage/homepage
+  tag: v2.6.0
+extraEnvFrom:
+  - secretRef:
+      name: homepage-secrets
+config:
+  allowedHosts:
+    - homepage.${DOMAIN}
+volumes:
+  - name: homepage-config
+    configMap:
+      name: homepage-config
+volumeMounts:
+  - name: homepage-config
+    mountPath: /app/config/settings.yaml
+    subPath: settings.yaml
+  - name: homepage-config
+    mountPath: /app/config/services.yaml
+    subPath: services.yaml
+  - name: homepage-config
+    mountPath: /app/config/widgets.yaml
+    subPath: widgets.yaml
+  - name: homepage-config
+    mountPath: /app/config/kubernetes.yaml
+    subPath: kubernetes.yaml
+  - name: homepage-config
+    mountPath: /app/config/bookmarks.yaml
+    subPath: bookmarks.yaml

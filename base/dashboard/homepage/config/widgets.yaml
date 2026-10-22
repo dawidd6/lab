@@ -1,0 +1,23 @@
+- kubernetes:
+    cluster:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
+      label: ${CLUSTER_NAME}
+    nodes:
+      show: false
+- openmeteo:
+    label: Warsaw
+    latitude: 52.2297
+    longitude: 21.0122
+    timezone: Europe/Warsaw
+    units: metric
+    cache: 5
+- search:
+    provider: duckduckgo
+    target: _blank
+- datetime:
+    format:
+      dateStyle: long
+      timeStyle: short

@@ -1,0 +1,5 @@
+certManager:
+  namespace: ingress-system
+secret:
+  existingSecret: true
+  existingSecretName: duckdns

@@ -1,0 +1,38 @@
+fullnameOverride: flux
+instance:
+  distribution:
+    version: 2.x # resolves to the newest 2.x embedded in the flux-operator image, so bumping the operator bumps Flux
+    registry: ghcr.io/fluxcd
+    artifact: "" # empty: use the manifests embedded in the operator instead of pulling :latest
+  sync:
+    kind: GitRepository
+    url: https://github.com/dawidd6/lab
+    ref: refs/heads/master
+    path: clusters/${CLUSTER_NAME}
+  kustomize:
+    patches:
+      - target:
+          kind: Deployment
+          name: helm-controller
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --feature-gates=DefaultToRetryOnFailure=true
+      - target:
+          kind: Kustomization
+          name: gitops-system
+        patch: |
+          - op: add
+            path: /spec/decryption
+            value:
+              provider: sops
+              secretRef:
+                name: sops-age
+          - op: add
+            path: /spec/postBuild
+            value:
+              substituteFrom:
+                - kind: ConfigMap
+                  name: cluster-settings
+                - kind: Secret
+                  name: cluster-secrets

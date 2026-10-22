@@ -1,0 +1,21 @@
+service:
+  myjd:
+    enabled: false
+  vnc:
+    enabled: false
+persistence:
+  config:
+    storageClass: internal
+    size: 1Gi
+  output:
+    storageClass: external
+    size: 1Gi
+    annotations:
+      helm.sh/resource-policy: keep
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            WEB_FILE_MANAGER: "1"

@@ -1,4 +1,0 @@
-apiVersion: v2
-name: extras
-description: What an app's own chart doesn't provide, from valuesExtras in its app.yaml (rendered for every app by the ApplicationSet)
-version: 0.0.0

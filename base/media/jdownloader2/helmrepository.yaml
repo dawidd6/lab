@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: jdownloader2
+  namespace: media
+spec:
+  type: oci
+  url: oci://oci.trueforge.org/truecharts
+  interval: 1h

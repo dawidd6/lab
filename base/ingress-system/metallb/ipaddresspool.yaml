@@ -1,0 +1,8 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: ingress-system
+spec:
+  addresses:
+    - ${SERVER_IP}/32

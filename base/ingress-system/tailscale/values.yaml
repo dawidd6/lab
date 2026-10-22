@@ -1,0 +1,14 @@
+image:
+  repository: tailscale/tailscale
+  tag: v1.104.1
+authKey:
+  existingSecret: tailscale
+tailscale:
+  hostname: ${CLUSTER_NAME}-pod
+  hostnameFromPodName: false
+  advertiseExitNode: false
+  routes:
+    - ${SERVER_IP}/32
+persistence:
+  storageClassName: internal
+  size: 1Gi

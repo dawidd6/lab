@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - gateway.yaml
+  - gatewayclass.yaml
+  - helmrelease.yaml
+  - helmrepository.yaml
+  - httproute.yaml
+configMapGenerator:
+  - name: envoy-gateway-values
+    namespace: ingress-system
+    files:
+      - values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    reconcile.fluxcd.io/watch: Enabled

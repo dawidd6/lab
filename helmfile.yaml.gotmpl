@@ -1,0 +1,34 @@
+# Bootstrap only: Flux itself plus the charts whose CRDs the first sync needs.
+# Flux's HelmReleases take these releases over afterwards.
+# Usage: helmfile sync --state-values-set cluster=<name>
+
+{{- define "release" }}
+{{- $release := readFile (printf "base/%s/helmrelease.yaml" .) | fromYaml }}
+{{- $repository := readFile (printf "base/%s/helmrepository.yaml" .) | fromYaml }}
+    name: {{ $release.metadata.name }}
+    namespace: {{ $release.metadata.namespace }}
+    chart: {{ $repository.spec.url }}/{{ $release.spec.chart.spec.chart }}
+    version: {{ $release.spec.chart.spec.version }}
+    values:
+      - base/{{ . }}/values.yaml
+{{- end }}
+
+releases:
+  - {{- template "release" "gitops-system/flux-operator" }}
+    set:
+      # web.config needs the OIDC client secret that only the HelmRelease injects
+      - name: web.enabled
+        value: false
+
+  - {{- template "release" "gitops-system/flux-instance" }}
+    needs:
+      - gitops-system/flux-operator
+    set:
+      - name: instance.sync.path
+        value: clusters/{{ .StateValues.cluster }}
+
+  - {{- template "release" "ingress-system/envoy-gateway" }}
+
+  - {{- template "release" "ingress-system/cert-manager" }}
+
+  - {{- template "release" "ingress-system/metallb" }}

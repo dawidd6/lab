@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
-#MISE description="Install k0s on the server and write the kubeconfig"
+#MISE description="Install k0s on a cluster's hosts and write the kubeconfig"
+#USAGE arg "<cluster>" default="server"
 set -euo pipefail
 
-ssh -t server 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
+umask 077
 
-k0sctl apply
-(umask 077; k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config")
+cd "$MISE_PROJECT_ROOT"
+
+# shellcheck disable=SC2154
+cluster="clusters/$usage_cluster"
+
+# k0sctl needs passwordless sudo; assumes the SSH host is named after the cluster (single node)
+ssh -t "$usage_cluster" 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
+
+k0sctl apply --config "$cluster/k0sctl.yaml"
+k0sctl kubeconfig --config "$cluster/k0sctl.yaml" >"$cluster/.config"
+
+ln -sf "$cluster/.config" .config

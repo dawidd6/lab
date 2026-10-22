@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: envoy-gateway
+  namespace: ingress-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: gateway-helm
+      version: 1.9.2
+      sourceRef:
+        kind: HelmRepository
+        name: envoy-gateway
+  upgrade:
+    crds: CreateReplace
+  valuesFrom:
+    - kind: ConfigMap
+      name: envoy-gateway-values

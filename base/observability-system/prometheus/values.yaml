@@ -1,0 +1,96 @@
+server:
+  persistentVolume:
+    storageClass: internal
+    size: 1Gi
+scrapeConfigs:
+  blackbox:
+    enabled: true
+    job_name: blackbox
+    metrics_path: /probe
+    static_configs:
+      - labels:
+          module: http_2xx
+        targets:
+          - https://flux.${DOMAIN}
+          - https://grafana.${DOMAIN}
+          - https://homepage.${DOMAIN}
+          - https://jdownloader.${DOMAIN}
+          - https://jellyfin.${DOMAIN}
+          - https://tinyauth.${DOMAIN}
+      - labels:
+          module: http_jellyfin_health
+        targets:
+          - https://jellyfin.${DOMAIN}/health
+      - labels:
+          module: http_grafana_health
+        targets:
+          - https://grafana.${DOMAIN}/api/health
+      - labels:
+          module: dns_duckdns
+        targets:
+          - ns1.duckdns.org:53
+      - labels:
+          module: dns_router_static
+        targets:
+          - ${ROUTER_IP}:53
+      - labels:
+          module: tcp_ssh
+        targets:
+          - ${SERVER_IP}:22
+    relabel_configs:
+      - source_labels:
+          - module
+        target_label: __param_module
+      - source_labels:
+          - __address__
+        target_label: __param_target
+      - source_labels:
+          - __param_target
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+  kubernetes-services:
+    relabel_configs:
+      - source_labels:
+          - __meta_kubernetes_service_annotation_prometheus_io_probe
+        action: keep
+        regex: true
+      - source_labels:
+          - __address__
+        target_label: __param_target
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+      - source_labels:
+          - __param_target
+        target_label: instance
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels:
+          - __meta_kubernetes_namespace
+        target_label: namespace
+      - source_labels:
+          - __meta_kubernetes_service_name
+        target_label: service
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: blackbox
+        rules:
+          - alert: ProbeFailing
+            expr: probe_success == 0
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} ({{ $labels.module }}) has been failing for 5 minutes"
+          - alert: CertificateExpiringSoon
+            expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 14
+            for: 1h
+            labels:
+              severity: warning
+            annotations:
+              summary: "Certificate served at {{ $labels.instance }} expires in {{ $value | humanize }} days"
+alertmanager:
+  enabled: false
+prometheus-pushgateway:
+  enabled: false

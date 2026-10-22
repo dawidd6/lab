@@ -1,0 +1,17 @@
+web:
+  config:
+    baseURL: https://flux.${DOMAIN}
+    authentication:
+      type: OAuth2
+      oauth2:
+        provider: OIDC
+        issuerURL: https://tinyauth.${DOMAIN}
+        clientID: flux
+        scopes:
+          - openid
+          - profile
+          - email
+          - groups
+        autoLogin: true
+        impersonation:
+          username: "has(claims.preferred_username) ? claims.preferred_username : ''"

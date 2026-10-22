@@ -1,0 +1,49 @@
+deploymentStrategy:
+  type: Recreate
+persistence:
+  enabled: true
+  storageClass: internal
+  size: 1Gi
+env:
+  - name: TINYAUTH_AUTH_USERS
+    valueFrom:
+      secretKeyRef:
+        name: tinyauth-secrets
+        key: USERS
+tinyauth:
+  appUrl: https://tinyauth.${DOMAIN}
+  analytics:
+    enabled: false
+  auth:
+    secureCookie: true
+    trustedProxies: ${POD_CIDR}
+  oidc:
+    clients:
+      - id: flux
+        name: Flux
+        clientId: flux
+        clientSecretSecretRef:
+          name: tinyauth-secrets
+          key: FLUX_CLIENT_SECRET
+        trustedRedirectUris: https://flux.${DOMAIN}/oauth2/callback
+      - id: grafana
+        name: Grafana
+        clientId: grafana
+        clientSecretSecretRef:
+          name: tinyauth-secrets
+          key: GRAFANA_CLIENT_SECRET
+        trustedRedirectUris: https://grafana.${DOMAIN}/login/generic_oauth
+      - id: jdownloader2
+        name: JDownloader
+        clientId: jdownloader2
+        clientSecretSecretRef:
+          name: tinyauth-secrets
+          key: JDOWNLOADER2_CLIENT_SECRET
+        trustedRedirectUris: https://jdownloader.${DOMAIN}/oauth2/callback
+      - id: jellyfin
+        name: Jellyfin
+        clientId: jellyfin
+        clientSecretSecretRef:
+          name: tinyauth-secrets
+          key: JELLYFIN_CLIENT_SECRET
+        trustedRedirectUris: https://jellyfin.${DOMAIN}/sso/OID/redirect/tinyauth

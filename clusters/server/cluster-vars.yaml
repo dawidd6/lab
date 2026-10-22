@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: gitops-system
+data:
+  CLUSTER_NAME: server
+  DOMAIN: dawidd6.duckdns.org
+  SERVER_IP: 192.168.1.109
+  ROUTER_IP: 192.168.1.1
+  POD_CIDR: 10.244.0.0/16
