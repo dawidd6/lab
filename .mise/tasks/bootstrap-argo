@@ -2,19 +2,14 @@
 #MISE description="Install ArgoCD and Applications"
 set -euo pipefail
 
-cd "$MISE_PROJECT_ROOT/apps"
+cd "$MISE_PROJECT_ROOT"
 
 kubectl create namespace secrets-system --dry-run=client -o yaml | kubectl apply --server-side -f -
-kubectl -n secrets-system create secret generic "$(yq '.values.secretsAsFiles[0].secretName' secrets-system/sops-secrets-operator/app.yaml)" \
-    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' secrets-system/sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
+kubectl -n secrets-system create secret generic "$(yq '.values.secretsAsFiles[0].secretName' apps/secrets-system/sops-secrets-operator/app.yaml)" \
+    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' apps/secrets-system/sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
     --dry-run=client -o yaml | kubectl apply --server-side -f -
 
-for app in gitops-system/argocd gitops-system/argocd-apps; do
-    kubectl create namespace "${app%%/*}" --dry-run=client -o yaml | kubectl apply --server-side -f -
-    yq '.values' $app/app.yaml | helm template "$(yq '.metadata.name' $app/app.yaml)" "$(yq '.spec.source.chart' $app/app.yaml)" \
-        --repo "$(yq '.spec.source.repoURL' $app/app.yaml)" \
-        --version "$(yq '.spec.source.targetRevision' $app/app.yaml)" \
-        --namespace "${app%%/*}" \
-        --values - |
-        kubectl apply --server-side --field-manager=argocd-controller --namespace "${app%%/*}" -f -
-done
+kubectl create namespace gitops-system --dry-run=client -o yaml | kubectl apply --server-side -f -
+# separate applies: the ApplicationSet needs the CRD from the argocd release
+helmfile template -l name=argocd | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -
+helmfile template -l name=argocd-apps | kubectl apply --server-side --field-manager=argocd-controller --namespace gitops-system -f -

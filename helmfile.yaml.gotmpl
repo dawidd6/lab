@@ -1,0 +1,20 @@
+# Bootstrap only: renders Argo CD and its ApplicationSet from their app.yaml; Argo CD manages both afterwards.
+{{- $apps := list "gitops-system/argocd" "gitops-system/argocd-apps" }}
+
+repositories:
+{{- range $apps }}
+  {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
+  - name: {{ $app.metadata.name }}
+    url: {{ $app.spec.source.repoURL }}
+{{- end }}
+
+releases:
+{{- range $apps }}
+  {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
+  - name: {{ $app.metadata.name }}
+    namespace: {{ dir . }}
+    chart: {{ $app.metadata.name }}/{{ $app.spec.source.chart }}
+    version: {{ $app.spec.source.targetRevision }}
+    values:
+      - {{ $app.values | toJson }}
+{{- end }}
