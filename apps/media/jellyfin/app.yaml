@@ -6,7 +6,7 @@ spec:
   source:
     repoURL: https://jellyfin.github.io/jellyfin-helm
     chart: jellyfin
-    targetRevision: 3.4.0
+    targetRevision: 3.6.0
 
 values:
   image:
