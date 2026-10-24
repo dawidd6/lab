@@ -56,7 +56,9 @@ values:
                 - type: markets
                   markets:
                     - symbol: ISAC.L
-                      name: ISAC.UK
+                      name: ISAC.L
+                      chart-link: https://finance.yahoo.com/quote/ISAC.L/
+                      symbol-link: https://finance.yahoo.com/quote/ISAC.L/
                     - symbol: ETFBTBSP.WA
                       name: ETFBTBSP.WA
                       chart-link: https://finance.yahoo.com/quote/ETFBTBSP.WA/
@@ -98,17 +100,16 @@ values:
                       url: https://grafana.dawidd6.duckdns.org
                       check-url: http://grafana.observability/api/health
                       icon: di:grafana
-                    - title: tinyauth
+                    - title: Tinyauth
                       url: https://tinyauth.dawidd6.duckdns.org
                       check-url: http://tinyauth.identity/api/healthz
                       icon: di:tinyauth
-                  style: compact
                 - type: reddit
                   subreddit: Polska
             - size: small
               widgets:
                 - type: custom-api
-                  title: Temperatures
+                  title: Sensors
                   parameters:
                     query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
                   subrequests:
@@ -155,8 +156,8 @@ values:
                       <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}%</div><div class="size-h6">MEMORY</div></div>
                     </div>
                     <div class="flex justify-between text-center margin-top-10">
-                      <div><div class="color-highlight size-h3">{{ div ((.Subrequest "usb").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">USB DRIVE FREE</div></div>
-                      <div><div class="color-highlight size-h3">{{ div ((.Subrequest "disk").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">SYSTEM DISK FREE</div></div>
+                      <div><div class="color-highlight size-h3">{{ div ((.Subrequest "usb").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">EXTERNAL DISK FREE</div></div>
+                      <div><div class="color-highlight size-h3">{{ div ((.Subrequest "disk").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">INTERNAL DISK FREE</div></div>
                     </div>
                   url: http://prometheus-server.observability/api/v1/query
                 - type: custom-api
