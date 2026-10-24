@@ -59,7 +59,7 @@ values:
             key: JELLYFIN_CLIENT_SECRET
           trustedRedirectUris: https://jellyfin.dawidd6.duckdns.org/sso/OID/redirect/tinyauth
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: tinyauth
       hostname: tinyauth.dawidd6.duckdns.org

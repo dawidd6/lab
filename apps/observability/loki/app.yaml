@@ -51,4 +51,4 @@ values:
   test:
     enabled: false
 
-valuesExtras: {}
+valuesExtra: {}

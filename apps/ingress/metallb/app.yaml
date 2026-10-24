@@ -12,7 +12,7 @@ values:
   frrk8s:
     enabled: false
 
-valuesExtras:
+valuesExtra:
   ipAddressPools:
     - name: default
       addresses:

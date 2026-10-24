@@ -61,4 +61,4 @@ values:
           Drop_Single_Key raw
           Line_Format json
 
-valuesExtras: {}
+valuesExtra: {}

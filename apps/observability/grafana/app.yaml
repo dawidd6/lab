@@ -95,7 +95,7 @@ values:
         gnetId: 15760
         revision: 41
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: grafana
       hostname: grafana.dawidd6.duckdns.org

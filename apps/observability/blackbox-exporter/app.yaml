@@ -58,4 +58,4 @@ values:
           query_response:
             - expect: ^SSH-2.0-
 
-valuesExtras: {}
+valuesExtra: {}

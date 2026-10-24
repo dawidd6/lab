@@ -31,7 +31,7 @@ values:
             env:
               WEB_FILE_MANAGER: "1"
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: jdownloader2
       hostname: jdownloader.dawidd6.duckdns.org

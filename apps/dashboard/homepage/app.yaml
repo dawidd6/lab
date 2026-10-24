@@ -36,7 +36,7 @@ values:
       mountPath: /app/config/bookmarks.yaml
       subPath: bookmarks.yaml
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: homepage
       hostname: homepage.dawidd6.duckdns.org

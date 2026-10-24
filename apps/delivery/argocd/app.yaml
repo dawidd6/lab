@@ -54,7 +54,7 @@ values:
           prometheus.io/scrape: "true"
           prometheus.io/port: "8084"
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: argocd
       hostname: argocd.dawidd6.duckdns.org

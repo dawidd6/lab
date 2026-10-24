@@ -106,4 +106,4 @@ values:
   prometheus-pushgateway:
     enabled: false
 
-valuesExtras: {}
+valuesExtra: {}

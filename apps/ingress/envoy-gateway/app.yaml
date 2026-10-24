@@ -10,7 +10,7 @@ spec:
 
 values: {}
 
-valuesExtras:
+valuesExtra:
   gatewayClasses:
     - name: envoy
       controllerName: gateway.envoyproxy.io/gatewayclass-controller

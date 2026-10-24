@@ -19,7 +19,7 @@ values:
       storageClass: internal
       size: 1Gi
 
-valuesExtras:
+valuesExtra:
   httpRoutes:
     - name: jellyfin
       hostname: jellyfin.dawidd6.duckdns.org

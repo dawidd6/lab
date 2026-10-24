@@ -16,7 +16,7 @@ values:
     kind: ControllerConfiguration
     enableGatewayAPI: true
 
-valuesExtras:
+valuesExtra:
   clusterIssuers:
     - name: letsencrypt
       acme:

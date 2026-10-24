@@ -34,4 +34,4 @@ values:
           paths:
             - /data/external
 
-valuesExtras: {}
+valuesExtra: {}

@@ -15,4 +15,4 @@ values:
     existingSecret: true
     existingSecretName: duckdns
 
-valuesExtras: {}
+valuesExtra: {}

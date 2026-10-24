@@ -24,4 +24,4 @@ values:
     storageClassName: internal
     size: 1Gi
 
-valuesExtras: {}
+valuesExtra: {}

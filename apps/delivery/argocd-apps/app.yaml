@@ -53,9 +53,9 @@ values:
                 values: '{{ toYaml .values }}'
             - repoURL: https://github.com/dawidd6/lab
               targetRevision: master
-              path: apps/_common
+              path: apps/_extra
               helm:
-                values: '{{ toYaml .valuesExtras }}'
+                values: '{{ toYaml .valuesExtra }}'
             - repoURL: https://github.com/dawidd6/lab
               targetRevision: master
               path: apps
@@ -63,4 +63,4 @@ values:
                 recurse: true
                 include: '{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/*.sops.yaml'
 
-valuesExtras: {}
+valuesExtra: {}
