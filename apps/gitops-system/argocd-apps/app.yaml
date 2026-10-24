@@ -17,6 +17,10 @@ values:
       goTemplate: true
       goTemplateOptions:
         - missingkey=error
+      # lets `argocd app set <app> --sync-policy none` stick instead of being reverted
+      ignoreApplicationDifferences:
+        - jsonPointers:
+            - /spec/syncPolicy
       generators:
         - git:
             repoURL: https://github.com/dawidd6/lab
