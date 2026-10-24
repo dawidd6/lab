@@ -9,10 +9,6 @@ spec:
     targetRevision: 5.7.0
 
 values:
-  image:
-    registry: ghcr.io
-    repository: gethomepage/homepage
-    tag: v2.6.0
   extraEnvFrom:
     - secretRef:
         name: homepage-secrets
