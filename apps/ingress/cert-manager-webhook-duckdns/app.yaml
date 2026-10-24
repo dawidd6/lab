@@ -10,7 +10,7 @@ spec:
 
 values:
   certManager:
-    namespace: ingress-system
+    namespace: ingress
   secret:
     existingSecret: true
     existingSecretName: duckdns

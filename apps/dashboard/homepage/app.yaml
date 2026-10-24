@@ -109,32 +109,32 @@ valuesExtras:
               - Argo CD:
                   href: https://argocd.dawidd6.duckdns.org
                   icon: argo-cd.png
-                  siteMonitor: http://argocd-server.gitops-system/healthz
-                  namespace: gitops-system
+                  siteMonitor: http://argocd-server.delivery/healthz
+                  namespace: delivery
                   app: argocd-server
                   widget:
                     type: argocd
-                    url: http://argocd-server.gitops-system
+                    url: http://argocd-server.delivery
                     key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
           - Observability:
               - Grafana:
                   href: https://grafana.dawidd6.duckdns.org
                   icon: grafana.png
-                  siteMonitor: http://grafana.observability-system/api/health
-                  namespace: observability-system
+                  siteMonitor: http://grafana.observability/api/health
+                  namespace: observability
                   app: grafana
               - Prometheus:
                   icon: prometheus.png
-                  namespace: observability-system
+                  namespace: observability
                   app: prometheus
                   widget:
                     type: prometheus
-                    url: http://prometheus-server.observability-system
+                    url: http://prometheus-server.observability
               - Temperatures:
                   icon: prometheus.png
                   widget:
                     type: prometheusmetric
-                    url: http://prometheus-server.observability-system
+                    url: http://prometheus-server.observability
                     metrics:
                       - label: CPU
                         query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
@@ -168,7 +168,7 @@ valuesExtras:
                   icon: prometheus.png
                   widget:
                     type: prometheusmetric
-                    url: http://prometheus-server.observability-system
+                    url: http://prometheus-server.observability
                     metrics:
                       - label: CPU
                         query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
@@ -190,8 +190,8 @@ valuesExtras:
               - tinyauth:
                   href: https://tinyauth.dawidd6.duckdns.org
                   icon: tinyauth.png
-                  siteMonitor: http://tinyauth.identity-system/api/healthz
-                  namespace: identity-system
+                  siteMonitor: http://tinyauth.identity/api/healthz
+                  namespace: identity
                   app: tinyauth
           - Ingress:
               - Tailscale:

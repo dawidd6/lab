@@ -11,7 +11,7 @@ spec:
 values:
   applicationsets:
     apps:
-      namespace: gitops-system
+      namespace: delivery
       additionalAnnotations:
         argocd.argoproj.io/sync-options: Delete=false,Prune=false
       goTemplate: true

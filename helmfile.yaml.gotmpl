@@ -1,5 +1,5 @@
 # Bootstrap only: renders Argo CD and its ApplicationSet from their app.yaml; Argo CD manages both afterwards.
-{{- $apps := list "gitops-system/argocd" "gitops-system/argocd-apps" }}
+{{- $apps := list "delivery/argocd" "delivery/argocd-apps" }}
 
 repositories:
 {{- range $apps }}
