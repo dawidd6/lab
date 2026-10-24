@@ -5,11 +5,12 @@ set -euo pipefail
 cd "$MISE_PROJECT_ROOT"
 
 kubectl create namespace secret --dry-run=client -o yaml | kubectl apply --server-side -f -
-kubectl -n secret create secret generic "$(yq '.values.secretsAsFiles[0].secretName' apps/secret/sops-secrets-operator/app.yaml)" \
-    --from-file="$(yq '.values.extraEnv[0].value | split("/") | .[-1]' apps/secret/sops-secrets-operator/app.yaml)=$HOME/.config/sops/age/keys.txt" \
-    --dry-run=client -o yaml | kubectl apply --server-side -f -
-
 kubectl create namespace delivery --dry-run=client -o yaml | kubectl apply --server-side -f -
-# separate applies: the ApplicationSet needs the CRD from the argocd release
-helmfile template -q -l name=argocd | kubectl apply --server-side --field-manager=argocd-controller --namespace delivery -f -
-helmfile template -q -l name=argocd-apps | kubectl apply --server-side --field-manager=argocd-controller --namespace delivery -f -
+
+kubectl -n secret create secret generic sops-age --from-file=keys.txt="$HOME/.config/sops/age/keys.txt" --dry-run=client -o yaml | kubectl apply --server-side -f -
+
+helmfile template -q -l name=argocd | kubectl apply --server-side --field-manager=argocd-controller -n delivery -f -
+
+kubectl -n delivery rollout status deploy/argocd-repo-server
+
+helmfile template -q -l name=argocd-apps | kubectl apply --server-side --field-manager=argocd-controller -n delivery -f -
