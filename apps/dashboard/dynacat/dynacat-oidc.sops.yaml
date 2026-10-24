@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: dynacat-oidc
+spec:
+  secretTemplates:
+    - name: dynacat-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:UM/BV52Jo9poLEwkD1DwDaz6LsI2Q2QXJw8HQWG9THRjOuwqo7XHLQZwxLt50JlBsSO9/bbsYH8Ug8Y2vI3MNg==,iv:BHf1q+0ST/OToR1iK0eAo3PjX09HmHL1hiIHEy80F/I=,tag:rItBbws8b1uhvXna6FL3hw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBNbnAxaXpqMmJpSlhscTZO
+        d05KTUxsdHc3TlVlNUdQSW1TcWdjeGZhN1VzCkRaR3liZFpER3RXQTNaTVVidjJn
+        b3lOOXJJOU9rcDlMbzk2YXArdlVGaEkKLS0tIFBoYVJ3eUdHV1pQVVQvbjFubWJq
+        TEEzR2hWQmljWGJ3VWdzWXN1ZnpxRlEK2yuEdM3SVElZ6h9Byu6ftf8S28VVFXcF
+        udrrmsitCKmJd9iLSWEUoSMiM3iM5Ve6dHbYsKtSOGex7ILHaLFRgA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-24T10:37:03Z"
+  mac: ENC[AES256_GCM,data:Xsci9CwMBRuvosALTiznet69JFBz+fKP9eNgDgvQd1PUY0myjABOED8qdPqobIKFsDB/2g0v4log11aHtyS8YdTamIyLwjEl/HLR6F89EonXzcMm2z4Fy21HF9SDuXWcrNyR6xMKHUFmKqXKBZft/HToiLuNk5URoJ+6KUHhvgg=,iv:ty4NRHO61FXqtm07jyrdyF7In7/Ot6Qb3TQAIHWaMV4=,tag:Wsn6xGDXMnsORuM3QJyh7g==,type:str]
+  version: 3.13.3
