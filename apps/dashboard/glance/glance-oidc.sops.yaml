@@ -1,10 +1,10 @@
 apiVersion: isindir.github.com/v1alpha3
 kind: SopsSecret
 metadata:
-  name: dynacat-oidc
+  name: glance-oidc
 spec:
   secretTemplates:
-    - name: dynacat-oidc
+    - name: glance-oidc
       stringData:
         client-secret: ENC[AES256_GCM,data:UM/BV52Jo9poLEwkD1DwDaz6LsI2Q2QXJw8HQWG9THRjOuwqo7XHLQZwxLt50JlBsSO9/bbsYH8Ug8Y2vI3MNg==,iv:BHf1q+0ST/OToR1iK0eAo3PjX09HmHL1hiIHEy80F/I=,tag:rItBbws8b1uhvXna6FL3hw==,type:str]
 sops:
@@ -19,6 +19,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
   encrypted_regex: ^(data|stringData)$
-  lastmodified: "2026-10-24T10:37:03Z"
-  mac: ENC[AES256_GCM,data:Xsci9CwMBRuvosALTiznet69JFBz+fKP9eNgDgvQd1PUY0myjABOED8qdPqobIKFsDB/2g0v4log11aHtyS8YdTamIyLwjEl/HLR6F89EonXzcMm2z4Fy21HF9SDuXWcrNyR6xMKHUFmKqXKBZft/HToiLuNk5URoJ+6KUHhvgg=,iv:ty4NRHO61FXqtm07jyrdyF7In7/Ot6Qb3TQAIHWaMV4=,tag:Wsn6xGDXMnsORuM3QJyh7g==,type:str]
+  lastmodified: "2026-10-24T11:12:52Z"
+  mac: ENC[AES256_GCM,data:Oj79m/YMx5r8jpklFP4VG8msSveDGmL5/Y+Lme0AX46FKUoij9hONOgXa4y1LQA4WYjXmb1SrAXB70ZRaBW9GjM7MKaVydUcLM2hmMbDF0Q8ry+02+pXvaPoBQ/ISgk4zWReT9zgl7XANQiWSvoOhkscrTdGrOQnGiRJvTl+IiQ=,iv:Mbhu763Py5AqLCPxvJsCS8STberOH9QeelRmdzKLjgU=,tag:dnhVF0qFxAbLu3yqKGLqAA==,type:str]
   version: 3.13.3

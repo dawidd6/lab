@@ -15,7 +15,7 @@ values:
       storageClass:
         create: true
         defaultVolumeType: hostPath
-        reclaimPolicy: Delete
+        reclaimPolicy: Retain
         volumeBindingMode: WaitForFirstConsumer
         pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/"
       nodePathMap:
