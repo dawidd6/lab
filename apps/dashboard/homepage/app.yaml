@@ -12,7 +12,7 @@ values:
   image:
     registry: ghcr.io
     repository: gethomepage/homepage
-    tag: v2.6.0
+    tag: v2.7.0
   extraEnvFrom:
     - secretRef:
         name: homepage-secrets
