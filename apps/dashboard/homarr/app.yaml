@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homarr
+spec:
+  source:
+    repoURL: https://homarr-labs.github.io/charts/
+    chart: homarr
+    targetRevision: 8.37.0
+
+values:
+  # boards, apps and widgets are configured in the UI and stored in the SQLite database
+  strategyType: Recreate
+  env:
+    TZ: Europe/Warsaw
+    # credentials only for the onboarding admin; tinyauth sends no groups claim, so group memberships are managed in Homarr
+    AUTH_PROVIDERS: credentials,oidc
+    AUTH_OIDC_ISSUER: https://tinyauth.dawidd6.duckdns.org
+    AUTH_OIDC_CLIENT_NAME: tinyauth
+    AUTH_OIDC_GROUPS_LOCAL_MANAGEMENT: "true"
+  envSecrets:
+    authOidcCredentials:
+      existingSecret: homarr-oidc
+      oidcClientId: client-id
+      oidcClientSecret: client-secret
+    dbEncryption:
+      existingSecret: homarr-secrets
+      key: db-encryption-key
+  persistence:
+    homarrDatabase:
+      enabled: true
+      storageClassName: internal
+      size: 1Gi
+
+valuesExtra:
+  httpRoutes:
+    - name: homarr
+      hostname: homarr.dawidd6.duckdns.org
+      service: homarr
+      port: 7575
