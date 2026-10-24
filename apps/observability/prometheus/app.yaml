@@ -25,7 +25,6 @@ values:
             - https://argocd.dawidd6.duckdns.org
             - https://glance.dawidd6.duckdns.org
             - https://grafana.dawidd6.duckdns.org
-            - https://homarr.dawidd6.duckdns.org
             - https://homepage.dawidd6.duckdns.org
             - https://jdownloader.dawidd6.duckdns.org
             - https://jellyfin.dawidd6.duckdns.org

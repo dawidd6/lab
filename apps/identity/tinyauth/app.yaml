@@ -51,13 +51,6 @@ values:
             name: tinyauth-secrets
             key: GRAFANA_CLIENT_SECRET
           trustedRedirectUris: https://grafana.dawidd6.duckdns.org/login/generic_oauth
-        - id: homarr
-          name: Homarr
-          clientId: homarr
-          clientSecretSecretRef:
-            name: tinyauth-secrets
-            key: HOMARR_CLIENT_SECRET
-          trustedRedirectUris: https://homarr.dawidd6.duckdns.org/api/auth/callback/oidc
         - id: jdownloader2
           name: JDownloader
           clientId: jdownloader2
