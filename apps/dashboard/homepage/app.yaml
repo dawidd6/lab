@@ -6,7 +6,7 @@ spec:
   source:
     repoURL: ghcr.io/m0nsterrr/helm-charts
     chart: homepage
-    targetRevision: 5.8.0
+    targetRevision: 5.9.0
 
 values:
   extraEnvFrom:
