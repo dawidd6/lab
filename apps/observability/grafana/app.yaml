@@ -6,7 +6,7 @@ spec:
   source:
     repoURL: https://grafana-community.github.io/helm-charts
     chart: grafana
-    targetRevision: 14.1.0
+    targetRevision: 14.2.0
 
 values:
   testFramework:
