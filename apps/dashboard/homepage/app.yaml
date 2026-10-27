@@ -30,9 +30,6 @@ values:
       mountPath: /app/config/widgets.yaml
       subPath: widgets.yaml
     - name: homepage-config
-      mountPath: /app/config/kubernetes.yaml
-      subPath: kubernetes.yaml
-    - name: homepage-config
       mountPath: /app/config/bookmarks.yaml
       subPath: bookmarks.yaml
 
@@ -45,92 +42,70 @@ valuesExtra:
   configMaps:
     - name: homepage-config
       data:
-        bookmarks.yaml:
-          - Links:
-              - Lab repository:
-                  - href: https://github.com/dawidd6/lab
-                    icon: github.png
-              - Tailscale:
-                  - href: https://login.tailscale.com/admin/machines
-                    icon: tailscale.png
-              - DuckDNS:
-                  - href: https://www.duckdns.org
-                    icon: duckdns.png
         settings.yaml:
           title: Server
           headerStyle: clean
-        kubernetes.yaml:
-          mode: cluster
+          layout:
+            Services:
+              style: row
+              columns: 5
+            Server:
+              style: row
+              columns: 3
+            GitHub:
+              style: row
+              columns: 2
+            Lab:
+              style: row
+              columns: 3
         widgets.yaml:
-          - kubernetes:
-              cluster:
-                show: true
-                cpu: true
-                memory: true
-                showLabel: true
-                label: server
-              nodes:
-                show: false
+          - datetime:
+              text_size: xl
+              format:
+                dateStyle: long
+                timeStyle: short
+                hourCycle: h23
+          - datetime:
+              format:
+                timeStyle: short
+                hourCycle: h23
+                timeZone: UTC
+                timeZoneName: short
           - openmeteo:
-              label: Warsaw
-              latitude: 52.2297
-              longitude: 21.0122
+              label: Wrocław
+              latitude: 51.1079
+              longitude: 17.0385
               timezone: Europe/Warsaw
               units: metric
               cache: 5
           - search:
-              provider: duckduckgo
+              provider: google
+              showSearchSuggestions: true
               target: _blank
-          - datetime:
-              format:
-                dateStyle: long
-                timeStyle: short
         services.yaml:
-          - Media:
+          - Services:
               - Jellyfin:
                   href: https://jellyfin.dawidd6.duckdns.org
                   icon: jellyfin.png
                   siteMonitor: http://jellyfin.media:8096/health
-                  namespace: media
-                  app: jellyfin
-                  widget:
-                    type: jellyfin
-                    version: 2
-                    url: http://jellyfin.media:8096
-                    key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
-                    enableBlocks: true
               - JDownloader:
                   href: https://jdownloader.dawidd6.duckdns.org
                   icon: jdownloader.png
                   siteMonitor: http://jdownloader2.media:10054
-                  namespace: media
-                  app: jdownloader2
-          - GitOps:
               - Argo CD:
                   href: https://argocd.dawidd6.duckdns.org
                   icon: argo-cd.png
                   siteMonitor: http://argocd-server.delivery/healthz
-                  namespace: delivery
-                  app: argocd-server
-                  widget:
-                    type: argocd
-                    url: http://argocd-server.delivery
-                    key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
-          - Observability:
               - Grafana:
                   href: https://grafana.dawidd6.duckdns.org
                   icon: grafana.png
                   siteMonitor: http://grafana.observability/api/health
-                  namespace: observability
-                  app: grafana
-              - Prometheus:
-                  icon: prometheus.png
-                  namespace: observability
-                  app: prometheus
-                  widget:
-                    type: prometheus
-                    url: http://prometheus-server.observability
-              - Temperatures:
+              - Tinyauth:
+                  href: https://tinyauth.dawidd6.duckdns.org
+                  icon: tinyauth.png
+                  siteMonitor: http://tinyauth.identity/api/healthz
+          - Server:
+              - Sensors:
                   icon: prometheus.png
                   widget:
                     type: prometheusmetric
@@ -178,22 +153,14 @@ valuesExtra:
                         query: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
                         format:
                           type: percent
-                      - label: USB drive free
+                      - label: External disk free
                         query: node_filesystem_avail_bytes{mountpoint="/data/external"}
                         format:
                           type: bytes
-                      - label: System disk free
+                      - label: Internal disk free
                         query: node_filesystem_avail_bytes{mountpoint="/"}
                         format:
                           type: bytes
-          - Identity:
-              - tinyauth:
-                  href: https://tinyauth.dawidd6.duckdns.org
-                  icon: tinyauth.png
-                  siteMonitor: http://tinyauth.identity/api/healthz
-                  namespace: identity
-                  app: tinyauth
-          - Ingress:
               - Tailscale:
                   href: https://login.tailscale.com/admin/machines
                   icon: tailscale.png
@@ -201,3 +168,42 @@ valuesExtra:
                     type: tailscale
                     deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
                     key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+          - GitHub:
+              - Repository:
+                  href: https://github.com/dawidd6/lab
+                  icon: github.png
+                  widget:
+                    type: customapi
+                    url: https://api.github.com/repos/dawidd6/lab
+                    mappings:
+                      - field: stargazers_count
+                        label: Stars
+                        format: number
+                      - field: forks_count
+                        label: Forks
+                        format: number
+                      - field: open_issues_count
+                        label: Open issues
+                        format: number
+                      - field: pushed_at
+                        label: Last push
+                        format: relativeDate
+              - Kubernetes releases:
+                  href: https://github.com/kubernetes/kubernetes/releases
+                  icon: kubernetes.png
+                  widget:
+                    type: feed
+                    url: https://github.com/kubernetes/kubernetes/releases.atom
+                    maxItems: 5
+                    images: false
+        bookmarks.yaml:
+          - Lab:
+              - Repository:
+                  - href: https://github.com/dawidd6/lab
+                    icon: github.png
+              - Tailscale:
+                  - href: https://login.tailscale.com/admin/machines
+                    icon: tailscale.png
+              - DuckDNS:
+                  - href: https://www.duckdns.org
+                    icon: duckdns.png
