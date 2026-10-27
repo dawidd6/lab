@@ -67,7 +67,8 @@ valuesExtra:
                 hourCycle: h23
           - datetime:
               format:
-                timeStyle: short
+                hour: 2-digit
+                minute: 2-digit
                 hourCycle: h23
                 timeZone: UTC
                 timeZoneName: short
