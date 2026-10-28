@@ -52,15 +52,20 @@ spec:
                 - name: Loki
                   type: loki
                   url: http://loki:3100
-                - name: Yahoo Finance
-                  uid: yahoo-finance
+                - name: Markets
+                  uid: markets
                   type: yesoreyeram-infinity-datasource
                   jsonData:
                     allowedHosts:
                       - https://query1.finance.yahoo.com
+                      - https://ec.europa.eu
+                      - https://stats.bis.org
                     httpHeaderName1: User-Agent
                   secureJsonData:
                     httpHeaderValue1: Mozilla/5.0
+              deleteDatasources:
+                - name: Yahoo Finance
+                  orgId: 1
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1

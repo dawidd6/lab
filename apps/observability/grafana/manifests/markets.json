@@ -110,13 +110,13 @@
       "title": "${crypto:text}",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "yahoo-finance"
+        "uid": "markets"
       },
       "repeat": "crypto",
       "repeatDirection": "h",
       "maxPerRow": 4,
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
         "x": 0,
         "y": 1
@@ -126,7 +126,7 @@
           "refId": "A",
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "yahoo-finance"
+            "uid": "markets"
           },
           "type": "json",
           "source": "url",
@@ -179,10 +179,10 @@
           "fields": "",
           "values": false
         },
-        "graphMode": "area",
+        "graphMode": "none",
         "colorMode": "none",
         "textMode": "value",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
@@ -190,6 +190,98 @@
     },
     {
       "id": 3,
+      "type": "timeseries",
+      "title": "",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "repeat": "crypto",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 4
+      },
+      "timeFrom": "7d",
+      "hideTimeOverride": true,
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${crypto}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "5d"
+              },
+              {
+                "key": "interval",
+                "value": "30m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "insertNulls": 7200000,
+            "spanNulls": false,
+            "axisPlacement": "right"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false,
+          "displayMode": "hidden",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 4,
       "type": "row",
       "title": "FX",
       "collapsed": false,
@@ -197,33 +289,33 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 10
       },
       "panels": []
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "stat",
       "title": "${fx:text}",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "yahoo-finance"
+        "uid": "markets"
       },
       "repeat": "fx",
       "repeatDirection": "h",
       "maxPerRow": 4,
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
         "x": 0,
-        "y": 7
+        "y": 11
       },
       "targets": [
         {
           "refId": "A",
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "yahoo-finance"
+            "uid": "markets"
           },
           "type": "json",
           "source": "url",
@@ -276,17 +368,109 @@
           "fields": "",
           "values": false
         },
-        "graphMode": "area",
+        "graphMode": "none",
         "colorMode": "none",
         "textMode": "value",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
       }
     },
     {
-      "id": 5,
+      "id": 6,
+      "type": "timeseries",
+      "title": "",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "repeat": "fx",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 14
+      },
+      "timeFrom": "7d",
+      "hideTimeOverride": true,
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${fx}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "5d"
+              },
+              {
+                "key": "interval",
+                "value": "30m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 4,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "insertNulls": 7200000,
+            "spanNulls": false,
+            "axisPlacement": "right"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false,
+          "displayMode": "hidden",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 7,
       "type": "row",
       "title": "Commodities",
       "collapsed": false,
@@ -294,33 +478,33 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 20
       },
       "panels": []
     },
     {
-      "id": 6,
+      "id": 8,
       "type": "stat",
       "title": "${commodities:text}",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "yahoo-finance"
+        "uid": "markets"
       },
       "repeat": "commodities",
       "repeatDirection": "h",
       "maxPerRow": 4,
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
         "x": 0,
-        "y": 13
+        "y": 21
       },
       "targets": [
         {
           "refId": "A",
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "yahoo-finance"
+            "uid": "markets"
           },
           "type": "json",
           "source": "url",
@@ -373,17 +557,109 @@
           "fields": "",
           "values": false
         },
-        "graphMode": "area",
+        "graphMode": "none",
         "colorMode": "none",
         "textMode": "value",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
       }
     },
     {
-      "id": 7,
+      "id": 9,
+      "type": "timeseries",
+      "title": "",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "repeat": "commodities",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 24
+      },
+      "timeFrom": "7d",
+      "hideTimeOverride": true,
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${commodities}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "5d"
+              },
+              {
+                "key": "interval",
+                "value": "30m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "insertNulls": 7200000,
+            "spanNulls": false,
+            "axisPlacement": "right"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false,
+          "displayMode": "hidden",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 10,
       "type": "row",
       "title": "ETFs",
       "collapsed": false,
@@ -391,33 +667,33 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 30
       },
       "panels": []
     },
     {
-      "id": 8,
+      "id": 11,
       "type": "stat",
       "title": "${etfs:text}",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "yahoo-finance"
+        "uid": "markets"
       },
       "repeat": "etfs",
       "repeatDirection": "h",
       "maxPerRow": 4,
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
         "x": 0,
-        "y": 19
+        "y": 31
       },
       "targets": [
         {
           "refId": "A",
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "yahoo-finance"
+            "uid": "markets"
           },
           "type": "json",
           "source": "url",
@@ -470,12 +746,294 @@
           "fields": "",
           "values": false
         },
-        "graphMode": "area",
+        "graphMode": "none",
         "colorMode": "none",
         "textMode": "value",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "repeat": "etfs",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 34
+      },
+      "timeFrom": "7d",
+      "hideTimeOverride": true,
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${etfs}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "5d"
+              },
+              {
+                "key": "interval",
+                "value": "30m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "showPoints": "never",
+            "insertNulls": 7200000,
+            "spanNulls": false,
+            "axisPlacement": "right"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false,
+          "displayMode": "hidden",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": "row",
+      "title": "Poland",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "panels": []
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Inflation y/y",
+      "description": "Eurostat HICP, annual rate of change, Poland (close to, not identical with, GUS CPI)",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 41
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "geo",
+                "value": "PL"
+              },
+              {
+                "key": "unit",
+                "value": "RCH_A"
+              },
+              {
+                "key": "coicop18",
+                "value": "TOTAL"
+              },
+              {
+                "key": "lastTimePeriod",
+                "value": "1"
+              },
+              {
+                "key": "format",
+                "value": "JSON"
+              }
+            ],
+            "headers": []
+          },
+          "root_selector": "{\"period\": $keys(dimension.time.category.index)[0], \"value\": value.\"0\"}",
+          "columns": [
+            {
+              "selector": "period",
+              "text": "Month",
+              "type": "string"
+            },
+            {
+              "selector": "value",
+              "text": "HICP",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "unit": "percent",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "NBP reference rate",
+      "description": "Central bank policy rate for Poland, as published by BIS (weekly)",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "markets"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 41
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "markets"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "url": "https://stats.bis.org/api/v1/data/WS_CBPOL/D.PL/all",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "lastNObservations",
+                "value": "1"
+              }
+            ],
+            "headers": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.sdmx.data+json;version=1.0.0"
+              }
+            ]
+          },
+          "root_selector": "{\"date\": data.structure.dimensions.observation[0].values[0].id, \"rate\": $number(data.dataSets[0].series.\"0:0\".observations.\"0\"[0])}",
+          "columns": [
+            {
+              "selector": "date",
+              "text": "As of",
+              "type": "string"
+            },
+            {
+              "selector": "rate",
+              "text": "Rate",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "unit": "percent",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "graphMode": "none",
+        "colorMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
         "wideLayout": true
       }
     }
