@@ -46,8 +46,11 @@ spec:
             httpGet:
               path: /api/healthcheck
               port: 3000
-          # single files, so Homepage can still write its logs and defaults into /app/config
+          # /app/config is root-owned in the image; Homepage (uid 1000) writes logs and default files there,
+          # so it's a writable emptyDir with the config files from git mounted on top
           volumeMounts:
+            - name: config-dir
+              mountPath: /app/config
             - name: config
               mountPath: /app/config/bookmarks.yaml
               subPath: bookmarks.yaml
@@ -61,6 +64,8 @@ spec:
               mountPath: /app/config/widgets.yaml
               subPath: widgets.yaml
       volumes:
+        - name: config-dir
+          emptyDir: {}
         - name: config
           configMap:
             name: homepage-config
