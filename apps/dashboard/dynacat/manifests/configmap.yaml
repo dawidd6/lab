@@ -6,8 +6,8 @@ data:
   dynacat.yml: |
     server:
       proxied: true
-      editing-users:
-        - dawid
+      # config comes from git; UI edits would be lost on the next restart
+      allow-editing: false
     auth:
       secret-key: ${DYNACAT_SECRET_KEY}
       disable-password: true
@@ -205,7 +205,7 @@ data:
                   </div>
               - type: custom-api
                 title: Sensors
-                update-interval: 15s
+                update-interval: 1m
                 title-icon: di:prometheus
                 parameters:
                   query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
@@ -232,7 +232,7 @@ data:
                 url: http://prometheus-server.observability/api/v1/query
               - type: custom-api
                 title: Resources
-                update-interval: 15s
+                update-interval: 1m
                 title-icon: di:prometheus
                 parameters:
                   query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100

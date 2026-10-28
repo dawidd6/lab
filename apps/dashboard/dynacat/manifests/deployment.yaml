@@ -13,19 +13,6 @@ spec:
       labels:
         app.kubernetes.io/name: dynacat
     spec:
-      initContainers:
-        # ConfigMap mounts are read-only; the UI editor needs a writable copy, refreshed from git on every start
-        - name: config
-          image: docker.io/panonim/dynacat:3.0.2
-          command:
-            - cp
-            - /configmap/dynacat.yml
-            - /app/config/dynacat.yml
-          volumeMounts:
-            - name: config
-              mountPath: /app/config
-            - name: configmap
-              mountPath: /configmap
       containers:
         - name: app
           image: docker.io/panonim/dynacat:3.0.2
@@ -60,13 +47,19 @@ spec:
                 secretKeyRef:
                   name: dynacat-secrets
                   key: github-token
+          livenessProbe:
+            httpGet:
+              path: /api/healthz
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /api/healthz
+              port: 8080
           volumeMounts:
             - name: config
               mountPath: /app/config
       volumes:
         - name: config
-          emptyDir: {}
-        - name: configmap
           configMap:
             name: dynacat-config
       enableServiceLinks: false
