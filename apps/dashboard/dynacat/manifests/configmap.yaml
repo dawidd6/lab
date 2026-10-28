@@ -110,8 +110,8 @@ data:
                 template: |-
                   <div class="flex justify-between text-center">
                     <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">CPU</div></div>
-                    <div><div class="color-highlight size-h3">{{ (.Subrequest "nvme").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">NVME</div></div>
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">MEMORY</div></div>
+                    <div><div class="color-highlight size-h3">{{ (.Subrequest "nvme").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">NVME</div></div>
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "ambient").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">AMBIENT</div></div>
                   </div>
                 url: http://prometheus-server.observability/api/v1/query
@@ -162,3 +162,4 @@ data:
               - type: releases
                 repositories:
                   - repository: kubernetes/kubernetes
+                  - repository: k0sproject/k0s
