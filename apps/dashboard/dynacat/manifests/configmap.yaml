@@ -230,35 +230,22 @@ data:
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "ambient").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">AMBIENT</div></div>
                   </div>
                 url: http://prometheus-server.observability/api/v1/query
-              - type: custom-api
-                title: Resources
-                update-interval: 1m
-                title-icon: di:prometheus
-                parameters:
-                  query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
-                subrequests:
-                  disk:
-                    parameters:
-                      query: node_filesystem_avail_bytes{mountpoint="/"}
-                    url: http://prometheus-server.observability/api/v1/query
-                  memory:
-                    parameters:
-                      query: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
-                    url: http://prometheus-server.observability/api/v1/query
-                  usb:
-                    parameters:
-                      query: node_filesystem_avail_bytes{mountpoint="/data/external"}
-                    url: http://prometheus-server.observability/api/v1/query
-                template: |-
-                  <div class="flex gap-45 text-center">
-                    <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}%</div><div class="size-h6">CPU</div></div>
-                    <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}%</div><div class="size-h6">MEMORY</div></div>
-                  </div>
-                  <div class="flex gap-45 text-center margin-top-10">
-                    <div><div class="color-highlight size-h3">{{ div ((.Subrequest "usb").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">EXTERNAL DISK FREE</div></div>
-                    <div><div class="color-highlight size-h3">{{ div ((.Subrequest "disk").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">INTERNAL DISK FREE</div></div>
-                  </div>
-                url: http://prometheus-server.observability/api/v1/query
+              - type: server-stats
+                # read live from node_exporter (the one Prometheus scrapes), not through Prometheus
+                update-interval: 15s
+                servers:
+                  - type: node-exporter
+                    name: server
+                    url: http://prometheus-prometheus-node-exporter.observability:9100
+                    cpu-temp-sensor: platform_coretemp_0/Package id 0
+                    hide-mountpoints-by-default: true
+                    mountpoints:
+                      "/":
+                        name: Internal
+                        hide: false
+                      "/data/external":
+                        name: External
+                        hide: false
               - type: custom-api
                 title: Tailscale
                 update-interval: 15m
