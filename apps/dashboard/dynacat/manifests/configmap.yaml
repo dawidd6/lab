@@ -4,6 +4,8 @@ metadata:
   name: dynacat-config
 data:
   dynacat.yml: |
+    theme:
+      custom-css-file: /assets/user.css
     server:
       proxied: true
       editing-users:
@@ -236,3 +238,12 @@ data:
                 repositories:
                   - repository: kubernetes/kubernetes
                   - repository: k0sproject/k0s
+  user.css: |
+    /* hide the 21-day sparkline in markets widgets */
+    .market-chart {
+      display: none;
+    }
+    /* the chart used to push the prices to the right edge */
+    .market-values {
+      margin-left: auto;
+    }

@@ -53,6 +53,9 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /app/config
+            - name: configmap
+              mountPath: /app/assets/user.css
+              subPath: user.css
       volumes:
         - name: config
           emptyDir: {}
