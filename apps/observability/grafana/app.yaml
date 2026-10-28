@@ -52,6 +52,15 @@ spec:
                 - name: Loki
                   type: loki
                   url: http://loki:3100
+                - name: Yahoo Finance
+                  uid: yahoo-finance
+                  type: yesoreyeram-infinity-datasource
+                  jsonData:
+                    allowedHosts:
+                      - https://query1.finance.yahoo.com
+                    httpHeaderName1: User-Agent
+                  secureJsonData:
+                    httpHeaderValue1: Mozilla/5.0
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
@@ -94,6 +103,11 @@ spec:
               kubernetes-pods:
                 gnetId: 15760
                 revision: 41
+          plugins:
+            - yesoreyeram-infinity-datasource@4.1.4
+          sidecar:
+            dashboards:
+              enabled: true
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/observability/grafana/manifests

@@ -1,0 +1,483 @@
+{
+  "uid": "markets",
+  "title": "Markets",
+  "tags": [
+    "markets"
+  ],
+  "editable": false,
+  "refresh": "1m",
+  "schemaVersion": 41,
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "crypto",
+        "label": "Crypto",
+        "type": "custom",
+        "hide": 2,
+        "query": "Bitcoin : BTC-USD, Ethereum : ETH-USD, Solana : SOL-USD",
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        }
+      },
+      {
+        "name": "fx",
+        "label": "FX",
+        "type": "custom",
+        "hide": 2,
+        "query": "EUR/PLN : EURPLN=X, USD/PLN : USDPLN=X, GBP/PLN : GBPPLN=X",
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        }
+      },
+      {
+        "name": "commodities",
+        "label": "Commodities",
+        "type": "custom",
+        "hide": 2,
+        "query": "Gold : GC=F, Silver : SI=F, Crude oil (WTI) : CL=F, Brent oil : BZ=F",
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        }
+      },
+      {
+        "name": "etfs",
+        "label": "ETFs",
+        "type": "custom",
+        "hide": 2,
+        "query": "Avantis Global Small Cap Value : AVWS.DE, iShares MSCI ACWI : ISAC.L, iShares Physical Silver : ISLN.L, VanEck Space Innovators : JEDI.L",
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "row",
+      "title": "Crypto",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "${crypto:text}",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "yahoo-finance"
+      },
+      "repeat": "crypto",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "yahoo-finance"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${crypto}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "1d"
+              },
+              {
+                "key": "interval",
+                "value": "5m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $append([{\"time\": $r.timestamp[0] - 300, \"price\": $r.meta.chartPreviousClose}], $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}})))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "auto",
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 3,
+      "type": "row",
+      "title": "FX",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "panels": []
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "${fx:text}",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "yahoo-finance"
+      },
+      "repeat": "fx",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "yahoo-finance"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${fx}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "1d"
+              },
+              {
+                "key": "interval",
+                "value": "5m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $append([{\"time\": $r.timestamp[0] - 300, \"price\": $r.meta.chartPreviousClose}], $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}})))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 4,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "auto",
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 5,
+      "type": "row",
+      "title": "Commodities",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "panels": []
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "${commodities:text}",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "yahoo-finance"
+      },
+      "repeat": "commodities",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 13
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "yahoo-finance"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${commodities}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "1d"
+              },
+              {
+                "key": "interval",
+                "value": "5m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $append([{\"time\": $r.timestamp[0] - 300, \"price\": $r.meta.chartPreviousClose}], $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}})))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "auto",
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard",
+        "wideLayout": true
+      }
+    },
+    {
+      "id": 7,
+      "type": "row",
+      "title": "ETFs",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "panels": []
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "${etfs:text}",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "yahoo-finance"
+      },
+      "repeat": "etfs",
+      "repeatDirection": "h",
+      "maxPerRow": 4,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 19
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "yahoo-finance"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "timeseries",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/${etfs}",
+          "url_options": {
+            "method": "GET",
+            "params": [
+              {
+                "key": "range",
+                "value": "1d"
+              },
+              {
+                "key": "interval",
+                "value": "5m"
+              }
+            ]
+          },
+          "root_selector": "($r := chart.result[0]; $append([{\"time\": $r.timestamp[0] - 300, \"price\": $r.meta.chartPreviousClose}], $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}})))",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch_s"
+            },
+            {
+              "selector": "price",
+              "text": "price",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "graphMode": "area",
+        "colorMode": "none",
+        "textMode": "value",
+        "justifyMode": "auto",
+        "showPercentChange": true,
+        "percentChangeColorMode": "standard",
+        "wideLayout": true
+      }
+    }
+  ]
+}
