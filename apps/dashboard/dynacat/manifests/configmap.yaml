@@ -161,88 +161,105 @@ data:
         columns:
           - size: full
             widgets:
-              - type: monitor
-                title: Services
-                update-interval: 1m
-                sites:
-                  - title: Jellyfin
-                    url: https://jellyfin.dawidd6.duckdns.org
-                    check-url: http://jellyfin.media:8096/health
-                    icon: di:jellyfin
-                  - title: JDownloader
-                    url: https://jdownloader.dawidd6.duckdns.org
-                    check-url: http://jdownloader2.media:10054
-                    icon: di:jdownloader
-                  - title: Argo CD
-                    url: https://argocd.dawidd6.duckdns.org
-                    check-url: http://argocd-server.delivery/healthz
-                    icon: di:argo-cd
-                  - title: Grafana
-                    url: https://grafana.dawidd6.duckdns.org
-                    check-url: http://grafana.observability/api/health
-                    icon: di:grafana
-                  - title: Tinyauth
-                    url: https://tinyauth.dawidd6.duckdns.org
-                    check-url: http://tinyauth.identity/api/healthz
-                    icon: di:tinyauth
-              - type: custom-api
-                title: Argo CD
-                update-interval: 15s
-                title-url: https://argocd.dawidd6.duckdns.org
-                url: http://argocd-server.delivery/api/v1/applications
-                headers:
-                  Authorization: Bearer ${ARGOCD_TOKEN}
-                parameters:
-                  fields: items.metadata.name,items.status.sync.status,items.status.health
-                template: |
-                  {{ $apps := .JSON.Array "items" }}
-                  <div class="flex gap-45 text-center">
-                    <div><div class="color-highlight size-h3">{{ len $apps }}</div><div class="size-h6">APPS</div></div>
-                    <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
-                    <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
-                  </div>
-              - type: custom-api
-                title: Sensors
-                update-interval: 1m
-                parameters:
-                  query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
-                subrequests:
-                  ambient:
+              - type: split-column
+                widgets:
+                  - type: monitor
+                    title: Services
+                    update-interval: 1m
+                    sites:
+                      - title: Jellyfin
+                        url: https://jellyfin.dawidd6.duckdns.org
+                        check-url: http://jellyfin.media:8096/health
+                        icon: di:jellyfin
+                      - title: JDownloader
+                        url: https://jdownloader.dawidd6.duckdns.org
+                        check-url: http://jdownloader2.media:10054
+                        icon: di:jdownloader
+                      - title: Argo CD
+                        url: https://argocd.dawidd6.duckdns.org
+                        check-url: http://argocd-server.delivery/healthz
+                        icon: di:argo-cd
+                      - title: Grafana
+                        url: https://grafana.dawidd6.duckdns.org
+                        check-url: http://grafana.observability/api/health
+                        icon: di:grafana
+                      - title: Tinyauth
+                        url: https://tinyauth.dawidd6.duckdns.org
+                        check-url: http://tinyauth.identity/api/healthz
+                        icon: di:tinyauth
+                  - type: bookmarks
+                    groups:
+                      - title: Lab
+                        links:
+                          - title: Repository
+                            url: https://github.com/dawidd6/lab
+                            icon: di:github
+                          - title: Tailscale
+                            url: https://login.tailscale.com/admin/machines
+                            icon: di:tailscale
+                          - title: DuckDNS
+                            url: https://www.duckdns.org
+                            icon: di:duckdns
+              - type: split-column
+                max-columns: 3
+                widgets:
+                  - type: custom-api
+                    title: Argo CD
+                    update-interval: 15s
+                    title-url: https://argocd.dawidd6.duckdns.org
+                    url: http://argocd-server.delivery/api/v1/applications
+                    headers:
+                      Authorization: Bearer ${ARGOCD_TOKEN}
                     parameters:
-                      query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Ambient"})
-                    url: http://prometheus-server.observability/api/v1/query
-                  memory:
+                      fields: items.metadata.name,items.status.sync.status,items.status.health
+                    template: |
+                      {{ $apps := .JSON.Array "items" }}
+                      <div class="flex gap-45 text-center">
+                        <div><div class="color-highlight size-h3">{{ len $apps }}</div><div class="size-h6">APPS</div></div>
+                        <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
+                        <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
+                      </div>
+                  - type: custom-api
+                    title: Sensors
+                    update-interval: 1m
                     parameters:
-                      query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Memory"})
+                      query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
+                    subrequests:
+                      ambient:
+                        parameters:
+                          query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Ambient"})
+                        url: http://prometheus-server.observability/api/v1/query
+                      memory:
+                        parameters:
+                          query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Memory"})
+                        url: http://prometheus-server.observability/api/v1/query
+                      nvme:
+                        parameters:
+                          query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Composite"})
+                        url: http://prometheus-server.observability/api/v1/query
+                    template: |-
+                      <div class="flex gap-45 text-center">
+                        <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">CPU</div></div>
+                        <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">MEMORY</div></div>
+                        <div><div class="color-highlight size-h3">{{ (.Subrequest "nvme").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">NVME</div></div>
+                        <div><div class="color-highlight size-h3">{{ (.Subrequest "ambient").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">AMBIENT</div></div>
+                      </div>
                     url: http://prometheus-server.observability/api/v1/query
-                  nvme:
-                    parameters:
-                      query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Composite"})
-                    url: http://prometheus-server.observability/api/v1/query
-                template: |-
-                  <div class="flex gap-45 text-center">
-                    <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">CPU</div></div>
-                    <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">MEMORY</div></div>
-                    <div><div class="color-highlight size-h3">{{ (.Subrequest "nvme").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">NVME</div></div>
-                    <div><div class="color-highlight size-h3">{{ (.Subrequest "ambient").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">AMBIENT</div></div>
-                  </div>
-                url: http://prometheus-server.observability/api/v1/query
-              - type: server-stats
-                # read live from node_exporter (the one Prometheus scrapes), not through Prometheus
-                update-interval: 15s
-                servers:
-                  - type: node-exporter
-                    name: server
-                    url: http://prometheus-prometheus-node-exporter.observability:9100
-                    cpu-temp-sensor: platform_coretemp_0/Package id 0
-                    hide-mountpoints-by-default: true
-                    mountpoints:
-                      "/":
-                        name: Internal
-                        hide: false
-                      "/data/external":
-                        name: External
-                        hide: false
+                  - type: server-stats
+                    # read live from node_exporter (the one Prometheus scrapes), not through Prometheus
+                    update-interval: 15s
+                    servers:
+                      - type: node-exporter
+                        name: server
+                        url: http://prometheus-prometheus-node-exporter.observability:9100
+                        hide-mountpoints-by-default: true
+                        mountpoints:
+                          "/":
+                            name: Internal
+                            hide: false
+                          "/data/external":
+                            name: External
+                            hide: false
               - type: custom-api
                 title: Tailscale
                 update-interval: 15m
@@ -257,26 +274,15 @@ data:
                     {{ end }}
                   </ul>
                 url: https://api.tailscale.com/api/v2/device/${TAILSCALE_DEVICE_ID}
-              - type: bookmarks
-                groups:
-                  - title: Lab
-                    links:
-                      - title: Repository
-                        url: https://github.com/dawidd6/lab
-                        icon: di:github
-                      - title: Tailscale
-                        url: https://login.tailscale.com/admin/machines
-                        icon: di:tailscale
-                      - title: DuckDNS
-                        url: https://www.duckdns.org
-                        icon: di:duckdns
-              - type: repository
-                repository: dawidd6/lab
-                update-interval: 15m
-                token: ${GITHUB_TOKEN}
-              - type: releases
-                update-interval: 1h
-                token: ${GITHUB_TOKEN}
-                repositories:
-                  - repository: kubernetes/kubernetes
-                  - repository: k0sproject/k0s
+              - type: split-column
+                widgets:
+                  - type: repository
+                    repository: dawidd6/lab
+                    update-interval: 15m
+                    token: ${GITHUB_TOKEN}
+                  - type: releases
+                    update-interval: 1h
+                    token: ${GITHUB_TOKEN}
+                    repositories:
+                      - repository: kubernetes/kubernetes
+                      - repository: k0sproject/k0s
