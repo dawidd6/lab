@@ -3,46 +3,7 @@ kind: Application
 metadata:
   name: jdownloader2
 spec:
-  source:
-    repoURL: oci.trueforge.org/truecharts
-    chart: jdownloader2
-    targetRevision: 23.0.4
-
-values:
-  service:
-    myjd:
-      enabled: false
-    vnc:
-      enabled: false
-  persistence:
-    config:
-      storageClass: internal
-      size: 1Gi
-    output:
-      storageClass: external
-      size: 1Gi
-      annotations:
-        argocd.argoproj.io/sync-options: Prune=confirm,Delete=confirm
-  workload:
-    main:
-      podSpec:
-        containers:
-          main:
-            env:
-              WEB_FILE_MANAGER: "1"
-
-valuesExtra:
-  httpRoutes:
-    - name: jdownloader2
-      hostname: jdownloader.dawidd6.duckdns.org
-      service: jdownloader2
-      port: 10054
-  securityPolicies:
-    - name: jdownloader2
-      route: jdownloader2
-      oidc:
-        provider:
-          issuer: https://tinyauth.dawidd6.duckdns.org
-        clientID: jdownloader2
-        clientSecret:
-          name: jdownloader2-oidc
+  sources:
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/media/jdownloader2/manifests

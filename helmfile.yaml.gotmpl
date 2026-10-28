@@ -4,17 +4,19 @@
 repositories:
 {{- range $apps }}
   {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
+  {{- $chart := index $app.spec.sources 0 }}
   - name: {{ $app.metadata.name }}
-    url: {{ $app.spec.source.repoURL }}
+    url: {{ $chart.repoURL }}
 {{- end }}
 
 releases:
 {{- range $apps }}
   {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
+  {{- $chart := index $app.spec.sources 0 }}
   - name: {{ $app.metadata.name }}
     namespace: {{ dir . }}
-    chart: {{ $app.metadata.name }}/{{ $app.spec.source.chart }}
-    version: {{ $app.spec.source.targetRevision }}
+    chart: {{ $app.metadata.name }}/{{ $chart.chart }}
+    version: {{ $chart.targetRevision }}
     values:
-      - {{ $app.values | toJson }}
+      - {{ $chart.helm.valuesObject | toJson }}
 {{- end }}

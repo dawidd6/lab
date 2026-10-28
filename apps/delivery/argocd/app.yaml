@@ -3,60 +3,54 @@ kind: Application
 metadata:
   name: argocd
 spec:
-  source:
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 10.11.6
-
-values:
-  configs:
-    cm:
-      url: https://argocd.dawidd6.duckdns.org
-      accounts.homepage: apiKey
-      oidc.config: |
-        name: tinyauth
-        issuer: https://tinyauth.dawidd6.duckdns.org
-        clientID: argocd
-        clientSecret: $argocd-oidc:clientSecret
-        requestedScopes: [openid, profile, email, groups]
-    rbac:
-      policy.csv: |
-        g, dawid, role:admin
-        g, homepage, role:readonly
-      scopes: '[groups, preferred_username]'
-    params:
-      server.insecure: true
-      controller.diff.server.side: true
-      applicationsetcontroller.enable.new.git.file.globbing: true
-  dex:
-    enabled: false
-  notifications:
-    enabled: false
-  controller:
-    metrics:
-      enabled: true
-      service:
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "8082"
-  server:
-    metrics:
-      enabled: true
-      service:
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "8083"
-  repoServer:
-    metrics:
-      enabled: true
-      service:
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "8084"
-
-valuesExtra:
-  httpRoutes:
-    - name: argocd
-      hostname: argocd.dawidd6.duckdns.org
-      service: argocd-server
-      port: 80
+  sources:
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 10.11.6
+      helm:
+        valuesObject:
+          configs:
+            cm:
+              url: https://argocd.dawidd6.duckdns.org
+              oidc.config: |
+                name: tinyauth
+                issuer: https://tinyauth.dawidd6.duckdns.org
+                clientID: argocd
+                clientSecret: $argocd-oidc:clientSecret
+                requestedScopes: [openid, profile, email, groups]
+            rbac:
+              policy.csv: |
+                g, dawid, role:admin
+              scopes: '[groups, preferred_username]'
+            params:
+              server.insecure: true
+              controller.diff.server.side: true
+              applicationsetcontroller.enable.new.git.file.globbing: true
+          dex:
+            enabled: false
+          notifications:
+            enabled: false
+          controller:
+            metrics:
+              enabled: true
+              service:
+                annotations:
+                  prometheus.io/scrape: "true"
+                  prometheus.io/port: "8082"
+          server:
+            metrics:
+              enabled: true
+              service:
+                annotations:
+                  prometheus.io/scrape: "true"
+                  prometheus.io/port: "8083"
+          repoServer:
+            metrics:
+              enabled: true
+              service:
+                annotations:
+                  prometheus.io/scrape: "true"
+                  prometheus.io/port: "8084"
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/delivery/argocd/manifests

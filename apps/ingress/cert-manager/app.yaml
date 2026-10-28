@@ -3,32 +3,18 @@ kind: Application
 metadata:
   name: cert-manager
 spec:
-  source:
-    repoURL: quay.io/jetstack/charts
-    chart: cert-manager
-    targetRevision: 1.21.3
-
-values:
-  crds:
-    enabled: true
-  config:
-    apiVersion: controller.config.cert-manager.io/v1alpha1
-    kind: ControllerConfiguration
-    enableGatewayAPI: true
-
-valuesExtra:
-  clusterIssuers:
-    - name: letsencrypt
-      acme:
-        server: https://acme-v02.api.letsencrypt.org/directory
-        privateKeySecretRef:
-          name: letsencrypt-account-key
-        solvers:
-          - dns01:
-              webhook:
-                config:
-                  apiTokenSecretRef:
-                    key: token
-                    name: duckdns
-                groupName: acme.duckdns.org
-                solverName: duckdns
+  sources:
+    - repoURL: quay.io/jetstack/charts
+      chart: cert-manager
+      targetRevision: 1.21.3
+      helm:
+        valuesObject:
+          crds:
+            enabled: true
+          config:
+            apiVersion: controller.config.cert-manager.io/v1alpha1
+            kind: ControllerConfiguration
+            enableGatewayAPI: true
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/ingress/cert-manager/manifests

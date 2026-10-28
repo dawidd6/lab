@@ -3,16 +3,17 @@ kind: Application
 metadata:
   name: cert-manager-webhook-duckdns
 spec:
-  source:
-    repoURL: ghcr.io/cobexer/charts
-    chart: cert-manager-webhook-duckdns
-    targetRevision: 2.0.0
-
-values:
-  certManager:
-    namespace: ingress
-  secret:
-    existingSecret: true
-    existingSecretName: duckdns
-
-valuesExtra: {}
+  sources:
+    - repoURL: ghcr.io/cobexer/charts
+      chart: cert-manager-webhook-duckdns
+      targetRevision: 2.0.0
+      helm:
+        valuesObject:
+          certManager:
+            namespace: ingress
+          secret:
+            existingSecret: true
+            existingSecretName: duckdns
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/ingress/cert-manager-webhook-duckdns/manifests

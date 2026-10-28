@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tailscale
+spec:
+  serviceName: tailscale
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tailscale
+  volumeClaimTemplates:
+    - metadata:
+        name: state
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: internal
+        resources:
+          requests:
+            storage: 1Gi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tailscale
+    spec:
+      containers:
+        - name: app
+          image: docker.io/tailscale/tailscale:v1.104.2
+          env:
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale
+                  key: TS_AUTHKEY
+            - name: TS_HOSTNAME
+              value: server-pod
+            - name: TS_STATE_DIR
+              value: /var/lib/tailscale
+            # empty, otherwise containerboot stores state in a "tailscale" Secret instead of the PVC
+            - name: TS_KUBE_SECRET
+              value: ""
+            - name: TS_USERSPACE
+              value: "false"
+            - name: TS_ACCEPT_DNS
+              value: "false"
+            - name: TS_AUTH_ONCE
+              value: "true"
+            - name: TS_ENABLE_HEALTH_CHECK
+              value: "true"
+            - name: TS_ENABLE_METRICS
+              value: "true"
+            - name: TS_LOCAL_ADDR_PORT
+              value: "[::]:9002"
+            - name: TS_ROUTES
+              value: 192.168.1.109/32
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 9002
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 9002
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: state
+              mountPath: /var/lib/tailscale
+            - name: tun
+              mountPath: /dev/net/tun
+      volumes:
+        - name: tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice
+      enableServiceLinks: false

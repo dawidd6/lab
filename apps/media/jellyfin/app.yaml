@@ -3,25 +3,21 @@ kind: Application
 metadata:
   name: jellyfin
 spec:
-  source:
-    repoURL: https://jellyfin.github.io/jellyfin-helm
-    chart: jellyfin
-    targetRevision: 3.7.0
-
-values:
-  image:
-    repository: docker.io/jellyfin/jellyfin
-    tag: "12.4"
-  persistence:
-    media:
-      existingClaim: jdownloader2-output
-    config:
-      storageClass: internal
-      size: 1Gi
-
-valuesExtra:
-  httpRoutes:
-    - name: jellyfin
-      hostname: jellyfin.dawidd6.duckdns.org
-      service: jellyfin
-      port: 8096
+  sources:
+    - repoURL: https://jellyfin.github.io/jellyfin-helm
+      chart: jellyfin
+      targetRevision: 3.7.0
+      helm:
+        valuesObject:
+          image:
+            repository: docker.io/jellyfin/jellyfin
+            tag: "12.4"
+          persistence:
+            media:
+              existingClaim: jdownloader2-output
+            config:
+              storageClass: internal
+              size: 1Gi
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/media/jellyfin/manifests
