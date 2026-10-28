@@ -33,19 +33,6 @@ data:
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
-              - type: bookmarks
-                groups:
-                  - title: Lab
-                    links:
-                      - title: Repository
-                        url: https://github.com/dawidd6/lab
-                        icon: di:github
-                      - title: Tailscale
-                        url: https://login.tailscale.com/admin/machines
-                        icon: di:tailscale
-                      - title: DuckDNS
-                        url: https://www.duckdns.org
-                        icon: di:duckdns
               # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
               - type: custom-api
                 title: Notifications
@@ -77,10 +64,6 @@ data:
                     {{ end }}
                   </ul>
                   {{ end }}
-              - type: repository
-                repository: dawidd6/lab
-                update-interval: 15m
-                token: ${GITHUB_TOKEN}
               - type: releases
                 update-interval: 1h
                 token: ${GITHUB_TOKEN}
@@ -291,3 +274,20 @@ data:
                     {{ end }}
                   </ul>
                 url: https://api.tailscale.com/api/v2/device/${TAILSCALE_DEVICE_ID}
+              - type: bookmarks
+                groups:
+                  - title: Lab
+                    links:
+                      - title: Repository
+                        url: https://github.com/dawidd6/lab
+                        icon: di:github
+                      - title: Tailscale
+                        url: https://login.tailscale.com/admin/machines
+                        icon: di:tailscale
+                      - title: DuckDNS
+                        url: https://www.duckdns.org
+                        icon: di:duckdns
+              - type: repository
+                repository: dawidd6/lab
+                update-interval: 15m
+                token: ${GITHUB_TOKEN}
