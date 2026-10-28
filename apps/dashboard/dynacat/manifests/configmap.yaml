@@ -36,7 +36,7 @@ data:
                 units: metric
               - type: markets
                 title: Crypto
-                update-interval: 15m
+                update-interval: 15s
                 symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
                 chart-link-template: *yahoo
                 markets:
@@ -48,7 +48,7 @@ data:
                     name: Solana
               - type: markets
                 title: FX
-                update-interval: 15m
+                update-interval: 15s
                 symbol-link-template: *yahoo
                 chart-link-template: *yahoo
                 markets:
@@ -60,7 +60,7 @@ data:
                     name: GBP/PLN
               - type: markets
                 title: Commodities
-                update-interval: 15m
+                update-interval: 15s
                 symbol-link-template: *yahoo
                 chart-link-template: *yahoo
                 markets:
@@ -162,6 +162,32 @@ data:
                     url: https://tinyauth.dawidd6.duckdns.org
                     check-url: http://tinyauth.identity/api/healthz
                     icon: di:tinyauth
+              - type: custom-api
+                title: Argo CD
+                title-icon: di:argo-cd
+                title-url: https://argocd.dawidd6.duckdns.org
+                url: http://argocd-server.delivery/api/v1/applications
+                headers:
+                  Authorization: Bearer ${ARGOCD_TOKEN}
+                parameters:
+                  fields: items.metadata.name,items.status.sync.status,items.status.health.status
+                template: |
+                  {{ $apps := .JSON.Array "items" }}
+                  <div class="flex justify-between text-center">
+                    <div><div class="color-highlight size-h3">{{ len $apps }}</div><div class="size-h6">APPS</div></div>
+                    <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
+                    <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
+                  </div>
+                  <ul class="list list-gap-10 margin-top-10">
+                    {{ range $apps }}
+                    {{ if or (ne (.String "status.sync.status") "Synced") (ne (.String "status.health.status") "Healthy") }}
+                    <li>
+                      <a class="color-highlight" href="https://argocd.dawidd6.duckdns.org/applications/delivery/{{ .String "metadata.name" }}" target="_blank" rel="noreferrer">{{ .String "metadata.name" }}</a>
+                      <span class="size-h6">{{ .String "status.sync.status" }} · {{ .String "status.health.status" }}</span>
+                    </li>
+                    {{ end }}
+                    {{ end }}
+                  </ul>
               - type: reddit
                 subreddit: Polska
           - size: small
