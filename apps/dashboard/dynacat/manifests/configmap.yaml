@@ -34,56 +34,54 @@ data:
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
-              - type: group
-                widgets:
-                  - type: markets
-                    title: Crypto
-                    symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
-                    chart-link-template: *yahoo
-                    markets:
-                      - symbol: BTC-USD
-                        name: Bitcoin
-                      - symbol: ETH-USD
-                        name: Ethereum
-                      - symbol: SOL-USD
-                        name: Solana
-                  - type: markets
-                    title: FX
-                    symbol-link-template: *yahoo
-                    chart-link-template: *yahoo
-                    markets:
-                      - symbol: EURPLN=X
-                        name: EUR/PLN
-                      - symbol: USDPLN=X
-                        name: USD/PLN
-                      - symbol: GBPPLN=X
-                        name: GBP/PLN
-                  - type: markets
-                    title: Commodities
-                    symbol-link-template: *yahoo
-                    chart-link-template: *yahoo
-                    markets:
-                      - symbol: GC=F
-                        name: Gold
-                      - symbol: SI=F
-                        name: Silver
-                      - symbol: CL=F
-                        name: Crude oil (WTI)
-                      - symbol: BZ=F
-                        name: Brent oil
-                  - type: markets
-                    title: ETFs
-                    symbol-link-template: *yahoo
-                    chart-link-template: *yahoo
-                    markets:
-                      - symbol: AVWS.DE
-                        name: Avantis Global Small Cap Value
-                      - symbol: ISAC.L
-                        name: iShares MSCI ACWI
-                      - symbol: ISLN.L
-                        name: iShares Physical Silver
-                      - symbol: JEDI.L
-                        name: VanEck Space Innovators
+              - type: markets
+                title: Crypto
+                symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: BTC-USD
+                    name: Bitcoin
+                  - symbol: ETH-USD
+                    name: Ethereum
+                  - symbol: SOL-USD
+                    name: Solana
+              - type: markets
+                title: FX
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: EURPLN=X
+                    name: EUR/PLN
+                  - symbol: USDPLN=X
+                    name: USD/PLN
+                  - symbol: GBPPLN=X
+                    name: GBP/PLN
+              - type: markets
+                title: Commodities
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: GC=F
+                    name: Gold
+                  - symbol: SI=F
+                    name: Silver
+                  - symbol: CL=F
+                    name: Crude oil (WTI)
+                  - symbol: BZ=F
+                    name: Brent oil
+              - type: markets
+                title: ETFs
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: AVWS.DE
+                    name: Avantis Global Small Cap Value
+                  - symbol: ISAC.L
+                    name: iShares MSCI ACWI
+                  - symbol: ISLN.L
+                    name: iShares Physical Silver
+                  - symbol: JEDI.L
+                    name: VanEck Space Innovators
               # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
               # the policy rate is the NBP reference rate as published by BIS (weekly)
               - type: custom-api
