@@ -4,8 +4,6 @@ metadata:
   name: dynacat-config
 data:
   dynacat.yml: |
-    theme:
-      custom-css-file: /assets/user.css
     server:
       proxied: true
       editing-users:
@@ -34,58 +32,6 @@ data:
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
-              - type: markets
-                title: Crypto
-                update-interval: 15s
-                symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
-                chart-link-template: *yahoo
-                markets:
-                  - symbol: BTC-USD
-                    name: Bitcoin
-                  - symbol: ETH-USD
-                    name: Ethereum
-                  - symbol: SOL-USD
-                    name: Solana
-              - type: markets
-                title: FX
-                update-interval: 15s
-                symbol-link-template: *yahoo
-                chart-link-template: *yahoo
-                markets:
-                  - symbol: EURPLN=X
-                    name: EUR/PLN
-                  - symbol: USDPLN=X
-                    name: USD/PLN
-                  - symbol: GBPPLN=X
-                    name: GBP/PLN
-              - type: markets
-                title: Commodities
-                update-interval: 15s
-                symbol-link-template: *yahoo
-                chart-link-template: *yahoo
-                markets:
-                  - symbol: GC=F
-                    name: Gold
-                  - symbol: SI=F
-                    name: Silver
-                  - symbol: CL=F
-                    name: Crude oil (WTI)
-                  - symbol: BZ=F
-                    name: Brent oil
-              - type: markets
-                title: ETFs
-                update-interval: 15m
-                symbol-link-template: *yahoo
-                chart-link-template: *yahoo
-                markets:
-                  - symbol: AVWS.DE
-                    name: Avantis Global Small Cap Value
-                  - symbol: ISAC.L
-                    name: iShares MSCI ACWI
-                  - symbol: ISLN.L
-                    name: iShares Physical Silver
-                  - symbol: JEDI.L
-                    name: VanEck Space Innovators
               # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
               # the policy rate is the NBP reference rate as published by BIS (weekly)
               - type: custom-api
@@ -162,6 +108,58 @@ data:
                     url: https://tinyauth.dawidd6.duckdns.org
                     check-url: http://tinyauth.identity/api/healthz
                     icon: di:tinyauth
+              - type: markets
+                title: Crypto
+                update-interval: 15s
+                symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: BTC-USD
+                    name: Bitcoin
+                  - symbol: ETH-USD
+                    name: Ethereum
+                  - symbol: SOL-USD
+                    name: Solana
+              - type: markets
+                title: FX
+                update-interval: 15s
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: EURPLN=X
+                    name: EUR/PLN
+                  - symbol: USDPLN=X
+                    name: USD/PLN
+                  - symbol: GBPPLN=X
+                    name: GBP/PLN
+              - type: markets
+                title: Commodities
+                update-interval: 15s
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: GC=F
+                    name: Gold
+                  - symbol: SI=F
+                    name: Silver
+                  - symbol: CL=F
+                    name: Crude oil (WTI)
+                  - symbol: BZ=F
+                    name: Brent oil
+              - type: markets
+                title: ETFs
+                update-interval: 15m
+                symbol-link-template: *yahoo
+                chart-link-template: *yahoo
+                markets:
+                  - symbol: AVWS.DE
+                    name: Avantis Global Small Cap Value
+                  - symbol: ISAC.L
+                    name: iShares MSCI ACWI
+                  - symbol: ISLN.L
+                    name: iShares Physical Silver
+                  - symbol: JEDI.L
+                    name: VanEck Space Innovators
               - type: reddit
                 subreddit: Polska
           - size: small
@@ -174,7 +172,7 @@ data:
                 headers:
                   Authorization: Bearer ${ARGOCD_TOKEN}
                 parameters:
-                  fields: items.metadata.name,items.status.sync.status,items.status.health.status
+                  fields: items.metadata.name,items.status.sync.status,items.status.health
                 template: |
                   {{ $apps := .JSON.Array "items" }}
                   <div class="flex justify-between text-center">
@@ -256,12 +254,3 @@ data:
                 repositories:
                   - repository: kubernetes/kubernetes
                   - repository: k0sproject/k0s
-  user.css: |
-    /* hide the 21-day sparkline in markets widgets */
-    .market-chart {
-      display: none;
-    }
-    /* the chart used to push the prices to the right edge */
-    .market-values {
-      margin-left: auto;
-    }
