@@ -35,8 +35,7 @@ data:
                 units: metric
               # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
               - type: custom-api
-                title: Notifications
-                title-icon: di:github
+                title: GitHub notifications
                 title-url: https://github.com/notifications
                 update-interval: 5m
                 url: https://api.github.com/notifications
@@ -189,7 +188,6 @@ data:
               - type: custom-api
                 title: Argo CD
                 update-interval: 15s
-                title-icon: di:argo-cd
                 title-url: https://argocd.dawidd6.duckdns.org
                 url: http://argocd-server.delivery/api/v1/applications
                 headers:
@@ -206,7 +204,6 @@ data:
               - type: custom-api
                 title: Sensors
                 update-interval: 1m
-                title-icon: di:prometheus
                 parameters:
                   query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
                 subrequests:
@@ -249,7 +246,6 @@ data:
               - type: custom-api
                 title: Tailscale
                 update-interval: 15m
-                title-icon: di:tailscale
                 headers:
                   Authorization: Bearer ${TAILSCALE_KEY}
                 template: |
