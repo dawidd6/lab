@@ -8,6 +8,7 @@ configMapGenerator:
   - name: grafana-dashboards
     files:
       - markets.json
+      - poland.json
     options:
       disableNameSuffixHash: true
       labels:

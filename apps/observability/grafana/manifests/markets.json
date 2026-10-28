@@ -205,8 +205,8 @@
         "x": 0,
         "y": 4
       },
-      "timeFrom": "7d",
-      "hideTimeOverride": true,
+      "timeFrom": "now/d",
+      "hideTimeOverride": false,
       "targets": [
         {
           "refId": "A",
@@ -224,15 +224,15 @@
             "params": [
               {
                 "key": "range",
-                "value": "5d"
+                "value": "1d"
               },
               {
                 "key": "interval",
-                "value": "30m"
+                "value": "5m"
               }
             ]
           },
-          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i], \"previous close\": $r.meta.chartPreviousClose}}))",
           "columns": [
             {
               "selector": "time",
@@ -242,6 +242,11 @@
             {
               "selector": "price",
               "text": "price",
+              "type": "number"
+            },
+            {
+              "selector": "previous close",
+              "text": "previous close",
               "type": "number"
             }
           ]
@@ -265,7 +270,41 @@
             "axisPlacement": "right"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "previous close"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    6,
+                    6
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.insertNulls",
+                "value": false
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -275,7 +314,7 @@
           "calcs": []
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       }
@@ -394,8 +433,8 @@
         "x": 0,
         "y": 14
       },
-      "timeFrom": "7d",
-      "hideTimeOverride": true,
+      "timeFrom": "now/d",
+      "hideTimeOverride": false,
       "targets": [
         {
           "refId": "A",
@@ -413,15 +452,15 @@
             "params": [
               {
                 "key": "range",
-                "value": "5d"
+                "value": "1d"
               },
               {
                 "key": "interval",
-                "value": "30m"
+                "value": "5m"
               }
             ]
           },
-          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i], \"previous close\": $r.meta.chartPreviousClose}}))",
           "columns": [
             {
               "selector": "time",
@@ -431,6 +470,11 @@
             {
               "selector": "price",
               "text": "price",
+              "type": "number"
+            },
+            {
+              "selector": "previous close",
+              "text": "previous close",
               "type": "number"
             }
           ]
@@ -454,7 +498,41 @@
             "axisPlacement": "right"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "previous close"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    6,
+                    6
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.insertNulls",
+                "value": false
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -464,7 +542,7 @@
           "calcs": []
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       }
@@ -583,8 +661,8 @@
         "x": 0,
         "y": 24
       },
-      "timeFrom": "7d",
-      "hideTimeOverride": true,
+      "timeFrom": "now/d",
+      "hideTimeOverride": false,
       "targets": [
         {
           "refId": "A",
@@ -602,15 +680,15 @@
             "params": [
               {
                 "key": "range",
-                "value": "5d"
+                "value": "1d"
               },
               {
                 "key": "interval",
-                "value": "30m"
+                "value": "5m"
               }
             ]
           },
-          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i], \"previous close\": $r.meta.chartPreviousClose}}))",
           "columns": [
             {
               "selector": "time",
@@ -620,6 +698,11 @@
             {
               "selector": "price",
               "text": "price",
+              "type": "number"
+            },
+            {
+              "selector": "previous close",
+              "text": "previous close",
               "type": "number"
             }
           ]
@@ -643,7 +726,41 @@
             "axisPlacement": "right"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "previous close"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    6,
+                    6
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.insertNulls",
+                "value": false
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -653,7 +770,7 @@
           "calcs": []
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       }
@@ -772,8 +889,8 @@
         "x": 0,
         "y": 34
       },
-      "timeFrom": "7d",
-      "hideTimeOverride": true,
+      "timeFrom": "now/d",
+      "hideTimeOverride": false,
       "targets": [
         {
           "refId": "A",
@@ -791,15 +908,15 @@
             "params": [
               {
                 "key": "range",
-                "value": "5d"
+                "value": "1d"
               },
               {
                 "key": "interval",
-                "value": "30m"
+                "value": "5m"
               }
             ]
           },
-          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i]}}))",
+          "root_selector": "($r := chart.result[0]; $map($r.timestamp, function($t, $i) {{\"time\": $t, \"price\": $r.indicators.quote[0].close[$i], \"previous close\": $r.meta.chartPreviousClose}}))",
           "columns": [
             {
               "selector": "time",
@@ -809,6 +926,11 @@
             {
               "selector": "price",
               "text": "price",
+              "type": "number"
+            },
+            {
+              "selector": "previous close",
+              "text": "previous close",
               "type": "number"
             }
           ]
@@ -832,7 +954,41 @@
             "axisPlacement": "right"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "previous close"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    6,
+                    6
+                  ]
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.insertNulls",
+                "value": false
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -842,199 +998,9 @@
           "calcs": []
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
-      }
-    },
-    {
-      "id": 13,
-      "type": "row",
-      "title": "Poland",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 40
-      },
-      "panels": []
-    },
-    {
-      "id": 14,
-      "type": "stat",
-      "title": "Inflation y/y",
-      "description": "Eurostat HICP, annual rate of change, Poland (close to, not identical with, GUS CPI)",
-      "datasource": {
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "markets"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 41
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "markets"
-          },
-          "type": "json",
-          "source": "url",
-          "parser": "backend",
-          "format": "table",
-          "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr",
-          "url_options": {
-            "method": "GET",
-            "params": [
-              {
-                "key": "geo",
-                "value": "PL"
-              },
-              {
-                "key": "unit",
-                "value": "RCH_A"
-              },
-              {
-                "key": "coicop18",
-                "value": "TOTAL"
-              },
-              {
-                "key": "lastTimePeriod",
-                "value": "1"
-              },
-              {
-                "key": "format",
-                "value": "JSON"
-              }
-            ],
-            "headers": []
-          },
-          "root_selector": "{\"period\": $keys(dimension.time.category.index)[0], \"value\": value.\"0\"}",
-          "columns": [
-            {
-              "selector": "period",
-              "text": "Month",
-              "type": "string"
-            },
-            {
-              "selector": "value",
-              "text": "HICP",
-              "type": "number"
-            }
-          ]
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 1,
-          "unit": "percent",
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "text"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/.*/",
-          "values": false
-        },
-        "graphMode": "none",
-        "colorMode": "none",
-        "textMode": "value_and_name",
-        "justifyMode": "center",
-        "wideLayout": true
-      }
-    },
-    {
-      "id": 15,
-      "type": "stat",
-      "title": "NBP reference rate",
-      "description": "Central bank policy rate for Poland, as published by BIS (weekly)",
-      "datasource": {
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "markets"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 41
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "markets"
-          },
-          "type": "json",
-          "source": "url",
-          "parser": "backend",
-          "format": "table",
-          "url": "https://stats.bis.org/api/v1/data/WS_CBPOL/D.PL/all",
-          "url_options": {
-            "method": "GET",
-            "params": [
-              {
-                "key": "lastNObservations",
-                "value": "1"
-              }
-            ],
-            "headers": [
-              {
-                "key": "Accept",
-                "value": "application/vnd.sdmx.data+json;version=1.0.0"
-              }
-            ]
-          },
-          "root_selector": "{\"date\": data.structure.dimensions.observation[0].values[0].id, \"rate\": $number(data.dataSets[0].series.\"0:0\".observations.\"0\"[0])}",
-          "columns": [
-            {
-              "selector": "date",
-              "text": "As of",
-              "type": "string"
-            },
-            {
-              "selector": "rate",
-              "text": "Rate",
-              "type": "number"
-            }
-          ]
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 2,
-          "unit": "percent",
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "text"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/.*/",
-          "values": false
-        },
-        "graphMode": "none",
-        "colorMode": "none",
-        "textMode": "value_and_name",
-        "justifyMode": "center",
-        "wideLayout": true
       }
     }
   ]
