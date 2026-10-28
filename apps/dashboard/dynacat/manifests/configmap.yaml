@@ -146,7 +146,7 @@ data:
                       lastNObservations: "1"
                 template: |
                   {{ $rate := .Subrequest "rate" }}
-                  <div class="flex justify-between text-center">
+                  <div class="flex gap-45 text-center">
                     <div>
                       <div class="color-highlight size-h3">{{ .JSON.Float "value.0" | printf "%.1f" }}%</div>
                       <div class="size-h6">INFLATION Y/Y</div>
@@ -198,7 +198,7 @@ data:
                   fields: items.metadata.name,items.status.sync.status,items.status.health
                 template: |
                   {{ $apps := .JSON.Array "items" }}
-                  <div class="flex justify-between text-center">
+                  <div class="flex gap-45 text-center">
                     <div><div class="color-highlight size-h3">{{ len $apps }}</div><div class="size-h6">APPS</div></div>
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
@@ -223,7 +223,7 @@ data:
                       query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Composite"})
                     url: http://prometheus-server.observability/api/v1/query
                 template: |-
-                  <div class="flex justify-between text-center">
+                  <div class="flex gap-45 text-center">
                     <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">CPU</div></div>
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">MEMORY</div></div>
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "nvme").JSON.Float "data.result.0.value.1" | printf "%.0f" }}°C</div><div class="size-h6">NVME</div></div>
@@ -250,11 +250,11 @@ data:
                       query: node_filesystem_avail_bytes{mountpoint="/data/external"}
                     url: http://prometheus-server.observability/api/v1/query
                 template: |-
-                  <div class="flex justify-between text-center">
+                  <div class="flex gap-45 text-center">
                     <div><div class="color-highlight size-h3">{{ .JSON.Float "data.result.0.value.1" | printf "%.0f" }}%</div><div class="size-h6">CPU</div></div>
                     <div><div class="color-highlight size-h3">{{ (.Subrequest "memory").JSON.Float "data.result.0.value.1" | printf "%.0f" }}%</div><div class="size-h6">MEMORY</div></div>
                   </div>
-                  <div class="flex justify-between text-center margin-top-10">
+                  <div class="flex gap-45 text-center margin-top-10">
                     <div><div class="color-highlight size-h3">{{ div ((.Subrequest "usb").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">EXTERNAL DISK FREE</div></div>
                     <div><div class="color-highlight size-h3">{{ div ((.Subrequest "disk").JSON.Float "data.result.0.value.1") 1073741824 | printf "%.0f" }} GB</div><div class="size-h6">INTERNAL DISK FREE</div></div>
                   </div>
