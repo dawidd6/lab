@@ -37,13 +37,20 @@ spec:
                     name: tinyauth-secrets
                     key: ARGOCD_CLIENT_SECRET
                   trustedRedirectUris: https://argocd.dawidd6.duckdns.org/auth/callback,http://localhost:8085/auth/callback
-                - id: dynacat
-                  name: Dynacat
-                  clientId: dynacat
+                - id: homepage
+                  name: Homepage
+                  clientId: homepage
                   clientSecretSecretRef:
                     name: tinyauth-secrets
-                    key: DYNACAT_CLIENT_SECRET
-                  trustedRedirectUris: https://dynacat.dawidd6.duckdns.org/api/oidc/callback
+                    key: HOMEPAGE_CLIENT_SECRET
+                  trustedRedirectUris: https://homepage.dawidd6.duckdns.org/oauth2/callback
+                - id: glances
+                  name: Glances
+                  clientId: glances
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: GLANCES_CLIENT_SECRET
+                  trustedRedirectUris: https://glances.dawidd6.duckdns.org/oauth2/callback
                 - id: grafana
                   name: Grafana
                   clientId: grafana

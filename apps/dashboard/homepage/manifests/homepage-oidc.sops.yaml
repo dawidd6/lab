@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: homepage-oidc
+spec:
+  secretTemplates:
+    - name: homepage-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:etvZ7qn73+VA0RfAzwqeIV4bpwEyi3rYDIDVgsJfqMQCMtu1bAksaJjVS/9OKek5p5oFfSDGIyr9acIDY6mcJQ==,iv:oXrb8RtnV4JuX3EBvSw9bEyVp3CPC1X/F1DBahcLrV0=,tag:lQDvEXj0cy0lW6mtsQ/zHA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBQZ2JqQ21rU29LZGZiQTYv
+        V1dHUlc3aCt3REhPdDM3SDJhS1o1eHJDSUNjCnR3Qlg2U2JqNVBzeFlUdnNJeUQ0
+        LytONXgzR0dwelcvY2tSN25KVmEyV0EKLS0tIFNkK2pydnV2bm5hbkVMT1c4b3JP
+        OEhEbGlPc1F4Rm1kalFETUZ0QkwxZG8KfzeRqjjwLbvd3G4qvbV31LSvJpn5WhlP
+        JAOI5z3UFMGhUBXVEnyV2O2O7Y0eLhIUWzBZwuCygPLfBJQdriVykg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-28T20:00:49Z"
+  mac: ENC[AES256_GCM,data:GkbCAGbzaxXNAteM3585c2GRoLlM1Tt1bFEUGFkZGHcpi7RXgWpBgRkQnl5Q0j9DrRHowbxmCXiWkxPGL1/x3yKqWsdpXrOzTSkzj3IcMvR2Zbqv3xuM9iPLoXPQuSBT0qALffEt0Hn/BabuCz4NRoMSyilI95pbizIzm4dcfuE=,iv:lP+w2K8SR429nVO/XKTSb3eE/3JSZhVuyESP9qOvnPQ=,tag:0+eLGAnxTZXz/C+SU0iAhQ==,type:str]
+  version: 3.13.3

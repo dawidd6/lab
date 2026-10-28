@@ -12,8 +12,8 @@ spec:
           configs:
             cm:
               url: https://argocd.dawidd6.duckdns.org
-              # read-only API token for the Dynacat widget
-              accounts.dynacat: apiKey
+              # read-only API token for the Homepage widget
+              accounts.homepage: apiKey
               oidc.config: |
                 name: tinyauth
                 issuer: https://tinyauth.dawidd6.duckdns.org
@@ -23,7 +23,7 @@ spec:
             rbac:
               policy.csv: |
                 g, dawid, role:admin
-                g, dynacat, role:readonly
+                g, homepage, role:readonly
               scopes: '[groups, preferred_username]'
             params:
               server.insecure: true

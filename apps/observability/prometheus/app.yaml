@@ -23,7 +23,7 @@ spec:
                     module: http_2xx
                   targets:
                     - https://argocd.dawidd6.duckdns.org
-                    - https://dynacat.dawidd6.duckdns.org
+                    - https://homepage.dawidd6.duckdns.org
                     - https://grafana.dawidd6.duckdns.org
                     - https://jdownloader.dawidd6.duckdns.org
                     - https://jellyfin.dawidd6.duckdns.org

@@ -1,0 +1,16 @@
+# the Glances web UI has no login of its own; envoy authenticates through tinyauth
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: glances
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: glances
+  oidc:
+    provider:
+      issuer: https://tinyauth.dawidd6.duckdns.org
+    clientID: glances
+    clientSecret:
+      name: glances-oidc

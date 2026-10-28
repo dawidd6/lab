@@ -1,0 +1,15 @@
+title: Server
+headerStyle: clean
+layout:
+  Services:
+    style: row
+    columns: 6
+  System:
+    style: row
+    columns: 4
+  GitHub:
+    style: row
+    columns: 4
+  Lab:
+    style: row
+    columns: 3

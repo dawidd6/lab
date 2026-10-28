@@ -1,0 +1,10 @@
+- Lab:
+    - Repository:
+        - href: https://github.com/dawidd6/lab
+          icon: github.png
+    - Tailscale:
+        - href: https://login.tailscale.com/admin/machines
+          icon: tailscale.png
+    - DuckDNS:
+        - href: https://www.duckdns.org
+          icon: duckdns.png

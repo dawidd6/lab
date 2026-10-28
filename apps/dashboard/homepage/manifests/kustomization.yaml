@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - homepage-oidc.sops.yaml
+  - homepage-secrets.sops.yaml
+  - httproute.yaml
+  - securitypolicy.yaml
+  - service.yaml
+# keeps Homepage's config files plain YAML instead of strings inside a ConfigMap
+configMapGenerator:
+  - name: homepage-config
+    files:
+      - bookmarks.yaml
+      - services.yaml
+      - settings.yaml
+      - widgets.yaml
+    options:
+      disableNameSuffixHash: true

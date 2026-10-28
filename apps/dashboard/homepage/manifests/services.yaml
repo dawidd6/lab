@@ -1,0 +1,138 @@
+- Services:
+    - Jellyfin:
+        href: https://jellyfin.dawidd6.duckdns.org
+        icon: jellyfin.png
+        siteMonitor: http://jellyfin.media:8096/health
+    - JDownloader:
+        href: https://jdownloader.dawidd6.duckdns.org
+        icon: jdownloader.png
+        siteMonitor: http://jdownloader2.media:10054
+    - Argo CD:
+        href: https://argocd.dawidd6.duckdns.org
+        icon: argo-cd.png
+        siteMonitor: http://argocd-server.delivery/healthz
+        widget:
+          type: argocd
+          url: http://argocd-server.delivery
+          key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
+          fields: ["apps", "synced", "outOfSync", "healthy"]
+    - Grafana:
+        href: https://grafana.dawidd6.duckdns.org
+        icon: grafana.png
+        siteMonitor: http://grafana.observability/api/health
+    - Tinyauth:
+        href: https://tinyauth.dawidd6.duckdns.org
+        icon: tinyauth.png
+        siteMonitor: http://tinyauth.identity/api/healthz
+    - Tailscale:
+        href: https://login.tailscale.com/admin/machines
+        icon: tailscale.png
+        widget:
+          type: tailscale
+          deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+          key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+# live charts from Glances, refreshed by the browser about once a second
+- System:
+    - CPU:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: cpu
+    - Memory:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: memory
+    - Internal disk:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: fs:/rootfs
+    - External disk:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: fs:/rootfs/data/external
+    - CPU temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Package id 0
+    - NVMe temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Composite
+    - Memory temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Memory
+    - Ambient temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Ambient
+- GitHub:
+    # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
+    - Notifications:
+        href: https://github.com/notifications
+        icon: github.png
+        widget:
+          type: customapi
+          url: https://api.github.com/notifications
+          refreshInterval: 300000
+          headers:
+            Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+            Accept: application/vnd.github+json
+          display: dynamic-list
+          mappings:
+            name: subject.title
+            label: repository.full_name
+            limit: 5
+    - Repository:
+        href: https://github.com/dawidd6/lab
+        icon: github.png
+        widget:
+          type: customapi
+          url: https://api.github.com/repos/dawidd6/lab
+          refreshInterval: 900000
+          headers:
+            Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+          mappings:
+            - field: stargazers_count
+              label: Stars
+              format: number
+            - field: forks_count
+              label: Forks
+              format: number
+            - field: open_issues_count
+              label: Open issues
+              format: number
+            - field: pushed_at
+              label: Last push
+              format: relativeDate
+    - Kubernetes releases:
+        href: https://github.com/kubernetes/kubernetes/releases
+        icon: kubernetes.png
+        widget:
+          type: feed
+          url: https://github.com/kubernetes/kubernetes/releases.atom
+          maxItems: 5
+          images: false
+    - k0s releases:
+        href: https://github.com/k0sproject/k0s/releases
+        icon: kubernetes.png
+        widget:
+          type: feed
+          url: https://github.com/k0sproject/k0s/releases.atom
+          maxItems: 5
+          images: false
