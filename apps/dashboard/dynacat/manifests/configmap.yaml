@@ -29,6 +29,7 @@ data:
                 timezones:
                   - timezone: UTC
               - type: weather
+                update-interval: 1h
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
@@ -144,7 +145,7 @@ data:
               # the policy rate is the NBP reference rate as published by BIS (weekly)
               - type: custom-api
                 title: Poland
-                cache: 6h
+                update-interval: 24h
                 url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr
                 parameters:
                   geo: PL
@@ -174,11 +175,13 @@ data:
                     </div>
                   </div>
               - type: reddit
+                update-interval: 30m
                 subreddit: Polska
           - size: small
             widgets:
               - type: monitor
                 title: Services
+                update-interval: 1m
                 sites:
                   - title: Jellyfin
                     url: https://jellyfin.dawidd6.duckdns.org
@@ -202,6 +205,7 @@ data:
                     icon: di:tinyauth
               - type: custom-api
                 title: Argo CD
+                update-interval: 15s
                 title-icon: di:argo-cd
                 title-url: https://argocd.dawidd6.duckdns.org
                 url: http://argocd-server.delivery/api/v1/applications
@@ -218,6 +222,7 @@ data:
                   </div>
               - type: custom-api
                 title: Sensors
+                update-interval: 15s
                 title-icon: di:prometheus
                 parameters:
                   query: max(node_hwmon_temp_celsius * on(chip, sensor) group_left node_hwmon_sensor_label{label="Package id 0"})
@@ -244,6 +249,7 @@ data:
                 url: http://prometheus-server.observability/api/v1/query
               - type: custom-api
                 title: Resources
+                update-interval: 15s
                 title-icon: di:prometheus
                 parameters:
                   query: 100 - avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
@@ -272,6 +278,7 @@ data:
                 url: http://prometheus-server.observability/api/v1/query
               - type: custom-api
                 title: Tailscale
+                update-interval: 15m
                 title-icon: di:tailscale
                 headers:
                   Authorization: Bearer ${TAILSCALE_KEY}
