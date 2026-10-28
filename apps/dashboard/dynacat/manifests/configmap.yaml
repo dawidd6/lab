@@ -36,6 +36,7 @@ data:
                 units: metric
               - type: markets
                 title: Crypto
+                update-interval: 15m
                 symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
                 chart-link-template: *yahoo
                 markets:
@@ -47,6 +48,7 @@ data:
                     name: Solana
               - type: markets
                 title: FX
+                update-interval: 15m
                 symbol-link-template: *yahoo
                 chart-link-template: *yahoo
                 markets:
@@ -58,6 +60,7 @@ data:
                     name: GBP/PLN
               - type: markets
                 title: Commodities
+                update-interval: 15m
                 symbol-link-template: *yahoo
                 chart-link-template: *yahoo
                 markets:
@@ -71,6 +74,7 @@ data:
                     name: Brent oil
               - type: markets
                 title: ETFs
+                update-interval: 15m
                 symbol-link-template: *yahoo
                 chart-link-template: *yahoo
                 markets:
