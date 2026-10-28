@@ -125,8 +125,6 @@ data:
                     name: iShares Physical Silver
                   - symbol: JEDI.L
                     name: VanEck Space Innovators
-          - size: small
-            widgets:
               # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
               # the policy rate is the NBP reference rate as published by BIS (weekly)
               - type: custom-api
@@ -205,8 +203,6 @@ data:
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
                   </div>
-          - size: small
-            widgets:
               - type: custom-api
                 title: Sensors
                 update-interval: 15s
