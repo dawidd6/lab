@@ -178,16 +178,6 @@ data:
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
                   </div>
-                  <ul class="list list-gap-10 margin-top-10">
-                    {{ range $apps }}
-                    {{ if or (ne (.String "status.sync.status") "Synced") (ne (.String "status.health.status") "Healthy") }}
-                    <li>
-                      <a class="color-highlight" href="https://argocd.dawidd6.duckdns.org/applications/delivery/{{ .String "metadata.name" }}" target="_blank" rel="noreferrer">{{ .String "metadata.name" }}</a>
-                      <span class="size-h6">{{ .String "status.sync.status" }} · {{ .String "status.health.status" }}</span>
-                    </li>
-                    {{ end }}
-                    {{ end }}
-                  </ul>
               - type: reddit
                 subreddit: Polska
           - size: small
