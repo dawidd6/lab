@@ -93,6 +93,8 @@
           headers:
             Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
             Accept: application/vnd.github+json
+            # GitHub's API rejects requests without one
+            User-Agent: homepage
           display: dynamic-list
           mappings:
             name: subject.title
@@ -107,6 +109,7 @@
           refreshInterval: 900000
           headers:
             Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+            User-Agent: homepage
           mappings:
             - field: stargazers_count
               label: Stars
