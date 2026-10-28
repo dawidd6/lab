@@ -162,6 +162,10 @@ data:
                     url: https://tinyauth.dawidd6.duckdns.org
                     check-url: http://tinyauth.identity/api/healthz
                     icon: di:tinyauth
+              - type: reddit
+                subreddit: Polska
+          - size: small
+            widgets:
               - type: custom-api
                 title: Argo CD
                 title-icon: di:argo-cd
@@ -178,10 +182,6 @@ data:
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.sync.status=="Synced")#|#` }}</div><div class="size-h6">SYNCED</div></div>
                     <div><div class="color-highlight size-h3">{{ .JSON.Int `items.#(status.health.status=="Healthy")#|#` }}</div><div class="size-h6">HEALTHY</div></div>
                   </div>
-              - type: reddit
-                subreddit: Polska
-          - size: small
-            widgets:
               - type: custom-api
                 title: Sensors
                 title-icon: di:prometheus
