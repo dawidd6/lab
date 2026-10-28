@@ -148,7 +148,7 @@ pages:
             widgets:
               # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
               - type: custom-api
-                title: Ntifications
+                title: Notifications
                 title-url: https://github.com/notifications
                 update-interval: 5m
                 url: https://api.github.com/notifications
