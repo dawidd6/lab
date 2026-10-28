@@ -55,6 +55,11 @@ spec:
                 secretKeyRef:
                   name: dynacat-secrets
                   key: argocd-token
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: dynacat-secrets
+                  key: github-token
           volumeMounts:
             - name: config
               mountPath: /app/config

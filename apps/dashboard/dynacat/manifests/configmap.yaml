@@ -45,19 +45,49 @@ data:
                       - title: DuckDNS
                         url: https://www.duckdns.org
                         icon: di:duckdns
+              # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
+              - type: custom-api
+                title: Notifications
+                title-icon: di:github
+                title-url: https://github.com/notifications
+                update-interval: 5m
+                url: https://api.github.com/notifications
+                headers:
+                  Authorization: Bearer ${GITHUB_TOKEN}
+                  Accept: application/vnd.github+json
+                template: |
+                  {{ $items := .JSON.Array "" }}
+                  {{ if eq (len $items) 0 }}
+                  <p class="color-subdue">No unread notifications</p>
+                  {{ else }}
+                  <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+                    {{ range $items }}
+                    {{ $repo := concat "https://github.com/" (.String "repository.full_name") }}
+                    {{ $url := .String "subject.url" | replaceAll "api.github.com/repos/" "github.com/" | replaceAll "/pulls/" "/pull/" | replaceAll "/commits/" "/commit/" }}
+                    {{ if or (eq $url "") (eq (.String "subject.type") "Release") }}{{ $url = $repo }}{{ end }}
+                    <li>
+                      <a class="size-title-dynamic color-primary-if-not-visited" href="{{ $url }}" target="_blank" rel="noreferrer">{{ .String "subject.title" }}</a>
+                      <ul class="list-horizontal-text">
+                        <li>{{ .String "repository.full_name" }}</li>
+                        <li>{{ .String "reason" | replaceAll "_" " " }}</li>
+                        <li {{ .String "updated_at" | parseRelativeTime "rfc3339" }}></li>
+                      </ul>
+                    </li>
+                    {{ end }}
+                  </ul>
+                  {{ end }}
               - type: repository
                 repository: dawidd6/lab
+                update-interval: 15m
+                token: ${GITHUB_TOKEN}
               - type: releases
+                update-interval: 1h
+                token: ${GITHUB_TOKEN}
                 repositories:
                   - repository: kubernetes/kubernetes
                   - repository: k0sproject/k0s
           - size: full
             widgets:
-              - type: search
-                new-tab: true
-                search-engine: google
-                autocomplete: true
-                autocomplete-provider: brave
               - type: markets
                 title: Crypto
                 update-interval: 15s
