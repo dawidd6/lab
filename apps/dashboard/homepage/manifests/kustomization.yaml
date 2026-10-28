@@ -11,9 +11,9 @@ resources:
 configMapGenerator:
   - name: homepage-config
     files:
-      - bookmarks.yaml
-      - services.yaml
-      - settings.yaml
-      - widgets.yaml
+      - configs/bookmarks.yaml
+      - configs/services.yaml
+      - configs/settings.yaml
+      - configs/widgets.yaml
     options:
       disableNameSuffixHash: true

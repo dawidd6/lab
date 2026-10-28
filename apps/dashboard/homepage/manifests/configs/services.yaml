@@ -105,22 +105,30 @@
         icon: github.png
         widget:
           type: customapi
-          url: https://api.github.com/repos/dawidd6/lab
+          # GraphQL, because the REST API counts PRs as issues
+          url: https://api.github.com/graphql
+          method: POST
           refreshInterval: 900000
           headers:
             Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
             User-Agent: homepage
+          requestBody:
+            query: |
+              {
+                repository(owner: "dawidd6", name: "lab") {
+                  pullRequests(states: OPEN) { totalCount }
+                  issues(states: OPEN) { totalCount }
+                  pushedAt
+                }
+              }
           mappings:
-            - field: stargazers_count
-              label: Stars
+            - field: data.repository.pullRequests.totalCount
+              label: Open PRs
               format: number
-            - field: forks_count
-              label: Forks
-              format: number
-            - field: open_issues_count
+            - field: data.repository.issues.totalCount
               label: Open issues
               format: number
-            - field: pushed_at
+            - field: data.repository.pushedAt
               label: Last push
               format: relativeDate
     - Kubernetes releases:
