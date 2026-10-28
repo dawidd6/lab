@@ -32,16 +32,89 @@ data:
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
-              - type: markets
-                markets:
-                  - symbol: ISAC.L
-                    name: ISAC.L
-                    chart-link: https://finance.yahoo.com/quote/ISAC.L/
-                    symbol-link: https://finance.yahoo.com/quote/ISAC.L/
-                  - symbol: ETFBTBSP.WA
-                    name: ETFBTBSP.WA
-                    chart-link: https://finance.yahoo.com/quote/ETFBTBSP.WA/
-                    symbol-link: https://finance.yahoo.com/quote/ETFBTBSP.WA/
+              - type: group
+                widgets:
+                  - type: markets
+                    title: Crypto
+                    symbol-link-template: &yahoo https://finance.yahoo.com/quote/{SYMBOL}/
+                    chart-link-template: *yahoo
+                    markets:
+                      - symbol: BTC-USD
+                        name: Bitcoin
+                      - symbol: ETH-USD
+                        name: Ethereum
+                      - symbol: SOL-USD
+                        name: Solana
+                  - type: markets
+                    title: FX
+                    symbol-link-template: *yahoo
+                    chart-link-template: *yahoo
+                    markets:
+                      - symbol: EURPLN=X
+                        name: EUR/PLN
+                      - symbol: USDPLN=X
+                        name: USD/PLN
+                      - symbol: GBPPLN=X
+                        name: GBP/PLN
+                  - type: markets
+                    title: Commodities
+                    symbol-link-template: *yahoo
+                    chart-link-template: *yahoo
+                    markets:
+                      - symbol: GC=F
+                        name: Gold
+                      - symbol: SI=F
+                        name: Silver
+                      - symbol: CL=F
+                        name: Crude oil (WTI)
+                      - symbol: BZ=F
+                        name: Brent oil
+                  - type: markets
+                    title: ETFs
+                    symbol-link-template: *yahoo
+                    chart-link-template: *yahoo
+                    markets:
+                      - symbol: AVWS.DE
+                        name: Avantis Global Small Cap Value
+                      - symbol: ISAC.L
+                        name: iShares MSCI ACWI
+                      - symbol: ISLN.L
+                        name: iShares Physical Silver
+                      - symbol: JEDI.L
+                        name: VanEck Space Innovators
+              # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
+              # the policy rate is the NBP reference rate as published by BIS (weekly)
+              - type: custom-api
+                title: Poland
+                cache: 6h
+                url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr
+                parameters:
+                  geo: PL
+                  unit: RCH_A
+                  coicop18: TOTAL
+                  lastTimePeriod: "1"
+                  format: JSON
+                subrequests:
+                  rate:
+                    url: https://stats.bis.org/api/v1/data/WS_CBPOL/D.PL/all
+                    headers:
+                      Accept: application/vnd.sdmx.data+json;version=1.0.0
+                    parameters:
+                      lastNObservations: "1"
+                template: |
+                  {{ $rate := .Subrequest "rate" }}
+                  <div class="flex justify-between text-center">
+                    <div>
+                      <div class="color-highlight size-h3">{{ .JSON.Float "value.0" | printf "%.1f" }}%</div>
+                      <div class="size-h6">INFLATION Y/Y</div>
+                      <div class="size-h6 color-subdue">{{ .JSON.String "dimension.time.category.index|@keys|0" }}</div>
+                    </div>
+                    <div>
+                      <div class="color-highlight size-h3">{{ $rate.JSON.String "data.dataSets.0.series.0:0.observations.0.0" }}%</div>
+                      <div class="size-h6">NBP RATE</div>
+                      <div class="size-h6 color-subdue">{{ $rate.JSON.String "data.structure.dimensions.observation.0.values.0.id" }}</div>
+                    </div>
+                  </div>
               - type: bookmarks
                 groups:
                   - title: Lab
