@@ -32,39 +32,6 @@ data:
                 hour-format: 24h
                 location: Wroclaw, Poland
                 units: metric
-              # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
-              # the policy rate is the NBP reference rate as published by BIS (weekly)
-              - type: custom-api
-                title: Poland
-                cache: 6h
-                url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr
-                parameters:
-                  geo: PL
-                  unit: RCH_A
-                  coicop18: TOTAL
-                  lastTimePeriod: "1"
-                  format: JSON
-                subrequests:
-                  rate:
-                    url: https://stats.bis.org/api/v1/data/WS_CBPOL/D.PL/all
-                    headers:
-                      Accept: application/vnd.sdmx.data+json;version=1.0.0
-                    parameters:
-                      lastNObservations: "1"
-                template: |
-                  {{ $rate := .Subrequest "rate" }}
-                  <div class="flex justify-between text-center">
-                    <div>
-                      <div class="color-highlight size-h3">{{ .JSON.Float "value.0" | printf "%.1f" }}%</div>
-                      <div class="size-h6">INFLATION Y/Y</div>
-                      <div class="size-h6 color-subdue">{{ .JSON.String "dimension.time.category.index|@keys|0" }}</div>
-                    </div>
-                    <div>
-                      <div class="color-highlight size-h3">{{ $rate.JSON.String "data.dataSets.0.series.0:0.observations.0.0" }}%</div>
-                      <div class="size-h6">NBP RATE</div>
-                      <div class="size-h6 color-subdue">{{ $rate.JSON.String "data.structure.dimensions.observation.0.values.0.id" }}</div>
-                    </div>
-                  </div>
               - type: bookmarks
                 groups:
                   - title: Lab
@@ -78,6 +45,12 @@ data:
                       - title: DuckDNS
                         url: https://www.duckdns.org
                         icon: di:duckdns
+              - type: repository
+                repository: dawidd6/lab
+              - type: releases
+                repositories:
+                  - repository: kubernetes/kubernetes
+                  - repository: k0sproject/k0s
           - size: full
             widgets:
               - type: search
@@ -85,29 +58,6 @@ data:
                 search-engine: google
                 autocomplete: true
                 autocomplete-provider: brave
-              - type: monitor
-                title: Services
-                sites:
-                  - title: Jellyfin
-                    url: https://jellyfin.dawidd6.duckdns.org
-                    check-url: http://jellyfin.media:8096/health
-                    icon: di:jellyfin
-                  - title: JDownloader
-                    url: https://jdownloader.dawidd6.duckdns.org
-                    check-url: http://jdownloader2.media:10054
-                    icon: di:jdownloader
-                  - title: Argo CD
-                    url: https://argocd.dawidd6.duckdns.org
-                    check-url: http://argocd-server.delivery/healthz
-                    icon: di:argo-cd
-                  - title: Grafana
-                    url: https://grafana.dawidd6.duckdns.org
-                    check-url: http://grafana.observability/api/health
-                    icon: di:grafana
-                  - title: Tinyauth
-                    url: https://tinyauth.dawidd6.duckdns.org
-                    check-url: http://tinyauth.identity/api/healthz
-                    icon: di:tinyauth
               - type: markets
                 title: Crypto
                 update-interval: 15s
@@ -160,10 +110,66 @@ data:
                     name: iShares Physical Silver
                   - symbol: JEDI.L
                     name: VanEck Space Innovators
+              # HICP is Eurostat's harmonised measure (close to, not identical with, GUS CPI);
+              # the policy rate is the NBP reference rate as published by BIS (weekly)
+              - type: custom-api
+                title: Poland
+                cache: 6h
+                url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr
+                parameters:
+                  geo: PL
+                  unit: RCH_A
+                  coicop18: TOTAL
+                  lastTimePeriod: "1"
+                  format: JSON
+                subrequests:
+                  rate:
+                    url: https://stats.bis.org/api/v1/data/WS_CBPOL/D.PL/all
+                    headers:
+                      Accept: application/vnd.sdmx.data+json;version=1.0.0
+                    parameters:
+                      lastNObservations: "1"
+                template: |
+                  {{ $rate := .Subrequest "rate" }}
+                  <div class="flex justify-between text-center">
+                    <div>
+                      <div class="color-highlight size-h3">{{ .JSON.Float "value.0" | printf "%.1f" }}%</div>
+                      <div class="size-h6">INFLATION Y/Y</div>
+                      <div class="size-h6 color-subdue">{{ .JSON.String "dimension.time.category.index|@keys|0" }}</div>
+                    </div>
+                    <div>
+                      <div class="color-highlight size-h3">{{ $rate.JSON.String "data.dataSets.0.series.0:0.observations.0.0" }}%</div>
+                      <div class="size-h6">NBP RATE</div>
+                      <div class="size-h6 color-subdue">{{ $rate.JSON.String "data.structure.dimensions.observation.0.values.0.id" }}</div>
+                    </div>
+                  </div>
               - type: reddit
                 subreddit: Polska
           - size: small
             widgets:
+              - type: monitor
+                title: Services
+                sites:
+                  - title: Jellyfin
+                    url: https://jellyfin.dawidd6.duckdns.org
+                    check-url: http://jellyfin.media:8096/health
+                    icon: di:jellyfin
+                  - title: JDownloader
+                    url: https://jdownloader.dawidd6.duckdns.org
+                    check-url: http://jdownloader2.media:10054
+                    icon: di:jdownloader
+                  - title: Argo CD
+                    url: https://argocd.dawidd6.duckdns.org
+                    check-url: http://argocd-server.delivery/healthz
+                    icon: di:argo-cd
+                  - title: Grafana
+                    url: https://grafana.dawidd6.duckdns.org
+                    check-url: http://grafana.observability/api/health
+                    icon: di:grafana
+                  - title: Tinyauth
+                    url: https://tinyauth.dawidd6.duckdns.org
+                    check-url: http://tinyauth.identity/api/healthz
+                    icon: di:tinyauth
               - type: custom-api
                 title: Argo CD
                 title-icon: di:argo-cd
@@ -248,9 +254,3 @@ data:
                     {{ end }}
                   </ul>
                 url: https://api.tailscale.com/api/v2/device/${TAILSCALE_DEVICE_ID}
-              - type: repository
-                repository: dawidd6/lab
-              - type: releases
-                repositories:
-                  - repository: kubernetes/kubernetes
-                  - repository: k0sproject/k0s
