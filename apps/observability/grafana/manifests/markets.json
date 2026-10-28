@@ -186,7 +186,14 @@
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
-      }
+      },
+      "links": [
+        {
+          "title": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/quote/${crypto:raw}/",
+          "targetBlank": true
+        }
+      ]
     },
     {
       "id": 3,
@@ -414,7 +421,14 @@
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
-      }
+      },
+      "links": [
+        {
+          "title": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/quote/${fx:raw}/",
+          "targetBlank": true
+        }
+      ]
     },
     {
       "id": 6,
@@ -642,7 +656,14 @@
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
-      }
+      },
+      "links": [
+        {
+          "title": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/quote/${commodities:raw}/",
+          "targetBlank": true
+        }
+      ]
     },
     {
       "id": 9,
@@ -870,7 +891,14 @@
         "showPercentChange": true,
         "percentChangeColorMode": "standard",
         "wideLayout": true
-      }
+      },
+      "links": [
+        {
+          "title": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/quote/${etfs:raw}/",
+          "targetBlank": true
+        }
+      ]
     },
     {
       "id": 12,

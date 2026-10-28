@@ -74,7 +74,7 @@
             ],
             "headers": []
           },
-          "root_selector": "{\"period\": $keys(dimension.time.category.index)[0], \"value\": value.`0`}",
+          "root_selector": "([{\"period\": $keys(dimension.time.category.index)[0], \"value\": $lookup(value, \"0\")}])",
           "columns": [
             {
               "selector": "period",
@@ -157,7 +157,7 @@
               }
             ]
           },
-          "root_selector": "{\"date\": data.structure.dimensions.observation[0].values[0].id, \"rate\": $number(data.dataSets[0].series.`0:0`.observations.`0`[0])}",
+          "root_selector": "([{\"date\": data.structure.dimensions.observation[0].values[0].id, \"rate\": $number($lookup($lookup(data.dataSets[0].series, \"0:0\").observations, \"0\")[0])}])",
           "columns": [
             {
               "selector": "date",
