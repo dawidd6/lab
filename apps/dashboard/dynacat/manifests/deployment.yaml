@@ -55,7 +55,6 @@ spec:
                 secretKeyRef:
                   name: dynacat-secrets
                   key: argocd-token
-                  optional: true
           volumeMounts:
             - name: config
               mountPath: /app/config
