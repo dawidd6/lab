@@ -24,6 +24,7 @@ spec:
                   targets:
                     - https://argocd.dawidd6.duckdns.org
                     - https://bazarr.dawidd6.duckdns.org
+                    - https://duplicati.dawidd6.duckdns.org
                     - https://homepage.dawidd6.duckdns.org
                     - https://grafana.dawidd6.duckdns.org
                     - https://jdownloader.dawidd6.duckdns.org
@@ -34,6 +35,7 @@ spec:
                     - https://sabnzbd.dawidd6.duckdns.org
                     - https://sonarr.dawidd6.duckdns.org
                     - https://tinyauth.dawidd6.duckdns.org
+                    - https://zerobyte.dawidd6.duckdns.org
                 - labels:
                     module: http_jellyfin_health
                   targets:

@@ -101,6 +101,18 @@
           type: ntfy
           url: http://ntfy.observability
           topic: lab
+    - Duplicati:
+        href: https://duplicati.dawidd6.duckdns.org
+        icon: duplicati.png
+        siteMonitor: http://duplicati.backup:8200
+        widget:
+          type: duplicati
+          url: http://duplicati.backup:8200
+          password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
+    - Zerobyte:
+        href: https://zerobyte.dawidd6.duckdns.org
+        icon: zerobyte.png
+        siteMonitor: http://zerobyte.backup:4096/api/healthcheck
     - Argo CD:
         href: https://argocd.dawidd6.duckdns.org
         icon: argo-cd.png

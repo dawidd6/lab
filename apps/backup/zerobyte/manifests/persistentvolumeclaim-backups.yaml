@@ -1,0 +1,15 @@
+# backup destination on the external disk (/data/external/backup/zerobyte-backups)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zerobyte-backups
+  annotations:
+    # backups: removing it from git needs confirmation, and deleting the app never deletes it
+    argocd.argoproj.io/sync-options: Prune=confirm,Delete=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: external
+  resources:
+    requests:
+      storage: 1Gi
