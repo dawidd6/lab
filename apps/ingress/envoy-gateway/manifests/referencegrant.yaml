@@ -1,0 +1,20 @@
+# lets the SecurityPolicies of every app envoy logs in for use the one tinyauth client secret, envoy-oidc
+apiVersion: gateway.networking.k8s.io/v1
+kind: ReferenceGrant
+metadata:
+  name: envoy-oidc
+spec:
+  from:
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: dashboard
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: media
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: observability
+  to:
+    - group: ""
+      kind: Secret
+      name: envoy-oidc

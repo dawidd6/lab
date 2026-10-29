@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: glances
 spec:
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: glances
@@ -46,4 +44,6 @@ spec:
           hostPath:
             path: /etc/os-release
             type: File
+      # the web UI's process list shows the host's processes, not only Glances itself
+      hostPID: true
       enableServiceLinks: false

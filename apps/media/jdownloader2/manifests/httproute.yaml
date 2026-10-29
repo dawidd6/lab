@@ -8,8 +8,8 @@ spec:
       namespace: ingress
       sectionName: https
   hostnames:
-    - jdownloader.dawidd6.duckdns.org
+    - jdownloader2.dawidd6.duckdns.org
   rules:
     - backendRefs:
         - name: jdownloader2
-          port: 10054
+          port: 5800

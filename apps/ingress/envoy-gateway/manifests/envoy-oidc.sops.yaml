@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: envoy-oidc
+spec:
+  secretTemplates:
+    - name: envoy-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:DPU76b6HLZI3xIY/InQ6TUK03/fZ4+bUeRAq8nPfdQhAObDw9KVXnrj4boWCz9aLksoxEHlyRYcMFHYecje+iQ==,iv:rbbP5EpIXv9Z6zDND/KmG0/iYqPt5sSA1p2kuYc5SqA=,tag:MABioiqIybBXRiYU4rDjXg==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPYU4zV3NOWjE5WWRYWWVx
+        UkpZM0N1cEVlc0xrSEc2eEpiaUVOTVFyVWo0CkJoZ3NzckE2NXFzanpDOWM5cmNm
+        ZDNCL3g2b21VTWVGZjQ4WEpqN0xsenMKLS0tIFpuR2VwbnpodWtUcjBvL04wZXZi
+        MUY1aE5JQzd3ay9ITEZKVENqOHgxMlkKk+kGYihNtjJZqOwJG1nbbf/NxfO7Bz4T
+        SfSkReaSloBK0lySQpSn6c7ZSFV+KcLu92PlWbli4LxEhR31dvc16g==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-29T17:23:02Z"
+  mac: ENC[AES256_GCM,data:5nt7hf4VOlpdIp8jxIWNDCEwr9VAH2WafyhQZYIUOrcAn7uqf7UCWrTsC6cPvVATQz0jniON6iZBJvVJ0LzdBp6Nwh595/rXAf8iD9Q51mMVkDdWqxMWvQbql9WA0V9wz4d78f+aMRNkXiIiUSruVM3hnWHVipjGal1ytEF+ODE=,iv:dKBZMK/8FGXTHUO8wVKdlJynZHYV45j+uIYCdPBSzaE=,tag:zcih2Yi6pJBqDJhqw9rleA==,type:str]
+  version: 3.13.3

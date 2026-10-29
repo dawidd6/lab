@@ -17,7 +17,7 @@ spec:
         - name: app
           image: lscr.io/linuxserver/radarr:6.4.4
           env:
-            # same user as JDownloader, which writes to the shared media volume
+            # same user as the other media apps
             - name: PUID
               value: "568"
             - name: PGID
@@ -30,10 +30,12 @@ spec:
             - secretRef:
                 name: radarr-secrets
           livenessProbe:
-            tcpSocket:
+            httpGet:
+              path: /ping
               port: 7878
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /ping
               port: 7878
           volumeMounts:
             - name: config

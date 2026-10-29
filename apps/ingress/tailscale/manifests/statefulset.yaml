@@ -46,8 +46,6 @@ spec:
               value: "true"
             - name: TS_ENABLE_HEALTH_CHECK
               value: "true"
-            - name: TS_ENABLE_METRICS
-              value: "true"
             - name: TS_LOCAL_ADDR_PORT
               value: "[::]:9002"
             - name: TS_ROUTES

@@ -10,6 +10,7 @@ spec:
   oidc:
     provider:
       issuer: https://tinyauth.dawidd6.duckdns.org
-    clientID: sabnzbd
+    clientID: envoy
     clientSecret:
-      name: sabnzbd-oidc
+      name: envoy-oidc
+      namespace: ingress

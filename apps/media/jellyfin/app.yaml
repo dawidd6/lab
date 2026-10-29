@@ -12,6 +12,9 @@ spec:
           image:
             repository: docker.io/jellyfin/jellyfin
             tag: "12.4"
+          # the Intel GPU (/dev/dri) for hardware transcoding (Dashboard > Playback > Transcoding: Intel QuickSync)
+          securityContext:
+            privileged: true
           persistence:
             media:
               existingClaim: media

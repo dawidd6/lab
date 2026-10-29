@@ -7,5 +7,5 @@ spec:
     app.kubernetes.io/name: jdownloader2
   ports:
     - name: http
-      port: 10054
+      port: 5800
       targetPort: 5800

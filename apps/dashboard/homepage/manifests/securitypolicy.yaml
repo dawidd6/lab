@@ -11,6 +11,7 @@ spec:
   oidc:
     provider:
       issuer: https://tinyauth.dawidd6.duckdns.org
-    clientID: homepage
+    clientID: envoy
     clientSecret:
-      name: homepage-oidc
+      name: envoy-oidc
+      namespace: ingress

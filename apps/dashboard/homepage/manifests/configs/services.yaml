@@ -1,51 +1,37 @@
 - System:
     - CPU:
-        widget:
+        widget: &glances
           type: glances
           url: http://glances.observability:61208
           version: 4
           metric: cpu
     - Memory:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: memory
     - Internal disk:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: fs:/rootfs
     - External disk:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: fs:/rootfs/data/external
     - CPU temperature:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: sensor:Package id 0
     - Memory temperature:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: sensor:Memory
     - NVMe temperature:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: sensor:Composite
     - Ambient temperature:
         widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
+          <<: *glances
           metric: sensor:Ambient
 
 - Services:
@@ -130,9 +116,9 @@
         icon: jellyfin.png
         siteMonitor: http://jellyfin.media:8096/health
     - JDownloader:
-        href: https://jdownloader.dawidd6.duckdns.org
+        href: https://jdownloader2.dawidd6.duckdns.org
         icon: jdownloader.png
-        siteMonitor: http://jdownloader2.media:10054
+        siteMonitor: http://jdownloader2.media:5800
     - Grafana:
         href: https://grafana.dawidd6.duckdns.org
         icon: grafana.png

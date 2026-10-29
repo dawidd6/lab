@@ -17,7 +17,7 @@ spec:
         - name: app
           image: lscr.io/linuxserver/bazarr:1.6.2
           env:
-            # same user as JDownloader, which writes to the shared media volume
+            # same user as the other media apps
             - name: PUID
               value: "568"
             - name: PGID

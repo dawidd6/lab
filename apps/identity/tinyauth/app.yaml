@@ -37,20 +37,21 @@ spec:
                     name: tinyauth-secrets
                     key: ARGOCD_CLIENT_SECRET
                   trustedRedirectUris: https://argocd.dawidd6.duckdns.org/auth/callback,http://localhost:8085/auth/callback
-                - id: homepage
-                  name: Homepage
-                  clientId: homepage
+                # one client for every app envoy logs in for (SecurityPolicies with clientID envoy, secret envoy-oidc in ingress)
+                - id: envoy
+                  name: Envoy
+                  clientId: envoy
                   clientSecretSecretRef:
                     name: tinyauth-secrets
-                    key: HOMEPAGE_CLIENT_SECRET
-                  trustedRedirectUris: https://homepage.dawidd6.duckdns.org/oauth2/callback
-                - id: glances
-                  name: Glances
-                  clientId: glances
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: GLANCES_CLIENT_SECRET
-                  trustedRedirectUris: https://glances.dawidd6.duckdns.org/oauth2/callback
+                    key: ENVOY_CLIENT_SECRET
+                  trustedRedirectUris: "https://bazarr.dawidd6.duckdns.org/oauth2/callback,\
+                    https://glances.dawidd6.duckdns.org/oauth2/callback,\
+                    https://homepage.dawidd6.duckdns.org/oauth2/callback,\
+                    https://jdownloader2.dawidd6.duckdns.org/oauth2/callback,\
+                    https://prowlarr.dawidd6.duckdns.org/oauth2/callback,\
+                    https://radarr.dawidd6.duckdns.org/oauth2/callback,\
+                    https://sabnzbd.dawidd6.duckdns.org/oauth2/callback,\
+                    https://sonarr.dawidd6.duckdns.org/oauth2/callback"
                 - id: grafana
                   name: Grafana
                   clientId: grafana
@@ -58,13 +59,6 @@ spec:
                     name: tinyauth-secrets
                     key: GRAFANA_CLIENT_SECRET
                   trustedRedirectUris: https://grafana.dawidd6.duckdns.org/login/generic_oauth
-                - id: jdownloader2
-                  name: JDownloader
-                  clientId: jdownloader2
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: JDOWNLOADER2_CLIENT_SECRET
-                  trustedRedirectUris: https://jdownloader.dawidd6.duckdns.org/oauth2/callback
                 - id: jellyfin
                   name: Jellyfin
                   clientId: jellyfin
@@ -72,41 +66,6 @@ spec:
                     name: tinyauth-secrets
                     key: JELLYFIN_CLIENT_SECRET
                   trustedRedirectUris: https://jellyfin.dawidd6.duckdns.org/sso/OID/redirect/tinyauth
-                - id: bazarr
-                  name: Bazarr
-                  clientId: bazarr
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: BAZARR_CLIENT_SECRET
-                  trustedRedirectUris: https://bazarr.dawidd6.duckdns.org/oauth2/callback
-                - id: sabnzbd
-                  name: SABnzbd
-                  clientId: sabnzbd
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: SABNZBD_CLIENT_SECRET
-                  trustedRedirectUris: https://sabnzbd.dawidd6.duckdns.org/oauth2/callback
-                - id: prowlarr
-                  name: Prowlarr
-                  clientId: prowlarr
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: PROWLARR_CLIENT_SECRET
-                  trustedRedirectUris: https://prowlarr.dawidd6.duckdns.org/oauth2/callback
-                - id: radarr
-                  name: Radarr
-                  clientId: radarr
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: RADARR_CLIENT_SECRET
-                  trustedRedirectUris: https://radarr.dawidd6.duckdns.org/oauth2/callback
-                - id: sonarr
-                  name: Sonarr
-                  clientId: sonarr
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: SONARR_CLIENT_SECRET
-                  trustedRedirectUris: https://sonarr.dawidd6.duckdns.org/oauth2/callback
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests

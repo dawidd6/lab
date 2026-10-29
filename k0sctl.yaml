@@ -14,6 +14,8 @@ spec:
           before:
             - sudo timedatectl set-timezone Europe/Warsaw
             - sudo localectl set-locale C
+            # the default 128 inotify instances per user runs out with a few dozen pods (most run as root)
+            - echo fs.inotify.max_user_instances=1024 | sudo tee /etc/sysctl.d/90-inotify.conf >/dev/null && sudo sysctl -q --system
             - grep -q ^LABEL=external /etc/fstab || echo 'LABEL=external /data/external ext4 defaults,noatime,nofail 0 2' | sudo tee -a /etc/fstab
             - findmnt /data/external || { sudo mkdir -p /data/external && sudo chattr +i /data/external && (sudo mount /data/external || true); }
   k0s:

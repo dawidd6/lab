@@ -10,6 +10,7 @@ spec:
   oidc:
     provider:
       issuer: https://tinyauth.dawidd6.duckdns.org
-    clientID: sonarr
+    clientID: envoy
     clientSecret:
-      name: sonarr-oidc
+      name: envoy-oidc
+      namespace: ingress

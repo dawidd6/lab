@@ -11,6 +11,7 @@ spec:
   oidc:
     provider:
       issuer: https://tinyauth.dawidd6.duckdns.org
-    clientID: glances
+    clientID: envoy
     clientSecret:
-      name: glances-oidc
+      name: envoy-oidc
+      namespace: ingress
