@@ -1,22 +1,30 @@
-# Bootstrap only: renders Argo CD and its ApplicationSet from their app.yaml; Argo CD manages both afterwards.
-{{- $apps := list "delivery/argocd" "delivery/argocd-apps" }}
+# Renders the chart of every app; used for bootstrap (-l name=argocd / argocd-apps, Argo CD manages them afterwards) and PR diffs.
+{{- $charts := list }}
+{{- range $ns := readDirEntries "apps" }}
+  {{- range readDirEntries (printf "apps/%s" $ns.Name) }}
+    {{- $app := readFile (printf "apps/%s/%s/app.yaml" $ns.Name .Name) | fromYaml }}
+    {{- $chart := index $app.spec.sources 0 }}
+    {{- if hasKey $chart "chart" }}
+      {{- $charts = append $charts (dict "name" $app.metadata.name "namespace" $ns.Name "source" $chart) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
 
 repositories:
-{{- range $apps }}
-  {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
-  {{- $chart := index $app.spec.sources 0 }}
-  - name: {{ $app.metadata.name }}
-    url: {{ $chart.repoURL }}
+{{- range $charts }}
+  {{- if contains "://" .source.repoURL }}
+  - name: {{ .name }}
+    url: {{ .source.repoURL }}
+  {{- end }}
 {{- end }}
 
 releases:
-{{- range $apps }}
-  {{- $app := readFile (printf "apps/%s/app.yaml" .) | fromYaml }}
-  {{- $chart := index $app.spec.sources 0 }}
-  - name: {{ $app.metadata.name }}
-    namespace: {{ dir . }}
-    chart: {{ $app.metadata.name }}/{{ $chart.chart }}
-    version: {{ $chart.targetRevision }}
+{{- range $charts }}
+  - name: {{ .name }}
+    namespace: {{ .namespace }}
+    # Argo CD takes OCI repos without a scheme
+    chart: {{ if contains "://" .source.repoURL }}{{ .name }}{{ else }}oci://{{ .source.repoURL }}{{ end }}/{{ .source.chart }}
+    version: {{ .source.targetRevision }}
     values:
-      - {{ $chart.helm.valuesObject | toJson }}
+      - {{ dig "helm" "valuesObject" dict .source | toJson }}
 {{- end }}
