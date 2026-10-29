@@ -1,7 +1,9 @@
+# shared by every media app (mounted at /media); one volume, so imports by Radarr/Sonarr are renames, not copies
+#   downloads (JDownloader, SABnzbd; SABnzbd's temporary folder is downloads/.incomplete), library/{movies,tv}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jdownloader2-output
+  name: media
   annotations:
     argocd.argoproj.io/sync-options: Prune=confirm,Delete=confirm
 spec:

@@ -14,7 +14,7 @@ spec:
             tag: "12.4"
           persistence:
             media:
-              existingClaim: jdownloader2-output
+              existingClaim: media
             config:
               storageClass: internal
               size: 1Gi

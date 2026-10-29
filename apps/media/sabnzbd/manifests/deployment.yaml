@@ -49,7 +49,7 @@ spec:
             claimName: sabnzbd-config
         - name: media
           persistentVolumeClaim:
-            claimName: jdownloader2-output
+            claimName: media
         - name: seed
           configMap:
             name: sabnzbd-seed
