@@ -1,12 +1,54 @@
+- System:
+    - CPU:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: cpu
+    - Memory:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: memory
+    - Internal disk:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: fs:/rootfs
+    - External disk:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: fs:/rootfs/data/external
+    - CPU temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Package id 0
+    - Memory temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Memory
+    - NVMe temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Composite
+    - Ambient temperature:
+        widget:
+          type: glances
+          url: http://glances.observability:61208
+          version: 4
+          metric: sensor:Ambient
+
 - Services:
-    - Jellyfin:
-        href: https://jellyfin.dawidd6.duckdns.org
-        icon: jellyfin.png
-        siteMonitor: http://jellyfin.media:8096/health
-    - JDownloader:
-        href: https://jdownloader.dawidd6.duckdns.org
-        icon: jdownloader.png
-        siteMonitor: http://jdownloader2.media:10054
     - SABnzbd:
         href: https://sabnzbd.dawidd6.duckdns.org
         icon: sabnzbd.png
@@ -45,6 +87,12 @@
         href: https://bazarr.dawidd6.duckdns.org
         icon: bazarr.png
         siteMonitor: http://bazarr.media:6767
+        widget:
+          type: bazarr
+          url: http://bazarr.media:6767
+          # Bazarr generates it itself (Settings > General); copied into homepage-secrets
+          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+          fields: ["missingEpisodes", "missingMovies"]
     - Argo CD:
         href: https://argocd.dawidd6.duckdns.org
         icon: argo-cd.png
@@ -54,6 +102,21 @@
           url: http://argocd-server.delivery
           key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
           fields: ["apps", "synced", "outOfSync", "healthy"]
+    - Tailscale:
+        href: https://login.tailscale.com/admin/machines
+        icon: tailscale.png
+        widget:
+          type: tailscale
+          deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+          key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+    - Jellyfin:
+        href: https://jellyfin.dawidd6.duckdns.org
+        icon: jellyfin.png
+        siteMonitor: http://jellyfin.media:8096/health
+    - JDownloader:
+        href: https://jdownloader.dawidd6.duckdns.org
+        icon: jdownloader.png
+        siteMonitor: http://jdownloader2.media:10054
     - Grafana:
         href: https://grafana.dawidd6.duckdns.org
         icon: grafana.png
@@ -62,65 +125,8 @@
         href: https://tinyauth.dawidd6.duckdns.org
         icon: tinyauth.png
         siteMonitor: http://tinyauth.identity/api/healthz
-    - Tailscale:
-        href: https://login.tailscale.com/admin/machines
-        icon: tailscale.png
-        widget:
-          type: tailscale
-          deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
-          key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
-# live charts from Glances, refreshed by the browser about once a second
-- System:
-    - CPU:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: cpu
-    - Memory:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: memory
-    - Internal disk:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: fs:/rootfs
-    - External disk:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: fs:/rootfs/data/external
-    - CPU temperature:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: sensor:Package id 0
-    - NVMe temperature:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: sensor:Composite
-    - Memory temperature:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: sensor:Memory
-    - Ambient temperature:
-        widget:
-          type: glances
-          url: http://glances.observability:61208
-          version: 4
-          metric: sensor:Ambient
+
 - GitHub:
-    # needs a classic token with only the "notifications" scope; fine-grained tokens can't read notifications
     - Notifications:
         href: https://github.com/notifications
         icon: github.png
