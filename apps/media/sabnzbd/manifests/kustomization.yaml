@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - httproute.yaml
+  - persistentvolumeclaim.yaml
+  - sabnzbd-oidc.sops.yaml
+  - securitypolicy.yaml
+  - service.yaml
+configMapGenerator:
+  - name: sabnzbd-seed
+    files:
+      - configs/sabnzbd.ini
+    options:
+      disableNameSuffixHash: true
