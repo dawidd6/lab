@@ -28,7 +28,11 @@ spec:
                     - https://grafana.dawidd6.duckdns.org
                     - https://jdownloader.dawidd6.duckdns.org
                     - https://jellyfin.dawidd6.duckdns.org
+                    - https://nzbget.dawidd6.duckdns.org
+                    - https://prowlarr.dawidd6.duckdns.org
+                    - https://radarr.dawidd6.duckdns.org
                     - https://sabnzbd.dawidd6.duckdns.org
+                    - https://sonarr.dawidd6.duckdns.org
                     - https://tinyauth.dawidd6.duckdns.org
                 - labels:
                     module: http_jellyfin_health

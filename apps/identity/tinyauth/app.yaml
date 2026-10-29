@@ -72,6 +72,13 @@ spec:
                     name: tinyauth-secrets
                     key: JELLYFIN_CLIENT_SECRET
                   trustedRedirectUris: https://jellyfin.dawidd6.duckdns.org/sso/OID/redirect/tinyauth
+                - id: nzbget
+                  name: NZBGet
+                  clientId: nzbget
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: NZBGET_CLIENT_SECRET
+                  trustedRedirectUris: https://nzbget.dawidd6.duckdns.org/oauth2/callback
                 - id: bazarr
                   name: Bazarr
                   clientId: bazarr
@@ -86,6 +93,27 @@ spec:
                     name: tinyauth-secrets
                     key: SABNZBD_CLIENT_SECRET
                   trustedRedirectUris: https://sabnzbd.dawidd6.duckdns.org/oauth2/callback
+                - id: prowlarr
+                  name: Prowlarr
+                  clientId: prowlarr
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: PROWLARR_CLIENT_SECRET
+                  trustedRedirectUris: https://prowlarr.dawidd6.duckdns.org/oauth2/callback
+                - id: radarr
+                  name: Radarr
+                  clientId: radarr
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: RADARR_CLIENT_SECRET
+                  trustedRedirectUris: https://radarr.dawidd6.duckdns.org/oauth2/callback
+                - id: sonarr
+                  name: Sonarr
+                  clientId: sonarr
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: SONARR_CLIENT_SECRET
+                  trustedRedirectUris: https://sonarr.dawidd6.duckdns.org/oauth2/callback
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests

@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: radarr-oidc
+spec:
+  secretTemplates:
+    - name: radarr-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:VABQ1DNLFaW+ejXbMd63Yh8G6ZQzZU4ajXyVFOgTqqurMUxg9kYFMzKzb+t6IZgNogko6UI7VitQ0WlUhLyEvQ==,iv:TlCRsEssCiG4HFG3hr5eQMWP5Jhzqr3khmqrG+dwQio=,tag:kqn3iugRSUV9JRBvHXU1GA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3OUtiWVJ4N1NINnZGeDZR
+        UEdDQUx5N2NqZHc5bmVTYjNDWFU0S2dFYUNNCmlxNnJyZTdhTEh6SXU3a2JNZENs
+        emVHUEREdEZWaVNjQUhzRS9NRzJxN3MKLS0tIDBPSGhueFQ0Zm9Wc1l2eEJ5TXdk
+        MHpZaitOOXRxNXRCeGFBaUhOM3AzY28KT+AOzLnbsS/+JFXiMZ4oQ/9VhIgBmoIr
+        WRrHSAvUxjgXqSqXnKulIypunX/QsvTS/HULOW6X2xzYpFcYLxxpMg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-29T10:58:38Z"
+  mac: ENC[AES256_GCM,data:oSkHYTOUu4UVYgRcL7stUMET+aGKaRbJrvv0qXGRGIblf5cRvmcS+k2KcsPTkRlorBnl+sxdQTlvFXIpSzh4gU9zMwGQ6i8FCexHv9WpG5tiPmWu8wwh1ofwWHWnTJX+3d+rthDXcTNIB2tsVezIyahsepmP6Rn9No2mVXeYAec=,iv:RktRh73KRoLn2PxYqnmb+TAfB8I845yn+LNxm6QWoI0=,tag:CEMERVF543Uzt2oqnFQZRA==,type:str]
+  version: 3.13.3
