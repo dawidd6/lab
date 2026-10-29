@@ -93,6 +93,14 @@
           # Bazarr generates it itself (Settings > General); copied into homepage-secrets
           key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
           fields: ["missingEpisodes", "missingMovies"]
+    - ntfy:
+        href: https://ntfy.dawidd6.duckdns.org
+        icon: ntfy.png
+        siteMonitor: http://ntfy.observability/v1/health
+        widget:
+          type: ntfy
+          url: http://ntfy.observability
+          topic: lab
     - Argo CD:
         href: https://argocd.dawidd6.duckdns.org
         icon: argo-cd.png

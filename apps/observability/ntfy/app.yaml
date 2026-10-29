@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ntfy
+spec:
+  sources:
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/observability/ntfy/manifests

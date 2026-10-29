@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntfy
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ntfy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ntfy
+    spec:
+      containers:
+        - name: app
+          image: docker.io/binwiederhier/ntfy:v2.34.0
+          args:
+            - serve
+          env:
+            - name: NTFY_BASE_URL
+              value: https://ntfy.dawidd6.duckdns.org
+            - name: NTFY_LISTEN_HTTP
+              value: ":8080"
+            # rate limits per client need the real IP from envoy's X-Forwarded-For
+            - name: NTFY_BEHIND_PROXY
+              value: "true"
+            - name: NTFY_CACHE_FILE
+              value: /var/cache/ntfy/cache.db
+            - name: NTFY_ATTACHMENT_CACHE_DIR
+              value: /var/cache/ntfy/attachments
+            # the iOS app only gets instant notifications through ntfy.sh's push relay
+            - name: NTFY_UPSTREAM_BASE_URL
+              value: https://ntfy.sh
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /v1/ready
+              port: 8080
+          volumeMounts:
+            - name: cache
+              mountPath: /var/cache/ntfy
+      volumes:
+        - name: cache
+          persistentVolumeClaim:
+            claimName: ntfy-cache
+      enableServiceLinks: false
