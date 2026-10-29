@@ -116,6 +116,3 @@ spec:
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/observability/grafana/manifests
-    - repoURL: https://github.com/dawidd6/lab
-      targetRevision: master
-      path: apps/observability/grafana/dashboards

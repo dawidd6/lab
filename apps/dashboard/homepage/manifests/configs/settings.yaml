@@ -3,7 +3,7 @@ headerStyle: clean
 layout:
   Services:
     style: row
-    columns: 6
+    columns: 4
   System:
     style: row
     columns: 4

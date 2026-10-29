@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabnzbd
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sabnzbd
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sabnzbd
+    spec:
+      containers:
+        - name: app
+          image: lscr.io/linuxserver/sabnzbd:5.1.3
+          env:
+            # same user as JDownloader, which writes to the shared media volume
+            - name: PUID
+              value: "568"
+            - name: PGID
+              value: "568"
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /downloads
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: sabnzbd-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: jdownloader2-output
+      enableServiceLinks: false

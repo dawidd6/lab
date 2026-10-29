@@ -23,10 +23,12 @@ spec:
                     module: http_2xx
                   targets:
                     - https://argocd.dawidd6.duckdns.org
+                    - https://bazarr.dawidd6.duckdns.org
                     - https://homepage.dawidd6.duckdns.org
                     - https://grafana.dawidd6.duckdns.org
                     - https://jdownloader.dawidd6.duckdns.org
                     - https://jellyfin.dawidd6.duckdns.org
+                    - https://sabnzbd.dawidd6.duckdns.org
                     - https://tinyauth.dawidd6.duckdns.org
                 - labels:
                     module: http_jellyfin_health

@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: sabnzbd-oidc
+spec:
+  secretTemplates:
+    - name: sabnzbd-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:Ax1WHUKvwaEA/u+dCWgF8i/0WG+qgx1PweXWFmVKLJzoYm/QEgWwiUQP6ac5CUveY/fl4PZuIMYSn6c45kb3LQ==,iv:oaCle8zzN5dBYQpC46xYM/qxzCJmg26lvSic87HMDyQ=,tag:OW3r5NeDhX3uWzfEiZSvXg==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxTWlTS1NHRDJsZDZJM0FW
+        dnpoL2lLakFUOHZGZFRMNnVwQ21Ma3FmN2dJCmNGb1I2ODJoWXRUc1V6bjhmSXha
+        VWJzWGd2QWxOd2ZaRVN5QUo4UlEyUDgKLS0tIFBLaURVaGFCbDVrRCs3d0dDNlVW
+        OGtzT1NqZ05aWUpHUVZ1N1JFR05ITEUKAKNyD/qa/qc311SOuMKLhmas+XNsSs88
+        yN69nrlrRn41S53uMORZhYeKV5jxKYtzlhiIFD2+upmfjRKAFU0J/g==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-29T10:18:18Z"
+  mac: ENC[AES256_GCM,data:3+Ez1zC7QCdkY9cSJ6Js1vK4n1Q/fSxO9x8BUy9psNwLoh4aMOT/F3Usas1YsJ2HiFrNLlNudtn+PBUaykGIp4myic4hkOJIdrxWu60hqRjohzqCeArmuXkMd9RIHwsKdxm5Ki/ffFo9BpFp933PjkSDOVkddZsTyaDMqQPve2k=,iv:157EkciB8RkX9LHrUbyqIbRxTeDyXHkt8wSZMdzz7WI=,tag:p4pdAx2+gem5PeiylFWB8w==,type:str]
+  version: 3.13.3

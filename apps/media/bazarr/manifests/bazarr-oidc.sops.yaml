@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: bazarr-oidc
+spec:
+  secretTemplates:
+    - name: bazarr-oidc
+      stringData:
+        client-secret: ENC[AES256_GCM,data:L2SJZSjrqxqDj0PVbKJsbmAj7AHw71C7OMaEUsohnGU/eaF6lSr9+6uYqFrcbg8U1aF1/XTjGY3b81xxx+OBtQ==,iv:6vFVffvKy65PHmpFMfxX8WnWK+8o46romlRXBdp1Vlw=,tag:TYE0vaZcA7WM71ZuViMknA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYaER3SEdzNk5jOURSVnhK
+        amtZeEpYdUwvVDIzcmlRclk4RzZYaVNhNlQ0Cm9vc3hFWklUcU4zSEZxTVNNdEFa
+        N1kySEExYmpDQzU4QWV1dENMQmlTdk0KLS0tIG1ZTkovWEI0NERrZFNSUUVKemZI
+        Y2d4bFR4cDdNREtxN1NENExRNzdYWHcK9cTTfLVl7R5Yt5uWPfUbQc1t0dQ273ro
+        1LyiQf7rTdVDFI5Y+X73/JIDv3udojTlQkCjzcTHspeClAkiCbpXdw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-10-29T10:18:17Z"
+  mac: ENC[AES256_GCM,data:P7HCdS6rPpZO2qTt/ndxT4sAPGqJ6OHpnqafTy4cT7IJ30Mw1ipg/fAzvt9/rEvHOzX28RtHhKNHYaayCXKdssEVD5rM5aaegXhanz6jwtpGsI9QfIQaA+b9hcOiBA/4DmCQnArLarTpcE66Kr9/8/B8vDEXmbTwYzSCYanCDpo=,iv:16+8TLaqGFfF7FfTCvsfRnFncmII6pzJQxp1GTUqlC4=,tag:LjI2XegGYAwIlg08E1fg1w==,type:str]
+  version: 3.13.3

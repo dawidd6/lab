@@ -7,6 +7,14 @@
         href: https://jdownloader.dawidd6.duckdns.org
         icon: jdownloader.png
         siteMonitor: http://jdownloader2.media:10054
+    - SABnzbd:
+        href: https://sabnzbd.dawidd6.duckdns.org
+        icon: sabnzbd.png
+        siteMonitor: http://sabnzbd.media:8080
+    - Bazarr:
+        href: https://bazarr.dawidd6.duckdns.org
+        icon: bazarr.png
+        siteMonitor: http://bazarr.media:6767
     - Argo CD:
         href: https://argocd.dawidd6.duckdns.org
         icon: argo-cd.png

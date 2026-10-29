@@ -72,6 +72,20 @@ spec:
                     name: tinyauth-secrets
                     key: JELLYFIN_CLIENT_SECRET
                   trustedRedirectUris: https://jellyfin.dawidd6.duckdns.org/sso/OID/redirect/tinyauth
+                - id: bazarr
+                  name: Bazarr
+                  clientId: bazarr
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: BAZARR_CLIENT_SECRET
+                  trustedRedirectUris: https://bazarr.dawidd6.duckdns.org/oauth2/callback
+                - id: sabnzbd
+                  name: SABnzbd
+                  clientId: sabnzbd
+                  clientSecretSecretRef:
+                    name: tinyauth-secrets
+                    key: SABNZBD_CLIENT_SECRET
+                  trustedRedirectUris: https://sabnzbd.dawidd6.duckdns.org/oauth2/callback
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests
