@@ -17,15 +17,6 @@
           # SABnzbd generates it on first start: Config > General > API Key
           key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
           fields: ["rate", "queue", "timeleft"]
-    - NZBGet:
-        href: https://nzbget.dawidd6.duckdns.org
-        icon: nzbget.png
-        siteMonitor: http://nzbget.media:6789
-        widget:
-          type: nzbget
-          url: http://nzbget.media:6789
-          username: nzbget
-          password: "{{HOMEPAGE_VAR_NZBGET_PASSWORD}}"
     - Radarr:
         href: https://radarr.dawidd6.duckdns.org
         icon: radarr.png

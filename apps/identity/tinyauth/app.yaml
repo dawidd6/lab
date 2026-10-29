@@ -72,13 +72,6 @@ spec:
                     name: tinyauth-secrets
                     key: JELLYFIN_CLIENT_SECRET
                   trustedRedirectUris: https://jellyfin.dawidd6.duckdns.org/sso/OID/redirect/tinyauth
-                - id: nzbget
-                  name: NZBGet
-                  clientId: nzbget
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: NZBGET_CLIENT_SECRET
-                  trustedRedirectUris: https://nzbget.dawidd6.duckdns.org/oauth2/callback
                 - id: bazarr
                   name: Bazarr
                   clientId: bazarr
