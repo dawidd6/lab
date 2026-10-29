@@ -109,18 +109,6 @@
           type: duplicati
           url: http://duplicati.backup:8200
           password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
-    - Zerobyte:
-        href: https://zerobyte.dawidd6.duckdns.org
-        icon: zerobyte.png
-        siteMonitor: http://zerobyte.backup:4096/api/healthcheck
-    - Backrest:
-        href: https://backrest.dawidd6.duckdns.org
-        icon: backrest.png
-        siteMonitor: http://backrest.backup:9898
-        widget:
-          type: backrest
-          # in-cluster, past tinyauth; no credentials since Backrest's own login is off
-          url: http://backrest.backup:9898
     - Argo CD:
         href: https://argocd.dawidd6.duckdns.org
         icon: argo-cd.png

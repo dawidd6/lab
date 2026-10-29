@@ -1,9 +1,0 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: zerobyte
-spec:
-  sources:
-    - repoURL: https://github.com/dawidd6/lab
-      targetRevision: master
-      path: apps/backup/zerobyte/manifests

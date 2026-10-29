@@ -107,21 +107,6 @@ spec:
                     name: tinyauth-secrets
                     key: SONARR_CLIENT_SECRET
                   trustedRedirectUris: https://sonarr.dawidd6.duckdns.org/oauth2/callback
-                - id: backrest
-                  name: Backrest
-                  clientId: backrest
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: BACKREST_CLIENT_SECRET
-                  trustedRedirectUris: https://backrest.dawidd6.duckdns.org/oauth2/callback
-                # for Zerobyte's own SSO login (Settings > Organization > Single Sign-On, provider ID "tinyauth")
-                - id: zerobyte
-                  name: Zerobyte
-                  clientId: zerobyte
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: ZEROBYTE_CLIENT_SECRET
-                  trustedRedirectUris: https://zerobyte.dawidd6.duckdns.org/api/auth/sso/callback/tinyauth
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests
