@@ -11,6 +11,12 @@
         href: https://sabnzbd.dawidd6.duckdns.org
         icon: sabnzbd.png
         siteMonitor: http://sabnzbd.media:8080
+        widget:
+          type: sabnzbd
+          url: http://sabnzbd.media:8080
+          # SABnzbd generates it on first start: Config > General > API Key
+          key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
+          fields: ["rate", "queue", "timeleft"]
     - Bazarr:
         href: https://bazarr.dawidd6.duckdns.org
         icon: bazarr.png
