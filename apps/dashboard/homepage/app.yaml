@@ -85,6 +85,31 @@ spec:
                       - href: https://www.duckdns.org
                         icon: duckdns.png
             services:
+              - Services:
+                  - Notifications:
+                      href: https://github.com/notifications
+                      icon: github.png
+                      widget:
+                        type: customapi
+                        url: https://api.github.com/notifications
+                        refreshInterval: 300000
+                        headers:
+                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+                          Accept: application/vnd.github+json
+                          # GitHub's API rejects requests without one
+                          User-Agent: homepage
+                        display: dynamic-list
+                        mappings:
+                          name: subject.title
+                          label: repository.full_name
+                          limit: 5
+                  - Tailscale:
+                      href: https://login.tailscale.com/admin/machines
+                      icon: tailscale.png
+                      widget:
+                        type: tailscale
+                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
               - System:
                   - CPU:
                       widget:
@@ -135,7 +160,7 @@ spec:
                         version: 4
                         metric: sensor:Ambient
 
-              - Services:
+              - Apps:
                   - SABnzbd:
                       href: https://sabnzbd.dawidd6.duckdns.org
                       icon: sabnzbd.png
@@ -205,13 +230,6 @@ spec:
                         url: http://argocd-server.delivery
                         key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
                         fields: ["apps", "synced", "outOfSync", "healthy"]
-                  - Tailscale:
-                      href: https://login.tailscale.com/admin/machines
-                      icon: tailscale.png
-                      widget:
-                        type: tailscale
-                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
-                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
                   - Jellyfin:
                       href: https://jellyfin.dawidd6.duckdns.org
                       icon: jellyfin.png
@@ -229,23 +247,6 @@ spec:
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
 
-                  - Notifications:
-                      href: https://github.com/notifications
-                      icon: github.png
-                      widget:
-                        type: customapi
-                        url: https://api.github.com/notifications
-                        refreshInterval: 300000
-                        headers:
-                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
-                          Accept: application/vnd.github+json
-                          # GitHub's API rejects requests without one
-                          User-Agent: homepage
-                        display: dynamic-list
-                        mappings:
-                          name: subject.title
-                          label: repository.full_name
-                          limit: 5
               - Repositories:
                   - Repository:
                       href: https://github.com/dawidd6/lab
@@ -406,6 +407,9 @@ spec:
               # a list, since Helm's toYaml would sort a map's keys and Homepage orders groups by this
               layout:
                 - Services:
+                    style: row
+                    columns: 4
+                - Apps:
                     style: row
                     columns: 4
                 - System:
