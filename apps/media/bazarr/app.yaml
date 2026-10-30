@@ -20,9 +20,6 @@ spec:
               existingClaim: media
               mountPath: /media
 
-          metrics:
-            main:
-              enabled: false
           service:
             metrics:
               enabled: false

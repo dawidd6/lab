@@ -16,7 +16,6 @@ spec:
               # root with the read-any-file capability so it can read every app's files, whoever owns them
               runAsUser: 0
               runAsGroup: 0
-              runAsNonRoot: false
               capabilities:
                 add:
                   - DAC_READ_SEARCH

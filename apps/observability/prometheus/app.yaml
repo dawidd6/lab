@@ -17,8 +17,6 @@ spec:
               size: 1Gi
           scrapeConfigs:
             blackbox:
-              enabled: true
-              job_name: blackbox
               metrics_path: /probe
               static_configs:
                 - labels:

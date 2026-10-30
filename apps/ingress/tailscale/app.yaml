@@ -11,8 +11,6 @@ spec:
       targetRevision: 13.1.6
       helm:
         valuesObject:
-          # the pod network, not the host's
-          hostNetwork: false
           securityContext:
             container:
               # containerboot turns on IP forwarding for the route, which needs a writable /proc/sys

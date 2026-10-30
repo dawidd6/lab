@@ -258,7 +258,6 @@ spec:
                 revision: 3
               argocd:
                 gnetId: 14584
-                revision: 1
               cert-manager:
                 gnetId: 20842
                 revision: 3
@@ -279,7 +278,6 @@ spec:
                 revision: 46
               blackbox-exporter:
                 gnetId: 13659
-                revision: 1
                 datasource:
                   - name: DS_PROMETHEUS
                     value: Prometheus

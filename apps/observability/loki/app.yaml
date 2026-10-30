@@ -32,7 +32,6 @@ spec:
               retention_enabled: true
               delete_request_store: filesystem
           singleBinary:
-            replicas: 1
             persistence:
               storageClass: internal
               size: 1Gi

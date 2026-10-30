@@ -14,8 +14,6 @@ spec:
           crds:
             enabled: true
           config:
-            apiVersion: controller.config.cert-manager.io/v1alpha1
-            kind: ControllerConfiguration
             enableGatewayAPI: true
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
