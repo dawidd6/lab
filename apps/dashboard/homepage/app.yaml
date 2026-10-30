@@ -86,7 +86,7 @@ spec:
                         icon: duckdns.png
             services:
               - Services:
-                  - Notifications:
+                  - GitHub:
                       href: https://github.com/notifications
                       icon: github.png
                       widget:
@@ -248,7 +248,7 @@ spec:
                       siteMonitor: http://tinyauth.identity/api/healthz
 
               - Repositories:
-                  - Repository:
+                  - dawidd6/lab:
                       href: https://github.com/dawidd6/lab
                       icon: github.png
                       widget:
