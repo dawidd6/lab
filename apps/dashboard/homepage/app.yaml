@@ -87,38 +87,52 @@ spec:
             services:
               - System:
                   - CPU:
-                      widget: &glances
+                      widget:
                         type: glances
                         url: http://glances.observability:61208
                         version: 4
                         metric: cpu
                   - Memory:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: memory
                   - Internal disk:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: fs:/rootfs
                   - External disk:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: fs:/rootfs/data/external
                   - CPU temperature:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: sensor:Package id 0
                   - Memory temperature:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: sensor:Memory
                   - NVMe temperature:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: sensor:Composite
                   - Ambient temperature:
                       widget:
-                        <<: *glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
                         metric: sensor:Ambient
 
               - Services:
