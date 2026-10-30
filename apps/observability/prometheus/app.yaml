@@ -45,69 +45,8 @@ spec:
                   target_label: instance
                 - target_label: __address__
                   replacement: blackbox-exporter:9115
-          serverFiles:
-            alerting_rules.yml:
-              groups:
-                - name: blackbox
-                  rules:
-                    - alert: ProbeFailing
-                      expr: probe_success == 0
-                      for: 5m
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "{{ $labels.instance }} ({{ $labels.module }}) has been failing for 5 minutes"
-                    - alert: CertificateExpiringSoon
-                      expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 14
-                      for: 1h
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "Certificate served at {{ $labels.instance }} expires in {{ $value | humanize }} days"
-                - name: host
-                  rules:
-                    - alert: DiskAlmostFull
-                      expr: node_filesystem_avail_bytes{mountpoint=~"/|/data/external"} / node_filesystem_size_bytes < 0.1
-                      for: 15m
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "{{ $labels.mountpoint }} has only {{ $value | humanizePercentage }} free"
-                    # nofail in fstab: without the disk the server boots anyway, and /data/external is then just a folder on /
-                    - alert: ExternalDiskMissing
-                      expr: absent(node_filesystem_size_bytes{mountpoint="/data/external"})
-                      for: 5m
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "The external disk isn't mounted at /data/external"
-                    # fixed limits: the sensors' own max values are 0 or nonsense on this board
-                    - alert: HostTooHot
-                      expr: node_hwmon_temp_celsius{chip="platform_coretemp_0"} > 90 or node_hwmon_temp_celsius{chip="nvme_nvme0", sensor="temp1"} > 70
-                      for: 10m
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "{{ $labels.chip }} {{ $labels.sensor }} has been at {{ $value }}°C for 10 minutes"
-                - name: kubernetes
-                  rules:
-                    - alert: PodCrashLooping
-                      expr: max by (namespace, pod, container) (kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"}) == 1
-                      for: 10m
-                      labels:
-                        severity: warning
-                      annotations:
-                        summary: "{{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been crash-looping for 10 minutes"
+          # alerting is Grafana's (rules in the grafana app)
           alertmanager:
-            persistence:
-              storageClass: internal
-            config:
-              receivers:
-                - name: ntfy
-                  webhook_configs:
-                    # ntfy's built-in template turns Alertmanager's JSON into a readable notification
-                    - url: http://ntfy.observability/lab?template=alertmanager
-              route:
-                receiver: ntfy
+            enabled: false
           prometheus-pushgateway:
             enabled: false

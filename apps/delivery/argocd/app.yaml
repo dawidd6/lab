@@ -34,40 +34,7 @@ spec:
           dex:
             enabled: false
           notifications:
-            argocdUrl: https://argocd.dawidd6.duckdns.org
-            notifiers:
-              # ntfy's JSON API (root URL, topic in the body) so each message gets its own title and link
-              service.webhook.ntfy: |
-                url: http://ntfy.observability
-            templates:
-              template.app-sync-failing: |
-                webhook:
-                  ntfy:
-                    method: POST
-                    body: |
-                      {"topic": "lab", "tags": ["warning"], "title": "{{.app.metadata.name}}: sync failing",
-                       "message": "Argo CD has retried the sync {{.app.status.operationState.retryCount}} times.",
-                       "click": "{{.context.argocdUrl}}/applications/{{.app.metadata.namespace}}/{{.app.metadata.name}}"}
-              template.app-health-degraded: |
-                webhook:
-                  ntfy:
-                    method: POST
-                    body: |
-                      {"topic": "lab", "tags": ["warning"], "title": "{{.app.metadata.name}}: degraded",
-                       "message": "Argo CD reports the app's health as Degraded.",
-                       "click": "{{.context.argocdUrl}}/applications/{{.app.metadata.namespace}}/{{.app.metadata.name}}"}
-            triggers:
-              # syncs retry forever (retry.limit -1), so a failing one never reaches phase Failed; count the retries instead
-              trigger.on-sync-failing: |
-                - when: app.status.operationState != nil and app.status.operationState.retryCount != nil and app.status.operationState.retryCount >= 5
-                  send: [app-sync-failing]
-              trigger.on-health-degraded: |
-                - when: app.status.health.status == 'Degraded'
-                  send: [app-health-degraded]
-            # every app, no per-app annotations
-            subscriptions:
-              - recipients: [ntfy]
-                triggers: [on-sync-failing, on-health-degraded]
+            enabled: false
           controller:
             metrics:
               enabled: true

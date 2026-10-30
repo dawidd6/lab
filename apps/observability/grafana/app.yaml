@@ -50,6 +50,7 @@ spec:
               prune: true
               datasources:
                 - name: Prometheus
+                  uid: prometheus
                   type: prometheus
                   url: http://prometheus-server
                   isDefault: true
@@ -79,36 +80,158 @@ spec:
               apiVersion: 1
               groups:
                 - orgId: 1
-                  name: logs
+                  name: lab
                   folder: Alerts
                   interval: 1m
+                  # A is the query, B the threshold on it; noDataState OK where no series means nothing is wrong
+                  # (the notification lists each alert's labels: which probe, disk, pod or app)
                   rules:
+                    - uid: probe-failing
+                      title: Probe failing
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: probe_success
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [1]}}]}}
+                      for: 5m
+                      annotations:
+                        summary: An uptime probe has been failing for 5 minutes
+                    - uid: certificate-expiring
+                      title: Certificate expiring
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            # cert-manager renews 30 days ahead, so under 14 means renewal is failing
+                            expr: (certmanager_certificate_expiration_timestamp_seconds - time()) / 86400
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [14]}}]}}
+                      for: 1h
+                      annotations:
+                        summary: A certificate expires in less than 14 days (value = days left)
+                    - uid: disk-almost-full
+                      title: Disk almost full
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: node_filesystem_avail_bytes{mountpoint=~"/|/data/external"} / node_filesystem_size_bytes
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [0.1]}}]}}
+                      for: 15m
+                      annotations:
+                        summary: A disk has less than 10% free (value = fraction free)
+                    # nofail in fstab: without the disk the server boots anyway, and /data/external is then just a folder on /
+                    - uid: external-disk-missing
+                      title: External disk missing
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: count(node_filesystem_size_bytes{mountpoint="/data/external"}) or vector(0)
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [1]}}]}}
+                      for: 5m
+                      annotations:
+                        summary: The external disk isn't mounted at /data/external
+                    # fixed limits: the sensors' own max values are 0 or nonsense on this board
+                    - uid: cpu-too-hot
+                      title: CPU too hot
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: node_hwmon_temp_celsius{chip="platform_coretemp_0"}
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [90]}}]}}
+                      for: 10m
+                      annotations:
+                        summary: The CPU has been above 90°C for 10 minutes
+                    - uid: nvme-too-hot
+                      title: NVMe too hot
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: node_hwmon_temp_celsius{chip="nvme_nvme0", sensor="temp1"}
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [70]}}]}}
+                      for: 10m
+                      annotations:
+                        summary: The NVMe disk has been above 70°C for 10 minutes
+                    - uid: pod-crash-looping
+                      title: Pod crash-looping
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: max by (namespace, pod, container) (kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"})
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [0]}}]}}
+                      noDataState: OK
+                      for: 10m
+                      annotations:
+                        summary: A container has been crash-looping for 10 minutes
+                    - uid: app-degraded
+                      title: App degraded
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: max by (name) (argocd_app_info{health_status="Degraded"})
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [0]}}]}}
+                      noDataState: OK
+                      for: 5m
+                      annotations:
+                        summary: Argo CD reports an app's health as Degraded
+                    - uid: app-out-of-sync
+                      title: App out of sync
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: max by (name) (argocd_app_info{sync_status="OutOfSync"})
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [0]}}]}}
+                      noDataState: OK
+                      for: 15m
+                      annotations:
+                        summary: An app has been OutOfSync for 15 minutes; with auto-sync and self-heal, that means its syncs keep failing
+                    # error or worse in the server's journal (kernel I/O errors, failed units, k0s), minus known noise:
+                    # networkd-dispatcher looking up pods' veths after they're gone, and sshd sessions killed on disconnect
                     - uid: host-errors
                       title: Host errors
                       condition: B
                       data:
                         - refId: A
                           datasourceUid: loki
-                          relativeTimeRange:
-                            from: 600
-                            to: 0
+                          relativeTimeRange: {from: 600, to: 0}
                           model:
                             queryType: instant
-                            # error or worse in the server's journal (kernel I/O errors, failed units, k0s), minus known noise:
-                            # networkd-dispatcher looking up pods' veths after they're gone, and sshd sessions killed on disconnect
                             expr: sum by (identifier) (count_over_time({job="journal", priority=~"[0-3]", identifier!~"networkctl|sshd-session"}[10m]))
-                        - refId: B
-                          datasourceUid: __expr__
-                          model:
-                            type: threshold
-                            expression: A
-                            conditions:
-                              - evaluator:
-                                  type: gt
-                                  params: [0]
-                      # no matching lines means no series, which is the good case
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [0]}}]}}
                       noDataState: OK
-                      execErrState: Error
                       for: 0s
                       annotations:
                         summary: The server logged error-level journal lines in the last 10 minutes (Explore > Loki, job="journal")
