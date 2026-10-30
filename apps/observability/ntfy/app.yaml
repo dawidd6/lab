@@ -52,6 +52,3 @@ spec:
                   sectionName: https
               hostnames:
                 - ntfy.dawidd6.duckdns.org
-    - repoURL: https://github.com/dawidd6/lab
-      targetRevision: master
-      path: apps/observability/ntfy/manifests
