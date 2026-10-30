@@ -6,6 +6,48 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: prowlarr
+      targetRevision: 23.1.1
+      helm:
+        valuesObject:
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      PROWLARR__AUTH__METHOD: External
+                    envFrom:
+                      - secretRef:
+                          name: prowlarr-secrets
+                          expandObjectName: false
+          persistence:
+            config:
+              storageClass: internal
+              size: 1Gi
+
+          configmap:
+            # a Grafana dashboard for the metrics turned off below
+            dashboard:
+              enabled: false
+
+          metrics:
+            main:
+              enabled: false
+          service:
+            metrics:
+              enabled: false
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - prowlarr.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/prowlarr/manifests

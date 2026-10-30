@@ -6,6 +6,41 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: glances
+      targetRevision: 4.0.4
+      helm:
+        valuesObject:
+          podOptions:
+            # the web UI's process list shows the host's processes, not only Glances itself
+            hostPID: true
+          persistence:
+            # CPU, memory and sensors come from the host's /proc and /sys as seen in any container;
+            # disk usage needs the host filesystems, sub-mounts (/data/external) included
+            rootfs:
+              enabled: true
+              type: hostPath
+              hostPath: /
+              mountPath: /rootfs
+              readOnly: true
+              mountPropagation: HostToContainer
+            os-release:
+              enabled: true
+              type: hostPath
+              hostPath: /etc/os-release
+              hostPathType: File
+              mountPath: /etc/os-release
+              readOnly: true
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - glances.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/observability/glances/manifests

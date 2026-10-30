@@ -23,6 +23,14 @@ spec:
                 secretKeyRef:
                   name: tinyauth-secrets
                   key: USERS
+          httpRoute:
+            enabled: true
+            parentRefs:
+              - name: envoy
+                namespace: ingress
+                sectionName: https
+            hostnames:
+              - tinyauth.dawidd6.duckdns.org
           tinyauth:
             appUrl: https://tinyauth.dawidd6.duckdns.org
             analytics:

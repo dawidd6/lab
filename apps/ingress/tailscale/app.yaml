@@ -6,6 +6,47 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: tailscale
+      targetRevision: 13.1.6
+      helm:
+        valuesObject:
+          # the pod network, not the host's
+          hostNetwork: false
+          securityContext:
+            container:
+              # containerboot turns on IP forwarding for the route, which needs a writable /proc/sys
+              privileged: true
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    # set here instead of the chart's tailscale-config ConfigMap, whose TS_KUBE_SECRET env can't override
+                    envFrom: []
+                    env:
+                      TS_HOSTNAME: server-pod
+                      # kernel networking, as a subnet router for the server's LAN address
+                      TS_USERSPACE: "false"
+                      TS_ROUTES: 192.168.1.109/32
+                      TS_ACCEPT_DNS: "false"
+                      TS_AUTH_ONCE: "true"
+                      # where the chart's probes look for it
+                      TS_SOCKET: /var/run/tailscale/tailscaled.sock
+                      TS_AUTHKEY:
+                        secretKeyRef:
+                          name: tailscale
+                          key: TS_AUTHKEY
+                          expandObjectName: false
+                      # state on the volume below (the device keeps its identity and approved route), not in a Secret
+                      TS_KUBE_SECRET: ""
+                      TS_STATE_DIR: /var/lib/tailscale
+          persistence:
+            state:
+              enabled: true
+              mountPath: /var/lib/tailscale
+              storageClass: internal
+              size: 1Gi
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/ingress/tailscale/manifests

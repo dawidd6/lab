@@ -6,6 +6,48 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: sonarr
+      targetRevision: 28.0.13
+      helm:
+        valuesObject:
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      SONARR__AUTH__METHOD: External
+                    envFrom:
+                      - secretRef:
+                          name: sonarr-secrets
+                          expandObjectName: false
+          persistence:
+            config:
+              storageClass: internal
+              size: 1Gi
+
+            media:
+              enabled: true
+              existingClaim: media
+              mountPath: /media
+
+          metrics:
+            main:
+              enabled: false
+          service:
+            metrics:
+              enabled: false
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - sonarr.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/sonarr/manifests

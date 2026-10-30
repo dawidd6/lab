@@ -6,6 +6,52 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: ntfy
+      targetRevision: 14.5.1
+      helm:
+        valuesObject:
+          securityContext:
+            container:
+              # the user that owns the existing cache volume
+              runAsUser: 1000
+              runAsGroup: 1000
+          service:
+            main:
+              ports:
+                main:
+                  port: 80
+                  targetPort: 8080
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      # the chart listens on the Service port, which non-root can't for 80
+                      NTFY_LISTEN_HTTP: ":8080"
+                      NTFY_BASE_URL: https://ntfy.dawidd6.duckdns.org
+                      # rate limits per client need the real IP from envoy's X-Forwarded-For
+                      NTFY_BEHIND_PROXY: true
+                      ENABLE_CACHE_FILE: true
+                      ENABLE_ATTACHMENT_CACHE_DIR: true
+          persistence:
+            # configured through env, no server.yml
+            config:
+              enabled: false
+            cache:
+              storageClass: internal
+              size: 1Gi
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - ntfy.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/observability/ntfy/manifests

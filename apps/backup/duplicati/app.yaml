@@ -6,6 +6,71 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: duplicati
+      targetRevision: 18.0.6
+      helm:
+        valuesObject:
+          securityContext:
+            container:
+              # root with the read-any-file capability so it can read every app's files, whoever owns them
+              runAsUser: 0
+              runAsGroup: 0
+              runAsNonRoot: false
+              capabilities:
+                add:
+                  - DAC_READ_SEARCH
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      # encrypts the settings database, which holds destination credentials
+                      SETTINGS_ENCRYPTION_KEY:
+                        secretKeyRef:
+                          name: duplicati-secrets
+                          key: SETTINGS_ENCRYPTION_KEY
+                          expandObjectName: false
+                      # UI login, also in homepage-secrets for the Homepage widget
+                      DUPLICATI__WEBSERVICE_PASSWORD:
+                        secretKeyRef:
+                          name: duplicati-secrets
+                          key: DUPLICATI__WEBSERVICE_PASSWORD
+                          expandObjectName: false
+          persistence:
+            config:
+              # the image's data folder (the chart mounts it at /data, where the image doesn't look)
+              mountPath: /config
+              storageClass: internal
+              size: 1Gi
+            # backup source, read-only: every app's config volume on the internal disk
+            internal:
+              enabled: true
+              type: hostPath
+              hostPath: /data/internal
+              hostPathType: Directory
+              mountPath: /source/internal
+              readOnly: true
+            # backup destination on the external disk
+            backups:
+              enabled: true
+              mountPath: /backups
+              storageClass: external
+              size: 1Gi
+              annotations:
+                # backups: removing it from git needs confirmation, and deleting the app never deletes it
+                argocd.argoproj.io/sync-options: Prune=confirm,Delete=false
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - duplicati.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/backup/duplicati/manifests

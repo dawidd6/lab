@@ -6,6 +6,47 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: sabnzbd
+      targetRevision: 26.0.6
+      helm:
+        valuesObject:
+          # folders, set in SABnzbd's UI and kept in its config: temporary /media/downloads/.incomplete, completed /media/downloads
+          # (below /media/<folder>, not /media itself: SABnzbd treats /media/<first folder> as an external drive and waits for it)
+          service:
+            main:
+              ports:
+                main:
+                  # the port Radarr and Sonarr have it configured at (the chart's default is 10097)
+                  port: 8080
+            metrics:
+              enabled: false
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      # SABnzbd refuses requests for hostnames it doesn't know
+                      SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawidd6.duckdns.org, sabnzbd.media
+          persistence:
+            config:
+              storageClass: internal
+              size: 1Gi
+            media:
+              enabled: true
+              existingClaim: media
+              mountPath: /media
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - sabnzbd.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/sabnzbd/manifests

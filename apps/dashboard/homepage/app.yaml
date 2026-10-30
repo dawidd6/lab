@@ -6,6 +6,318 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: homepage
+      targetRevision: 14.2.1
+      helm:
+        valuesObject:
+          service:
+            main:
+              ports:
+                main:
+                  port: 3000
+          workload:
+            main:
+              podSpec:
+                # copies sample config files in when missing; the files come from git instead
+                initContainers:
+                  init-config:
+                    enabled: false
+                containers:
+                  main:
+                    env:
+                      MY_POD_IP:
+                        fieldRef:
+                          fieldPath: status.podIP
+                      # the pod IP for the kubelet probes, which use it as the Host header
+                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dashboard:3000,homepage.dawidd6.duckdns.org
+                    envFrom:
+                      # HOMEPAGE_VAR_* values referenced as {{HOMEPAGE_VAR_...}} in the config
+                      - secretRef:
+                          name: homepage-secrets
+                          expandObjectName: false
+          # Homepage's Kubernetes integration (cluster-wide read access) isn't used
+          serviceAccount:
+            main:
+              enabled: false
+          rbac:
+            main:
+              enabled: false
+          forceConfigFromValues: true
+          configmap:
+            config:
+              data:
+                # the config itself is under homepage: below; tpl runs on these lines only, not on the YAML they insert,
+                # so the {{HOMEPAGE_VAR_...}} placeholders reach Homepage as they are
+                bookmarks.yaml: |
+                  {{- toYaml .Values.homepage.bookmarks | nindent 2 }}
+                services.yaml: |
+                  {{- toYaml .Values.homepage.services | nindent 2 }}
+                settings.yaml: |
+                  {{- toYaml .Values.homepage.settings | nindent 2 }}
+                widgets.yaml: |
+                  {{- toYaml .Values.homepage.widgets | nindent 2 }}
+          persistence:
+            # Homepage writes logs and default files here; the config files are mounted on top
+            config:
+              type: emptyDir
+            kubernetes-config:
+              enabled: false
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - homepage.dawidd6.duckdns.org
+          homepage:
+            bookmarks:
+              - Links:
+                  - Repository:
+                      - href: https://github.com/dawidd6/lab
+                        icon: github.png
+                  - Tailscale:
+                      - href: https://login.tailscale.com/admin/machines
+                        icon: tailscale.png
+                  - DuckDNS:
+                      - href: https://www.duckdns.org
+                        icon: duckdns.png
+            services:
+              - System:
+                  - CPU:
+                      widget: &glances
+                        type: glances
+                        url: http://glances.observability:61208
+                        version: 4
+                        metric: cpu
+                  - Memory:
+                      widget:
+                        <<: *glances
+                        metric: memory
+                  - Internal disk:
+                      widget:
+                        <<: *glances
+                        metric: fs:/rootfs
+                  - External disk:
+                      widget:
+                        <<: *glances
+                        metric: fs:/rootfs/data/external
+                  - CPU temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Package id 0
+                  - Memory temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Memory
+                  - NVMe temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Composite
+                  - Ambient temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Ambient
+
+              - Services:
+                  - SABnzbd:
+                      href: https://sabnzbd.dawidd6.duckdns.org
+                      icon: sabnzbd.png
+                      siteMonitor: http://sabnzbd.media:8080
+                      widget:
+                        type: sabnzbd
+                        url: http://sabnzbd.media:8080
+                        # SABnzbd generates it on first start: Config > General > API Key
+                        key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
+                        fields: ["rate", "queue", "timeleft"]
+                  - Radarr:
+                      href: https://radarr.dawidd6.duckdns.org
+                      icon: radarr.png
+                      siteMonitor: http://radarr.media:7878
+                      widget:
+                        type: radarr
+                        url: http://radarr.media:7878
+                        key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+                  - Sonarr:
+                      href: https://sonarr.dawidd6.duckdns.org
+                      icon: sonarr.png
+                      siteMonitor: http://sonarr.media:8989
+                      widget:
+                        type: sonarr
+                        url: http://sonarr.media:8989
+                        key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+                  - Prowlarr:
+                      href: https://prowlarr.dawidd6.duckdns.org
+                      icon: prowlarr.png
+                      siteMonitor: http://prowlarr.media:9696
+                      widget:
+                        type: prowlarr
+                        url: http://prowlarr.media:9696
+                        key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+                  - Bazarr:
+                      href: https://bazarr.dawidd6.duckdns.org
+                      icon: bazarr.png
+                      siteMonitor: http://bazarr.media:6767
+                      widget:
+                        type: bazarr
+                        url: http://bazarr.media:6767
+                        # Bazarr generates it itself (Settings > General); copied into homepage-secrets
+                        key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+                        fields: ["missingEpisodes", "missingMovies"]
+                  - ntfy:
+                      href: https://ntfy.dawidd6.duckdns.org
+                      icon: ntfy.png
+                      siteMonitor: http://ntfy.observability/v1/health
+                      widget:
+                        type: ntfy
+                        url: http://ntfy.observability
+                        topic: lab
+                  - Duplicati:
+                      href: https://duplicati.dawidd6.duckdns.org
+                      icon: duplicati.png
+                      siteMonitor: http://duplicati.backup:8200
+                      widget:
+                        type: duplicati
+                        url: http://duplicati.backup:8200
+                        password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
+                  - Argo CD:
+                      href: https://argocd.dawidd6.duckdns.org
+                      icon: argo-cd.png
+                      siteMonitor: http://argocd-server.delivery/healthz
+                      widget:
+                        type: argocd
+                        url: http://argocd-server.delivery
+                        key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
+                        fields: ["apps", "synced", "outOfSync", "healthy"]
+                  - Tailscale:
+                      href: https://login.tailscale.com/admin/machines
+                      icon: tailscale.png
+                      widget:
+                        type: tailscale
+                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+                  - Jellyfin:
+                      href: https://jellyfin.dawidd6.duckdns.org
+                      icon: jellyfin.png
+                      siteMonitor: http://jellyfin.media:8096/health
+                  - JDownloader:
+                      href: https://jdownloader2.dawidd6.duckdns.org
+                      icon: jdownloader.png
+                      siteMonitor: http://jdownloader2.media:5800
+                  - Grafana:
+                      href: https://grafana.dawidd6.duckdns.org
+                      icon: grafana.png
+                      siteMonitor: http://grafana.observability/api/health
+                  - Tinyauth:
+                      href: https://tinyauth.dawidd6.duckdns.org
+                      icon: tinyauth.png
+                      siteMonitor: http://tinyauth.identity/api/healthz
+
+              - GitHub:
+                  - Notifications:
+                      href: https://github.com/notifications
+                      icon: github.png
+                      widget:
+                        type: customapi
+                        url: https://api.github.com/notifications
+                        refreshInterval: 300000
+                        headers:
+                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+                          Accept: application/vnd.github+json
+                          # GitHub's API rejects requests without one
+                          User-Agent: homepage
+                        display: dynamic-list
+                        mappings:
+                          name: subject.title
+                          label: repository.full_name
+                          limit: 5
+                  - Repository:
+                      href: https://github.com/dawidd6/lab
+                      icon: github.png
+                      widget:
+                        type: customapi
+                        # GraphQL, because the REST API counts PRs as issues
+                        url: https://api.github.com/graphql
+                        method: POST
+                        refreshInterval: 900000
+                        headers:
+                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+                          User-Agent: homepage
+                        requestBody:
+                          query: |
+                            {
+                              repository(owner: "dawidd6", name: "lab") {
+                                pullRequests(states: OPEN) { totalCount }
+                                issues(states: OPEN) { totalCount }
+                                pushedAt
+                              }
+                            }
+                        mappings:
+                          - field: data.repository.pullRequests.totalCount
+                            label: Open PRs
+                            format: number
+                          - field: data.repository.issues.totalCount
+                            label: Open issues
+                            format: number
+                          - field: data.repository.pushedAt
+                            label: Last push
+                            format: relativeDate
+                  - Kubernetes releases:
+                      href: https://github.com/kubernetes/kubernetes/releases
+                      icon: kubernetes.png
+                      widget:
+                        type: feed
+                        url: https://github.com/kubernetes/kubernetes/releases.atom
+                        maxItems: 5
+                        images: false
+                  - k0s releases:
+                      href: https://github.com/k0sproject/k0s/releases
+                      icon: kubernetes.png
+                      widget:
+                        type: feed
+                        url: https://github.com/k0sproject/k0s/releases.atom
+                        maxItems: 5
+                        images: false
+            settings:
+              title: Server
+              headerStyle: clean
+              layout:
+                Services:
+                  style: row
+                  columns: 4
+                System:
+                  style: row
+                  columns: 4
+                GitHub:
+                  style: row
+                  columns: 4
+                Links:
+                  style: row
+                  columns: 3
+            widgets:
+              - datetime:
+                  text_size: xl
+                  format:
+                    dateStyle: long
+                    timeStyle: short
+                    hourCycle: h23
+              # Intl.DateTimeFormat rejects timeStyle together with timeZoneName, so the time parts are listed instead
+              - datetime:
+                  format:
+                    hour: 2-digit
+                    minute: 2-digit
+                    hourCycle: h23
+                    timeZone: UTC
+                    timeZoneName: short
+              - openmeteo:
+                  label: Wrocław
+                  latitude: 51.1079
+                  longitude: 17.0385
+                  timezone: Europe/Warsaw
+                  units: metric
+                  cache: 5
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/dashboard/homepage/manifests

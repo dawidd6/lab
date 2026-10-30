@@ -11,12 +11,14 @@ spec:
       targetRevision: 3.7.0
       helm:
         valuesObject:
-          image:
-            repository: docker.io/jellyfin/jellyfin
-            tag: "12.4"
-          # the Intel GPU (/dev/dri) for hardware transcoding (Dashboard > Playback > Transcoding: Intel QuickSync)
-          securityContext:
-            privileged: true
+          httpRoute:
+            enabled: true
+            parentRefs:
+              - name: envoy
+                namespace: ingress
+                sectionName: https
+            hostnames:
+              - jellyfin.dawidd6.duckdns.org
           persistence:
             media:
               existingClaim: media

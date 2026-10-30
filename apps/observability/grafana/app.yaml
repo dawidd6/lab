@@ -43,6 +43,15 @@ spec:
               auto_login: true
               allow_sign_up: true
               role_attribute_path: preferred_username == 'dawid' && 'Admin' || 'Viewer'
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - grafana.dawidd6.duckdns.org
           datasources:
             datasources.yaml:
               apiVersion: 1

@@ -6,6 +6,36 @@ spec:
   project: ""
   destination: {}
   sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: bazarr
+      targetRevision: 25.0.7
+      helm:
+        valuesObject:
+          persistence:
+            config:
+              storageClass: internal
+              size: 1Gi
+            media:
+              enabled: true
+              existingClaim: media
+              mountPath: /media
+
+          metrics:
+            main:
+              enabled: false
+          service:
+            metrics:
+              enabled: false
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - bazarr.dawidd6.duckdns.org
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/bazarr/manifests
