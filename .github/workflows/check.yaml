@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read # checkout
+      pull-requests: write # deadvalues report comment
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # the commit compared with too: the pull request base, or the one before the push
+          fetch-depth: 0
           persist-credentials: false
 
       - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
@@ -21,3 +24,7 @@ jobs:
           install_args: kubeconform
 
       - run: mise run check
+
+      - uses: guarnz/deadvalues@6ed0a88f1513ea7c3c93b3bb9a4b4fc71b951b25 # v0.1.9
+        with:
+          path: apps
