@@ -3,8 +3,7 @@ name: Diff
 on:
   pull_request:
     paths:
-      - apps/*/*/app.yaml
-      - helmfile.yaml.gotmpl
+      - apps/**
 
 jobs:
   diff:
@@ -13,30 +12,7 @@ jobs:
       contents: read # checkout
       pull-requests: write # diff comment
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: sholdee/drydock/pr-action@b9ea057d0acea877ee93e3dcee6229618d3b83d7 # v0.3.8
         with:
-          ref: ${{ github.base_ref }}
-          persist-credentials: false
-
-      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
-        with:
-          install_args: helm helmfile
-
-      - run: helmfile template -q --output-dir "$RUNNER_TEMP/base"
-
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - run: helmfile template -q --output-dir "$RUNNER_TEMP/head"
-
-      - uses: int128/diff-action@5808e847fcbe8a6c943e20d5b372204e99eb2de5 # v2.42.0
-        id: diff
-        with:
-          base: ${{ runner.temp }}/base
-          head: ${{ runner.temp }}/head
-
-      - uses: int128/comment-action@304df51b76a99f2ba948f8d780d789b5ecc22893 # v1.80.0
-        with:
-          update-if-exists: replace
-          post: ${{ steps.diff.outputs.comment-body || 'No changes in rendered charts.' }}
+          # app.yaml files are the ApplicationSet's input, not Applications of their own
+          discover-ignore: apps/*/*/app.yaml
