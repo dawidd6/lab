@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: metallb
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: quay.io/metallb/chart
       chart: metallb

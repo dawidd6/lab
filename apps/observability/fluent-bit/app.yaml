@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: fluent-bit
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: https://fluent.github.io/helm-charts
       chart: fluent-bit

@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: prometheus
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: prometheus
@@ -62,6 +65,40 @@ spec:
                         severity: warning
                       annotations:
                         summary: "Certificate served at {{ $labels.instance }} expires in {{ $value | humanize }} days"
+                - name: host
+                  rules:
+                    - alert: DiskAlmostFull
+                      expr: node_filesystem_avail_bytes{mountpoint=~"/|/data/external"} / node_filesystem_size_bytes < 0.1
+                      for: 15m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: "{{ $labels.mountpoint }} has only {{ $value | humanizePercentage }} free"
+                    # nofail in fstab: without the disk the server boots anyway, and /data/external is then just a folder on /
+                    - alert: ExternalDiskMissing
+                      expr: absent(node_filesystem_size_bytes{mountpoint="/data/external"})
+                      for: 5m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: "The external disk isn't mounted at /data/external"
+                    # fixed limits: the sensors' own max values are 0 or nonsense on this board
+                    - alert: HostTooHot
+                      expr: node_hwmon_temp_celsius{chip="platform_coretemp_0"} > 90 or node_hwmon_temp_celsius{chip="nvme_nvme0", sensor="temp1"} > 70
+                      for: 10m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: "{{ $labels.chip }} {{ $labels.sensor }} has been at {{ $value }}°C for 10 minutes"
+                - name: kubernetes
+                  rules:
+                    - alert: PodCrashLooping
+                      expr: max by (namespace, pod, container) (kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"}) == 1
+                      for: 10m
+                      labels:
+                        severity: warning
+                      annotations:
+                        summary: "{{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container }}) has been crash-looping for 10 minutes"
           alertmanager:
             persistence:
               storageClass: internal

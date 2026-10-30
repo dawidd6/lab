@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Validate every app's files against the schemas"
+set -euo pipefail
+
+cd "$MISE_PROJECT_ROOT/apps"
+
+# configs/ hold app configs, not resources
+find . -type f -name '*.yaml' -not -path '*/configs/*' -print0 | xargs -0 kubeconform \
+  -strict \
+  -summary \
+  -verbose \
+  -cache /tmp \
+  -schema-location default \
+  -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'

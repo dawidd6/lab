@@ -1,12 +1,10 @@
-name: helm-diff
+name: Diff
 
 on:
   pull_request:
     paths:
       - apps/*/*/app.yaml
       - helmfile.yaml.gotmpl
-
-permissions: {}
 
 jobs:
   diff:
@@ -15,25 +13,29 @@ jobs:
       contents: read # checkout
       pull-requests: write # diff comment
     steps:
-      # both sides are checked out to the same path, so helmfile names the output dirs the same
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.base_ref }}
           persist-credentials: false
-      - uses: helmfile/helmfile-action@614b4cd063ada10b87f668f6ffd35485bce0cac5 # v2.4.8
+
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
         with:
-          helmfile-args: template -q --output-dir ${{ runner.temp }}/base
+          install_args: helm helmfile
+
+      - run: helmfile template -q --output-dir "$RUNNER_TEMP/base"
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: helmfile/helmfile-action@614b4cd063ada10b87f668f6ffd35485bce0cac5 # v2.4.8
-        with:
-          helmfile-args: template -q --output-dir ${{ runner.temp }}/head
+
+      - run: helmfile template -q --output-dir "$RUNNER_TEMP/head"
+
       - uses: int128/diff-action@5808e847fcbe8a6c943e20d5b372204e99eb2de5 # v2.42.0
         id: diff
         with:
           base: ${{ runner.temp }}/base
           head: ${{ runner.temp }}/head
+
       - uses: int128/comment-action@304df51b76a99f2ba948f8d780d789b5ecc22893 # v1.80.0
         with:
           update-if-exists: replace

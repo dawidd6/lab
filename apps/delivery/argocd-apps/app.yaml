@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: argocd-apps
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: https://argoproj.github.io/argo-helm
       chart: argocd-apps

@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: cloudnative-pg
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: https://cloudnative-pg.github.io/charts
       chart: cloudnative-pg

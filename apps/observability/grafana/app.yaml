@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: grafana
 spec:
+  # filled in by the ApplicationSet
+  project: ""
+  destination: {}
   sources:
     - repoURL: https://grafana-community.github.io/helm-charts
       chart: grafana
@@ -52,8 +55,64 @@ spec:
                   url: http://prometheus-server
                   isDefault: true
                 - name: Loki
+                  uid: loki
                   type: loki
                   url: http://loki:3100
+          # values here go through Helm's tpl, so no {{ }} in them
+          alerting:
+            contactpoints.yaml:
+              apiVersion: 1
+              contactPoints:
+                - orgId: 1
+                  name: ntfy
+                  receivers:
+                    - uid: ntfy
+                      type: webhook
+                      settings:
+                        # ntfy's built-in template turns Grafana's JSON into a readable notification
+                        url: http://ntfy.observability/lab?template=grafana
+            policies.yaml:
+              apiVersion: 1
+              policies:
+                - orgId: 1
+                  receiver: ntfy
+            rules.yaml:
+              apiVersion: 1
+              groups:
+                - orgId: 1
+                  name: logs
+                  folder: Alerts
+                  interval: 1m
+                  rules:
+                    - uid: host-errors
+                      title: Host errors
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: loki
+                          relativeTimeRange:
+                            from: 600
+                            to: 0
+                          model:
+                            queryType: instant
+                            # error or worse in the server's journal (kernel I/O errors, failed units, k0s), minus known noise:
+                            # networkd-dispatcher looking up pods' veths after they're gone, and sshd sessions killed on disconnect
+                            expr: sum by (identifier) (count_over_time({job="journal", priority=~"[0-3]", identifier!~"networkctl|sshd-session"}[10m]))
+                        - refId: B
+                          datasourceUid: __expr__
+                          model:
+                            type: threshold
+                            expression: A
+                            conditions:
+                              - evaluator:
+                                  type: gt
+                                  params: [0]
+                      # no matching lines means no series, which is the good case
+                      noDataState: OK
+                      execErrState: Error
+                      for: 0s
+                      annotations:
+                        summary: The server logged error-level journal lines in the last 10 minutes (Explore > Loki, job="journal")
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
