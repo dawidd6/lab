@@ -110,7 +110,7 @@ spec:
                         type: tailscale
                         deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
                         key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
-              - System:
+              - Vitals:
                   - CPU:
                       widget:
                         type: glances
@@ -409,13 +409,13 @@ spec:
                 - Services:
                     style: row
                     columns: 4
-                - Apps:
-                    style: row
-                    columns: 4
-                - System:
-                    style: row
-                    columns: 4
                 - Repositories:
+                    style: row
+                    columns: 4
+                - Vitals:
+                    style: row
+                    columns: 4
+                - Apps:
                     style: row
                     columns: 4
                 - Releases:
