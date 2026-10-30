@@ -294,6 +294,111 @@ spec:
                         url: https://github.com/k0sproject/k0s/releases.atom
                         maxItems: 5
                         images: false
+                  - SABnzbd releases:
+                      href: https://github.com/sabnzbd/sabnzbd/releases
+                      icon: sabnzbd.png
+                      widget:
+                        type: feed
+                        url: https://github.com/sabnzbd/sabnzbd/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Radarr releases:
+                      href: https://github.com/Radarr/Radarr/releases
+                      icon: radarr.png
+                      widget:
+                        type: feed
+                        url: https://github.com/Radarr/Radarr/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Sonarr releases:
+                      href: https://github.com/Sonarr/Sonarr/releases
+                      icon: sonarr.png
+                      widget:
+                        type: feed
+                        url: https://github.com/Sonarr/Sonarr/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Prowlarr releases:
+                      href: https://github.com/Prowlarr/Prowlarr/releases
+                      icon: prowlarr.png
+                      widget:
+                        type: feed
+                        url: https://github.com/Prowlarr/Prowlarr/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Bazarr releases:
+                      href: https://github.com/morpheus65535/bazarr/releases
+                      icon: bazarr.png
+                      widget:
+                        type: feed
+                        url: https://github.com/morpheus65535/bazarr/releases.atom
+                        maxItems: 5
+                        images: false
+                  - ntfy releases:
+                      href: https://github.com/binwiederhier/ntfy/releases
+                      icon: ntfy.png
+                      widget:
+                        type: feed
+                        url: https://github.com/binwiederhier/ntfy/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Duplicati releases:
+                      href: https://github.com/duplicati/duplicati/releases
+                      icon: duplicati.png
+                      widget:
+                        type: feed
+                        url: https://github.com/duplicati/duplicati/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Argo CD releases:
+                      href: https://github.com/argoproj/argo-cd/releases
+                      icon: argo-cd.png
+                      widget:
+                        type: feed
+                        url: https://github.com/argoproj/argo-cd/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Tailscale releases:
+                      href: https://github.com/tailscale/tailscale/releases
+                      icon: tailscale.png
+                      widget:
+                        type: feed
+                        url: https://github.com/tailscale/tailscale/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Jellyfin releases:
+                      href: https://github.com/jellyfin/jellyfin/releases
+                      icon: jellyfin.png
+                      widget:
+                        type: feed
+                        url: https://github.com/jellyfin/jellyfin/releases.atom
+                        maxItems: 5
+                        images: false
+                  # JDownloader itself publishes no releases; this is the image it runs from
+                  - JDownloader releases:
+                      href: https://github.com/jlesage/docker-jdownloader-2/releases
+                      icon: jdownloader.png
+                      widget:
+                        type: feed
+                        url: https://github.com/jlesage/docker-jdownloader-2/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Grafana releases:
+                      href: https://github.com/grafana/grafana/releases
+                      icon: grafana.png
+                      widget:
+                        type: feed
+                        url: https://github.com/grafana/grafana/releases.atom
+                        maxItems: 5
+                        images: false
+                  - Tinyauth releases:
+                      href: https://github.com/tinyauthapp/tinyauth/releases
+                      icon: tinyauth.png
+                      widget:
+                        type: feed
+                        url: https://github.com/tinyauthapp/tinyauth/releases.atom
+                        maxItems: 5
+                        images: false
             settings:
               title: Server
               headerStyle: clean
