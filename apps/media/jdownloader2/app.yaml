@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: jdownloader2
 spec:
-  # filled in by the ApplicationSet
   project: ""
   destination: {}
   sources:

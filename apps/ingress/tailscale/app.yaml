@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: tailscale
 spec:
-  # filled in by the ApplicationSet
   project: ""
   destination: {}
   sources:

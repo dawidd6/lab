@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: fluent-bit
 spec:
-  # filled in by the ApplicationSet
   project: ""
   destination: {}
   sources:

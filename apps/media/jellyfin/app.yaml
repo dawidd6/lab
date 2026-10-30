@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: jellyfin
 spec:
-  # filled in by the ApplicationSet
   project: ""
   destination: {}
   sources:
