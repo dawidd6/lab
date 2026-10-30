@@ -229,7 +229,6 @@ spec:
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
 
-              - GitHub:
                   - Notifications:
                       href: https://github.com/notifications
                       icon: github.png
@@ -247,6 +246,7 @@ spec:
                           name: subject.title
                           label: repository.full_name
                           limit: 5
+              - Repositories:
                   - Repository:
                       href: https://github.com/dawidd6/lab
                       icon: github.png
@@ -278,6 +278,7 @@ spec:
                           - field: data.repository.pushedAt
                             label: Last push
                             format: relativeDate
+              - Releases:
                   - Kubernetes releases:
                       href: https://github.com/kubernetes/kubernetes/releases
                       icon: kubernetes.png
@@ -410,7 +411,10 @@ spec:
                 - System:
                     style: row
                     columns: 4
-                - GitHub:
+                - Repositories:
+                    style: row
+                    columns: 4
+                - Releases:
                     style: row
                     columns: 4
                 - Links:
