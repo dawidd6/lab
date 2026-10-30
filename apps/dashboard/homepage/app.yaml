@@ -297,19 +297,20 @@ spec:
             settings:
               title: Server
               headerStyle: clean
+              # a list, since Helm's toYaml would sort a map's keys and Homepage orders groups by this
               layout:
-                Services:
-                  style: row
-                  columns: 4
-                System:
-                  style: row
-                  columns: 4
-                GitHub:
-                  style: row
-                  columns: 4
-                Links:
-                  style: row
-                  columns: 3
+                - Services:
+                    style: row
+                    columns: 4
+                - System:
+                    style: row
+                    columns: 4
+                - GitHub:
+                    style: row
+                    columns: 4
+                - Links:
+                    style: row
+                    columns: 3
             widgets:
               - datetime:
                   text_size: xl
