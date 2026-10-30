@@ -57,6 +57,13 @@ spec:
               apiVersion: 1
               # deletes datasources no longer listed here
               prune: true
+              # one-time: Grafana can't change an existing datasource's uid in place (it stopped starting), so these two
+              # are recreated with the fixed uids the alert rules use; remove once Grafana has started with them
+              deleteDatasources:
+                - name: Prometheus
+                  orgId: 1
+                - name: Loki
+                  orgId: 1
               datasources:
                 - name: Prometheus
                   uid: prometheus
