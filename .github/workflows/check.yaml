@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read # checkout
-      pull-requests: write # deadvalues report comment
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -28,3 +27,5 @@ jobs:
       - uses: guarnz/deadvalues@6ed0a88f1513ea7c3c93b3bb9a4b4fc71b951b25 # v0.1.9
         with:
           path: apps
+          # the report goes to the job summary; a PR comment would come on every PR, apps changed or not
+          comment: false
