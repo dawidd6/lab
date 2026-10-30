@@ -1,0 +1,10 @@
+# Bootstrap only: Argo CD with the chart's defaults; it then manages itself (apps/delivery/argocd) with the real values
+repositories:
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+
+releases:
+  - name: argocd
+    namespace: delivery
+    chart: argo/argo-cd
+    version: 10.11.6

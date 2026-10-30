@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/delivery/root/manifests

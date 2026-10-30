@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  annotations:
+    # never deleted or pruned with the root app: that would delete every Application it generated
+    argocd.argoproj.io/sync-options: Delete=false,Prune=false
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  # lets `argocd app set <app> --sync-policy none` stick instead of being reverted
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  generators:
+    - git:
+        repoURL: https://github.com/dawidd6/lab
+        revision: master
+        files:
+          - path: apps/*/*/app.yaml
+  template:
+    metadata:
+      name: '{{ index .path.segments 2 }}'
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ index .path.segments 1 }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: -1
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - SkipDryRunOnMissingResource=true
+  # each app.yaml lists its own spec.sources; template fields can only hold strings, so the list is patched in
+  templatePatch: |
+    spec:
+      sources: {{ toJson .spec.sources }}
