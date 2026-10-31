@@ -36,7 +36,7 @@ spec:
                   targets:
                     - https://tinyauth.dawid.indevs.in/api/healthz
                 - labels:
-                    module: http_tinyauth_redirect
+                    module: http_tinyauth_login
                   targets:
                     - https://homepage.dawid.indevs.in
               relabel_configs:

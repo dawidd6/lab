@@ -53,15 +53,13 @@ spec:
                   preferred_ip_protocol: ip4
                   valid_status_codes:
                     - 200
-              # an app behind the tinyauth SecurityPolicy still sends the login redirect
-              http_tinyauth_redirect:
+              # an app behind the tinyauth SecurityPolicy still ends up on the login page, not its own
+              http_tinyauth_login:
                 prober: http
                 timeout: 5s
                 http:
                   preferred_ip_protocol: ip4
-                  follow_redirects: false
                   valid_status_codes:
-                    - 302
-                  fail_if_header_not_matches:
-                    - header: Location
-                      regexp: ^https://tinyauth\.dawid\.indevs\.in/
+                    - 200
+                  fail_if_body_not_matches_regexp:
+                    - <title>Tinyauth</title>
