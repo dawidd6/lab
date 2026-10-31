@@ -49,8 +49,8 @@ spec:
               data:
                 # the config itself is under homepage: below; tpl runs on these lines only, not on the YAML they insert,
                 # so the {{HOMEPAGE_VAR_...}} placeholders reach Homepage as they are
-                bookmarks.yaml: |
-                  {{- toYaml .Values.homepage.bookmarks | nindent 2 }}
+                # empty rather than left out, since Homepage would create a sample one
+                bookmarks.yaml: "[]"
                 services.yaml: |
                   {{- toYaml .Values.homepage.services | nindent 2 }}
                 settings.yaml: |
@@ -73,17 +73,6 @@ spec:
               hostnames:
                 - homepage.dawidd6.duckdns.org
           homepage:
-            bookmarks:
-              - Links:
-                  - Repository:
-                      - href: https://github.com/dawidd6/lab
-                        icon: github.png
-                  - Tailscale:
-                      - href: https://login.tailscale.com/admin/machines
-                        icon: tailscale.png
-                  - DuckDNS:
-                      - href: https://www.duckdns.org
-                        icon: duckdns.png
             services:
               - Services:
                   - GitHub:
@@ -110,6 +99,21 @@ spec:
                         type: tailscale
                         deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
                         key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+                  - DuckDNS:
+                      href: https://www.duckdns.org
+                      icon: duckdns.png
+                      widget:
+                        type: customapi
+                        # a DNS-over-HTTPS lookup; DuckDNS's own API only updates, and without ip= it would set the public IP
+                        url: https://dns.google/resolve?name=dawidd6.duckdns.org&type=A
+                        refreshInterval: 300000
+                        mappings:
+                          - field: Answer.0.data
+                            label: IP
+                          - field: Answer.0.TTL
+                            label: TTL
+                            format: number
+                            suffix: s
               - Vitals:
                   - CPU:
                       widget:
@@ -448,9 +452,6 @@ spec:
                 - Releases:
                     style: row
                     columns: 4
-                - Links:
-                    style: row
-                    columns: 3
             widgets:
               - datetime:
                   text_size: xl
