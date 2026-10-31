@@ -4,19 +4,18 @@ set -euo pipefail
 
 cd "$MISE_PROJECT_ROOT"
 
-# --no-textconv: scan the committed bytes, not what a sops diff driver decrypts them to
-gitleaks git --redact --no-banner --log-opts='--no-textconv --full-history --all'
-gitleaks dir --redact --no-banner .
+gitleaks git --redact --verbose --log-opts='--no-textconv --full-history --all'
+gitleaks dir --redact --verbose .
 
-# gitleaks misses low-entropy plaintext, so a secret file must at least be a sops file
-for f in $(find apps -name '*.sops.yaml'); do
-  sops filestatus "$f" | grep -q '"encrypted":true' || { echo "not encrypted: $f"; exit 1; }
+shopt -s globstar
+for f in apps/**/*.sops.yaml; do
+  sops filestatus "$f" | grep -q '"encrypted":true' || {
+    echo "not encrypted: $f"
+    exit 1
+  }
 done
 
-cd apps
-
-# configs/ hold app configs, not resources
-find . -type f -name '*.yaml' -not -path '*/configs/*' -print0 | xargs -0 kubeconform \
+find apps -type f -name '*.yaml' -print0 | xargs -0 kubeconform \
   -strict \
   -summary \
   -verbose \

@@ -1,0 +1,18 @@
+# tinyauth login for the dashboard routes labelled auth: tinyauth (a policy only selects routes in its own namespace)
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: tinyauth
+  namespace: dashboard
+spec:
+  targetSelectors:
+    - kind: HTTPRoute
+      matchLabels:
+        auth: tinyauth
+  oidc:
+    provider:
+      issuer: https://tinyauth.dawid.indevs.in
+    clientID: envoy
+    clientSecret:
+      name: envoy-oidc
+      namespace: ingress

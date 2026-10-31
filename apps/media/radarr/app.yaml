@@ -42,6 +42,9 @@ spec:
           route:
             main:
               enabled: true
+              # tinyauth login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              labels:
+                auth: tinyauth
               parentRefs:
                 - name: envoy
                   namespace: ingress

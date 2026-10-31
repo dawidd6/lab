@@ -11,8 +11,6 @@ spec:
       targetRevision: 0.58.3
       helm:
         valuesObject:
-          testFramework:
-            enabled: false
           config:
             inputs: |
               [INPUT]

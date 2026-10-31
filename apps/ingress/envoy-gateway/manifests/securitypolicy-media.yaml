@@ -1,12 +1,14 @@
+# tinyauth login for the media routes labelled auth: tinyauth (a policy only selects routes in its own namespace)
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: bazarr
+  name: tinyauth
+  namespace: media
 spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: bazarr
+  targetSelectors:
+    - kind: HTTPRoute
+      matchLabels:
+        auth: tinyauth
   oidc:
     provider:
       issuer: https://tinyauth.dawid.indevs.in

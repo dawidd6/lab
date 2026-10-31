@@ -43,12 +43,12 @@ spec:
           route:
             main:
               enabled: true
+              # tinyauth login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              labels:
+                auth: tinyauth
               parentRefs:
                 - name: envoy
                   namespace: ingress
                   sectionName: https
               hostnames:
                 - jdownloader2.dawid.indevs.in
-    - repoURL: https://github.com/dawidd6/lab
-      targetRevision: master
-      path: apps/media/jdownloader2/manifests

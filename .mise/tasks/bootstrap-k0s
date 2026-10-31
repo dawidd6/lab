@@ -2,7 +2,10 @@
 #MISE description="Install k0s on the server and write the kubeconfig"
 set -euo pipefail
 
+cd "$MISE_PROJECT_ROOT"
+
 ssh -t server 'echo "%sudo ALL=(ALL:ALL) NOPASSWD: ALL" | sudo EDITOR=tee visudo -f /etc/sudoers.d/sudo-nopasswd >/dev/null'
 
 k0sctl apply
-(umask 077; k0sctl kubeconfig >"$MISE_PROJECT_ROOT/.config")
+k0sctl kubeconfig >.config
+chmod 600 .config

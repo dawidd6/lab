@@ -30,7 +30,7 @@ spec:
                         fieldRef:
                           fieldPath: status.podIP
                       # the pod IP for the kubelet probes, which use it as the Host header
-                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dashboard:3000,homepage.dawid.indevs.in
+                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dawid.indevs.in
                     envFrom:
                       # HOMEPAGE_VAR_* values referenced as {{HOMEPAGE_VAR_...}} in the config
                       - secretRef:
@@ -66,6 +66,9 @@ spec:
           route:
             main:
               enabled: true
+              # tinyauth login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              labels:
+                auth: tinyauth
               parentRefs:
                 - name: envoy
                   namespace: ingress
@@ -116,51 +119,40 @@ spec:
               - Vitals:
                   - CPU:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        # the Vitals widgets below merge these in too (<<: *glances); the anchor leaves metric out,
+                        # since kubeconform -strict rejects a merged key set again
+                        <<: &glances
+                          type: glances
+                          url: http://glances.observability:61208
+                          version: 4
                         metric: cpu
                   - Memory:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: memory
                   - Internal disk:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: fs:/rootfs
                   - External disk:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: fs:/rootfs/data/external
                   - CPU temperature:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: sensor:Package id 0
                   - Memory temperature:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: sensor:Memory
                   - NVMe temperature:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: sensor:Composite
                   - Ambient temperature:
                       widget:
-                        type: glances
-                        url: http://glances.observability:61208
-                        version: 4
+                        <<: *glances
                         metric: sensor:Ambient
 
               - Apps:
@@ -307,130 +299,103 @@ spec:
                       href: https://github.com/kubernetes/kubernetes/releases
                       icon: kubernetes.png
                       widget:
-                        type: feed
+                        # the Releases widgets below merge these in too (<<: *feed); the anchor leaves url out,
+                        # since kubeconform -strict rejects a merged key set again
+                        <<: &feed
+                          type: feed
+                          maxItems: 5
+                          images: false
                         url: https://github.com/kubernetes/kubernetes/releases.atom
-                        maxItems: 5
-                        images: false
                   - k0s:
                       href: https://github.com/k0sproject/k0s/releases
                       icon: kubernetes.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/k0sproject/k0s/releases.atom
-                        maxItems: 5
-                        images: false
                   - SABnzbd:
                       href: https://github.com/sabnzbd/sabnzbd/releases
                       icon: sabnzbd.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/sabnzbd/sabnzbd/releases.atom
-                        maxItems: 5
-                        images: false
                   - Radarr:
                       href: https://github.com/Radarr/Radarr/releases
                       icon: radarr.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/Radarr/Radarr/releases.atom
-                        maxItems: 5
-                        images: false
                   - Sonarr:
                       href: https://github.com/Sonarr/Sonarr/releases
                       icon: sonarr.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/Sonarr/Sonarr/releases.atom
-                        maxItems: 5
-                        images: false
                   - Prowlarr:
                       href: https://github.com/Prowlarr/Prowlarr/releases
                       icon: prowlarr.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/Prowlarr/Prowlarr/releases.atom
-                        maxItems: 5
-                        images: false
                   - Bazarr:
                       href: https://github.com/morpheus65535/bazarr/releases
                       icon: bazarr.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/morpheus65535/bazarr/releases.atom
-                        maxItems: 5
-                        images: false
                   - ntfy:
                       href: https://github.com/binwiederhier/ntfy/releases
                       icon: ntfy.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/binwiederhier/ntfy/releases.atom
-                        maxItems: 5
-                        images: false
                   - Duplicati:
                       href: https://github.com/duplicati/duplicati/releases
                       icon: duplicati.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/duplicati/duplicati/releases.atom
-                        maxItems: 5
-                        images: false
                   - Argo CD:
                       href: https://github.com/argoproj/argo-cd/releases
                       icon: argo-cd.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/argoproj/argo-cd/releases.atom
-                        maxItems: 5
-                        images: false
                   - Tailscale:
                       href: https://github.com/tailscale/tailscale/releases
                       icon: tailscale.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/tailscale/tailscale/releases.atom
-                        maxItems: 5
-                        images: false
                   - Jellyfin:
                       href: https://github.com/jellyfin/jellyfin/releases
                       icon: jellyfin.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/jellyfin/jellyfin/releases.atom
-                        maxItems: 5
-                        images: false
                   - JDownloader:
                       href: https://github.com/jlesage/docker-jdownloader-2/releases
                       icon: jdownloader.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/jlesage/docker-jdownloader-2/releases.atom
-                        maxItems: 5
-                        images: false
                   - Grafana:
                       href: https://github.com/grafana/grafana/releases
                       icon: grafana.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/grafana/grafana/releases.atom
-                        maxItems: 5
-                        images: false
                   - Tinyauth:
                       href: https://github.com/tinyauthapp/tinyauth/releases
                       icon: tinyauth.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/tinyauthapp/tinyauth/releases.atom
-                        maxItems: 5
-                        images: false
                   - cert-manager:
                       href: https://github.com/cert-manager/cert-manager/releases
                       icon: cert-manager.png
                       widget:
-                        type: feed
+                        <<: *feed
                         url: https://github.com/cert-manager/cert-manager/releases.atom
-                        maxItems: 5
-                        images: false
             settings:
               title: Server
               headerStyle: clean
