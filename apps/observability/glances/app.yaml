@@ -40,7 +40,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - glances.dawidd6.duckdns.org
+                - glances.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/observability/glances/manifests

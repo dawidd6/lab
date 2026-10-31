@@ -13,12 +13,12 @@ spec:
         valuesObject:
           configs:
             cm:
-              url: https://argocd.dawidd6.duckdns.org
+              url: https://argocd.dawid.indevs.in
               # read-only API token for the Homepage widget
               accounts.homepage: apiKey
               oidc.config: |
                 name: tinyauth
-                issuer: https://tinyauth.dawidd6.duckdns.org
+                issuer: https://tinyauth.dawid.indevs.in
                 clientID: argocd
                 clientSecret: $argocd-oidc:clientSecret
                 requestedScopes: [openid, profile, email, groups]
@@ -54,7 +54,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - argocd.dawidd6.duckdns.org
+                - argocd.dawid.indevs.in
           repoServer:
             metrics:
               enabled: true

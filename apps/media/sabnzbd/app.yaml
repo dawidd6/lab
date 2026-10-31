@@ -28,7 +28,7 @@ spec:
                   main:
                     env:
                       # SABnzbd refuses requests for hostnames it doesn't know
-                      SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawidd6.duckdns.org, sabnzbd.media
+                      SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawid.indevs.in, sabnzbd.media
           persistence:
             config:
               storageClass: internal
@@ -46,7 +46,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - sabnzbd.dawidd6.duckdns.org
+                - sabnzbd.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/sabnzbd/manifests

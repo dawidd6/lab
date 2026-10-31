@@ -48,7 +48,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - jdownloader2.dawidd6.duckdns.org
+                - jdownloader2.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/jdownloader2/manifests

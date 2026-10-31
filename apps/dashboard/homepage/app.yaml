@@ -30,7 +30,7 @@ spec:
                         fieldRef:
                           fieldPath: status.podIP
                       # the pod IP for the kubelet probes, which use it as the Host header
-                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dashboard:3000,homepage.dawidd6.duckdns.org
+                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dashboard:3000,homepage.dawid.indevs.in
                     envFrom:
                       # HOMEPAGE_VAR_* values referenced as {{HOMEPAGE_VAR_...}} in the config
                       - secretRef:
@@ -71,7 +71,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - homepage.dawidd6.duckdns.org
+                - homepage.dawid.indevs.in
           homepage:
             services:
               - Services:
@@ -99,13 +99,12 @@ spec:
                         type: tailscale
                         deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
                         key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
-                  - DuckDNS:
-                      href: https://www.duckdns.org
-                      icon: duckdns.png
+                  - Cloudflare:
+                      href: https://dash.cloudflare.com
+                      icon: cloudflare.png
                       widget:
                         type: customapi
-                        # a DNS-over-HTTPS lookup; DuckDNS's own API only updates, and without ip= it would set the public IP
-                        url: https://dns.google/resolve?name=dawidd6.duckdns.org&type=A
+                        url: https://dns.google/resolve?name=dawid.indevs.in&type=A
                         refreshInterval: 300000
                         mappings:
                           - field: Answer.0.data
@@ -166,7 +165,7 @@ spec:
 
               - Apps:
                   - SABnzbd:
-                      href: https://sabnzbd.dawidd6.duckdns.org
+                      href: https://sabnzbd.dawid.indevs.in
                       icon: sabnzbd.png
                       siteMonitor: http://sabnzbd.media:8080
                       widget:
@@ -176,7 +175,7 @@ spec:
                         key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
                         fields: ["rate", "queue", "timeleft"]
                   - Radarr:
-                      href: https://radarr.dawidd6.duckdns.org
+                      href: https://radarr.dawid.indevs.in
                       icon: radarr.png
                       siteMonitor: http://radarr.media:7878
                       widget:
@@ -184,7 +183,7 @@ spec:
                         url: http://radarr.media:7878
                         key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
                   - Sonarr:
-                      href: https://sonarr.dawidd6.duckdns.org
+                      href: https://sonarr.dawid.indevs.in
                       icon: sonarr.png
                       siteMonitor: http://sonarr.media:8989
                       widget:
@@ -192,7 +191,7 @@ spec:
                         url: http://sonarr.media:8989
                         key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
                   - Prowlarr:
-                      href: https://prowlarr.dawidd6.duckdns.org
+                      href: https://prowlarr.dawid.indevs.in
                       icon: prowlarr.png
                       siteMonitor: http://prowlarr.media:9696
                       widget:
@@ -200,7 +199,7 @@ spec:
                         url: http://prowlarr.media:9696
                         key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
                   - Bazarr:
-                      href: https://bazarr.dawidd6.duckdns.org
+                      href: https://bazarr.dawid.indevs.in
                       icon: bazarr.png
                       siteMonitor: http://bazarr.media:6767
                       widget:
@@ -210,7 +209,7 @@ spec:
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
                   - ntfy:
-                      href: https://ntfy.dawidd6.duckdns.org
+                      href: https://ntfy.dawid.indevs.in
                       icon: ntfy.png
                       siteMonitor: http://ntfy.observability/v1/health
                       widget:
@@ -218,7 +217,7 @@ spec:
                         url: http://ntfy.observability
                         topic: lab
                   - Duplicati:
-                      href: https://duplicati.dawidd6.duckdns.org
+                      href: https://duplicati.dawid.indevs.in
                       icon: duplicati.png
                       siteMonitor: http://duplicati.backup:8200
                       widget:
@@ -226,7 +225,7 @@ spec:
                         url: http://duplicati.backup:8200
                         password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
                   - Argo CD:
-                      href: https://argocd.dawidd6.duckdns.org
+                      href: https://argocd.dawid.indevs.in
                       icon: argo-cd.png
                       siteMonitor: http://argocd-server.delivery/healthz
                       widget:
@@ -235,23 +234,23 @@ spec:
                         key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
                         fields: ["apps", "synced", "outOfSync", "healthy"]
                   - Jellyfin:
-                      href: https://jellyfin.dawidd6.duckdns.org
+                      href: https://jellyfin.dawid.indevs.in
                       icon: jellyfin.png
                       siteMonitor: http://jellyfin.media:8096/health
                   - JDownloader:
-                      href: https://jdownloader2.dawidd6.duckdns.org
+                      href: https://jdownloader2.dawid.indevs.in
                       icon: jdownloader.png
                       siteMonitor: http://jdownloader2.media:5800
                   - Grafana:
-                      href: https://grafana.dawidd6.duckdns.org
+                      href: https://grafana.dawid.indevs.in
                       icon: grafana.png
                       siteMonitor: http://grafana.observability/api/health
                   - Tinyauth:
-                      href: https://tinyauth.dawidd6.duckdns.org
+                      href: https://tinyauth.dawid.indevs.in
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
                   - cert-manager:
-                      href: https://crt.sh/?q=dawidd6.duckdns.org
+                      href: https://crt.sh/?q=dawid.indevs.in
                       icon: cert-manager.png
                       widget:
                         type: prometheusmetric

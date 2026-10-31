@@ -28,7 +28,7 @@ spec:
                 key: client_secret
           grafana.ini:
             server:
-              root_url: https://grafana.dawidd6.duckdns.org
+              root_url: https://grafana.dawid.indevs.in
             auth:
               disable_login_form: true
             auth.generic_oauth:
@@ -36,9 +36,9 @@ spec:
               name: tinyauth
               client_id: grafana
               scopes: openid email profile
-              auth_url: https://tinyauth.dawidd6.duckdns.org/authorize
-              token_url: https://tinyauth.dawidd6.duckdns.org/api/oidc/token
-              api_url: https://tinyauth.dawidd6.duckdns.org/api/oidc/userinfo
+              auth_url: https://tinyauth.dawid.indevs.in/authorize
+              token_url: https://tinyauth.dawid.indevs.in/api/oidc/token
+              api_url: https://tinyauth.dawid.indevs.in/api/oidc/userinfo
               use_pkce: true
               auto_login: true
               allow_sign_up: true
@@ -51,7 +51,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - grafana.dawidd6.duckdns.org
+                - grafana.dawid.indevs.in
           datasources:
             datasources.yaml:
               apiVersion: 1

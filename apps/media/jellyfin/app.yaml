@@ -18,7 +18,7 @@ spec:
                 namespace: ingress
                 sectionName: https
             hostnames:
-              - jellyfin.dawidd6.duckdns.org
+              - jellyfin.dawid.indevs.in
           persistence:
             media:
               existingClaim: media

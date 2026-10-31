@@ -16,13 +16,13 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.dawidd6.duckdns.org"
+      hostname: "*.dawid.indevs.in"
       tls:
         mode: Terminate
         certificateRefs:
           - group: ""
             kind: Secret
-            name: dawidd6-duckdns-org-tls
+            name: dawid-indevs-in-tls
       allowedRoutes:
         namespaces:
           from: All

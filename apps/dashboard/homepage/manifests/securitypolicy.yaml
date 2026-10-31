@@ -10,7 +10,7 @@ spec:
       name: homepage
   oidc:
     provider:
-      issuer: https://tinyauth.dawidd6.duckdns.org
+      issuer: https://tinyauth.dawid.indevs.in
     clientID: envoy
     clientSecret:
       name: envoy-oidc

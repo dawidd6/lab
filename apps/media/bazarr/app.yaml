@@ -32,7 +32,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - bazarr.dawidd6.duckdns.org
+                - bazarr.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/bazarr/manifests

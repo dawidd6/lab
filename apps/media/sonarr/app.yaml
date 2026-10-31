@@ -47,7 +47,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - sonarr.dawidd6.duckdns.org
+                - sonarr.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/sonarr/manifests

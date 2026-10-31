@@ -28,11 +28,11 @@ spec:
                   preferred_ip_protocol: ip4
                   fail_if_body_not_matches_regexp:
                     - '"database":\s*"ok"'
-              dns_duckdns:
+              dns_cloudflare:
                 prober: dns
                 timeout: 5s
                 dns:
-                  query_name: dawidd6.duckdns.org
+                  query_name: dawid.indevs.in
                   query_type: A
                   preferred_ip_protocol: ip4
                   valid_rcodes:
@@ -44,7 +44,7 @@ spec:
                 prober: dns
                 timeout: 5s
                 dns:
-                  query_name: dawidd6.duckdns.org
+                  query_name: dawid.indevs.in
                   query_type: A
                   preferred_ip_protocol: ip4
                   valid_rcodes:

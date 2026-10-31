@@ -69,7 +69,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - duplicati.dawidd6.duckdns.org
+                - duplicati.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/backup/duplicati/manifests

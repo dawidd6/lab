@@ -47,7 +47,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - radarr.dawidd6.duckdns.org
+                - radarr.dawid.indevs.in
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/radarr/manifests
