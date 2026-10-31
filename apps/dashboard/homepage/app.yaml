@@ -437,9 +437,12 @@ spec:
               headerStyle: clean
               statusStyle: dot
               blockStyle: refined
+              color: neutral
               background:
                 image: https://raw.githubusercontent.com/tinyauthapp/tinyauth/c3b5c0443e9407d451f7d9473e1ab666220ff676/assets/background.jpg
                 opacity: 50
+                brightness: 50
+                saturate: 50
               # a list, since Helm's toYaml would sort a map's keys and Homepage orders groups by this
               layout:
                 - Services:
