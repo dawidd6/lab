@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: homepage
-      targetRevision: 14.2.1
+      targetRevision: 14.3.0
       helm:
         valuesObject:
           service:
