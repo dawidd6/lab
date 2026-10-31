@@ -55,6 +55,7 @@ spec:
                     name: tinyauth-secrets
                     key: ENVOY_CLIENT_SECRET
                   trustedRedirectUris: "https://bazarr.dawid.indevs.in/oauth2/callback,\
+                    https://duplicati.dawid.indevs.in/oauth2/callback,\
                     https://glances.dawid.indevs.in/oauth2/callback,\
                     https://homepage.dawid.indevs.in/oauth2/callback,\
                     https://jdownloader2.dawid.indevs.in/oauth2/callback,\
@@ -69,13 +70,6 @@ spec:
                     name: tinyauth-secrets
                     key: GRAFANA_CLIENT_SECRET
                   trustedRedirectUris: https://grafana.dawid.indevs.in/login/generic_oauth
-                - id: jellyfin
-                  name: Jellyfin
-                  clientId: jellyfin
-                  clientSecretSecretRef:
-                    name: tinyauth-secrets
-                    key: JELLYFIN_CLIENT_SECRET
-                  trustedRedirectUris: https://jellyfin.dawid.indevs.in/sso/OID/redirect/tinyauth
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests
