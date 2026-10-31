@@ -11,6 +11,13 @@ spec:
       targetRevision: 5.2.0
       helm:
         valuesObject:
+          # Kubernetes' default instead of the chart's ndots 1, so <service>.<namespace> names try the cluster first:
+          # media and delivery are public TLDs, and bazarr.media and jellyfin.media are real websites
+          podOptions:
+            dnsConfig:
+              options:
+                - name: ndots
+                  value: "5"
           # history in SQLite on the volume below instead of the chart's CloudNativePG cluster
           cnpg:
             main:
