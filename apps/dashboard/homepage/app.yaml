@@ -246,6 +246,26 @@ spec:
                       href: https://tinyauth.dawidd6.duckdns.org
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
+                  - cert-manager:
+                      href: https://crt.sh/?q=dawidd6.duckdns.org
+                      icon: cert-manager.png
+                      widget:
+                        type: prometheusmetric
+                        url: http://prometheus-server.observability
+                        refreshInterval: 3600000
+                        metrics:
+                          # the soonest-expiring Let's Encrypt certificate
+                          - label: Expires in
+                            query: min(certmanager_certificate_expiration_timestamp_seconds{issuer_name="letsencrypt"} - time()) / 86400
+                            format:
+                              type: number
+                              suffix: " days"
+                              options:
+                                maximumFractionDigits: 0
+                          - label: Ready
+                            query: sum(certmanager_certificate_ready_status{condition="True"})
+                          - label: Not ready
+                            query: sum(certmanager_certificate_ready_status{condition!="True"})
 
               - Repositories:
                   - dawidd6/lab:
@@ -398,6 +418,14 @@ spec:
                       widget:
                         type: feed
                         url: https://github.com/tinyauthapp/tinyauth/releases.atom
+                        maxItems: 5
+                        images: false
+                  - cert-manager:
+                      href: https://github.com/cert-manager/cert-manager/releases
+                      icon: cert-manager.png
+                      widget:
+                        type: feed
+                        url: https://github.com/cert-manager/cert-manager/releases.atom
                         maxItems: 5
                         images: false
             settings:
