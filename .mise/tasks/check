@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
-#MISE description="Validate every app's files against the schemas"
+#MISE description="Scan for leaks, check secrets are encrypted and validate every app's files against the schemas"
 set -euo pipefail
 
-cd "$MISE_PROJECT_ROOT/apps"
+cd "$MISE_PROJECT_ROOT"
+
+# --no-textconv: scan the committed bytes, not what a sops diff driver decrypts them to
+gitleaks git --redact --no-banner --log-opts='--no-textconv --full-history --all'
+gitleaks dir --redact --no-banner .
+
+# gitleaks misses low-entropy plaintext, so a secret file must at least be a sops file
+for f in $(find apps -name '*.sops.yaml'); do
+  sops filestatus "$f" | grep -q '"encrypted":true' || { echo "not encrypted: $f"; exit 1; }
+done
+
+cd apps
 
 # configs/ hold app configs, not resources
 find . -type f -name '*.yaml' -not -path '*/configs/*' -print0 | xargs -0 kubeconform \
