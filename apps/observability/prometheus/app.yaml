@@ -31,6 +31,14 @@ spec:
                     module: tcp_ssh
                   targets:
                     - 192.168.1.109:22
+                - labels:
+                    module: http_ok
+                  targets:
+                    - https://tinyauth.dawid.indevs.in/api/healthz
+                - labels:
+                    module: http_tinyauth_redirect
+                  targets:
+                    - https://homepage.dawid.indevs.in
               relabel_configs:
                 - source_labels:
                     - module
