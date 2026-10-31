@@ -225,14 +225,6 @@ spec:
                         url: http://argocd-server.delivery
                         key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
                         fields: ["apps", "synced", "outOfSync", "healthy"]
-                  - Jellyfin:
-                      href: https://jellyfin.dawid.indevs.in
-                      icon: jellyfin.png
-                      siteMonitor: http://jellyfin.media:8096/health
-                  - JDownloader:
-                      href: https://jdownloader2.dawid.indevs.in
-                      icon: jdownloader.png
-                      siteMonitor: http://jdownloader2.media:5800
                   - Gatus:
                       href: https://gatus.dawid.indevs.in
                       icon: gatus.png
@@ -240,14 +232,6 @@ spec:
                       widget:
                         type: gatus
                         url: http://gatus.observability:8080
-                  - Grafana:
-                      href: https://grafana.dawid.indevs.in
-                      icon: grafana.png
-                      siteMonitor: http://grafana.observability/api/health
-                  - Tinyauth:
-                      href: https://tinyauth.dawid.indevs.in
-                      icon: tinyauth.png
-                      siteMonitor: http://tinyauth.identity/api/healthz
                   - cert-manager:
                       href: https://crt.sh/?q=dawid.indevs.in
                       icon: cert-manager.png
@@ -268,6 +252,22 @@ spec:
                             query: sum(certmanager_certificate_ready_status{condition="True"})
                           - label: Not ready
                             query: sum(certmanager_certificate_ready_status{condition!="True"})
+                  - Jellyfin:
+                      href: https://jellyfin.dawid.indevs.in
+                      icon: jellyfin.png
+                      siteMonitor: http://jellyfin.media:8096/health
+                  - JDownloader:
+                      href: https://jdownloader2.dawid.indevs.in
+                      icon: jdownloader.png
+                      siteMonitor: http://jdownloader2.media:5800
+                  - Grafana:
+                      href: https://grafana.dawid.indevs.in
+                      icon: grafana.png
+                      siteMonitor: http://grafana.observability/api/health
+                  - Tinyauth:
+                      href: https://tinyauth.dawid.indevs.in
+                      icon: tinyauth.png
+                      siteMonitor: http://tinyauth.identity/api/healthz
 
               - Repositories:
                   - dawidd6/lab:
