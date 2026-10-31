@@ -56,6 +56,7 @@ spec:
                     key: ENVOY_CLIENT_SECRET
                   trustedRedirectUris: "https://bazarr.dawid.indevs.in/oauth2/callback,\
                     https://duplicati.dawid.indevs.in/oauth2/callback,\
+                    https://gatus.dawid.indevs.in/oauth2/callback,\
                     https://glances.dawid.indevs.in/oauth2/callback,\
                     https://homepage.dawid.indevs.in/oauth2/callback,\
                     https://jdownloader2.dawid.indevs.in/oauth2/callback,\

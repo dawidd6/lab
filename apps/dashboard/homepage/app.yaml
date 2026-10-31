@@ -29,8 +29,8 @@ spec:
                       MY_POD_IP:
                         fieldRef:
                           fieldPath: status.podIP
-                      # the pod IP for the kubelet probes, which use it as the Host header
-                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dawid.indevs.in
+                      # the pod IP for the kubelet probes, which use it as the Host header; homepage.dashboard for Gatus
+                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dashboard:3000,homepage.dawid.indevs.in
                     envFrom:
                       # HOMEPAGE_VAR_* values referenced as {{HOMEPAGE_VAR_...}} in the config
                       - secretRef:
@@ -233,6 +233,13 @@ spec:
                       href: https://jdownloader2.dawid.indevs.in
                       icon: jdownloader.png
                       siteMonitor: http://jdownloader2.media:5800
+                  - Gatus:
+                      href: https://gatus.dawid.indevs.in
+                      icon: gatus.png
+                      siteMonitor: http://gatus.observability:8080/health
+                      widget:
+                        type: gatus
+                        url: http://gatus.observability:8080
                   - Grafana:
                       href: https://grafana.dawid.indevs.in
                       icon: grafana.png
@@ -384,6 +391,12 @@ spec:
                       widget:
                         <<: *feed
                         url: https://github.com/grafana/grafana/releases.atom
+                  - Gatus:
+                      href: https://github.com/TwiN/gatus/releases
+                      icon: gatus.png
+                      widget:
+                        <<: *feed
+                        url: https://github.com/TwiN/gatus/releases.atom
                   - Tinyauth:
                       href: https://github.com/tinyauthapp/tinyauth/releases
                       icon: tinyauth.png

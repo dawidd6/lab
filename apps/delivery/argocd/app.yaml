@@ -49,6 +49,8 @@ spec:
               service:
                 annotations:
                   prometheus.io/scrape: "true"
+                  # without it Prometheus also scrapes the pod's other ports, which serve no metrics
+                  prometheus.io/port: "8083"
             httproute:
               enabled: true
               parentRefs:
@@ -63,6 +65,7 @@ spec:
               service:
                 annotations:
                   prometheus.io/scrape: "true"
+                  prometheus.io/port: "8084"
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/delivery/argocd/manifests

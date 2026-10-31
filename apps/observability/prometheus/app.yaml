@@ -15,34 +15,6 @@ spec:
             persistentVolume:
               storageClass: internal
               size: 1Gi
-          scrapeConfigs:
-            blackbox:
-              metrics_path: /probe
-              static_configs:
-                - labels:
-                    module: dns_cloudflare
-                  targets:
-                    - anastasia.ns.cloudflare.com:53
-                - labels:
-                    module: dns_router_static
-                  targets:
-                    - 192.168.1.1:53
-                - labels:
-                    module: tcp_ssh
-                  targets:
-                    - 192.168.1.109:22
-              relabel_configs:
-                - source_labels:
-                    - module
-                  target_label: __param_module
-                - source_labels:
-                    - __address__
-                  target_label: __param_target
-                - source_labels:
-                    - __param_target
-                  target_label: instance
-                - target_label: __address__
-                  replacement: blackbox-exporter:9115
           # alerting is Grafana's (rules in the grafana app)
           alertmanager:
             enabled: false
