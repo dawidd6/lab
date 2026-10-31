@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: blackbox-exporter
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: prometheus-blackbox-exporter
+      targetRevision: 11.20.2
+      helm:
+        valuesObject:
+          fullnameOverride: blackbox-exporter
+          config:
+            modules:
+              dns_cloudflare:
+                prober: dns
+                timeout: 5s
+                dns:
+                  query_name: dawid.indevs.in
+                  query_type: A
+                  preferred_ip_protocol: ip4
+                  valid_rcodes:
+                    - NOERROR
+                  validate_answer_rrs:
+                    fail_if_not_matches_regexp:
+                      - 192.168.1.109
+              dns_router_static:
+                prober: dns
+                timeout: 5s
+                dns:
+                  query_name: dawid.indevs.in
+                  query_type: A
+                  preferred_ip_protocol: ip4
+                  valid_rcodes:
+                    - NOERROR
+                  validate_answer_rrs:
+                    fail_if_not_matches_regexp:
+                      - '\t0\tIN\tA\t192.168.1.109'
+              tcp_ssh:
+                prober: tcp
+                timeout: 5s
+                tcp:
+                  preferred_ip_protocol: ip4
+                  query_response:
+                    - expect: ^SSH-2.0-

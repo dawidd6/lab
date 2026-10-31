@@ -85,18 +85,28 @@ spec:
                   receiver: ntfy
             rules.yaml:
               apiVersion: 1
-              # Grafana keeps a provisioned rule that's gone from the file; this removes the one for blackbox-exporter's probes
-              deleteRules:
-                - orgId: 1
-                  uid: probe-failing
               groups:
                 - orgId: 1
                   name: lab
                   folder: Alerts
                   interval: 1m
                   # A is the query, B the threshold on it; noDataState OK where no series means nothing is wrong
-                  # (the notification lists each alert's labels: which disk, pod or app)
+                  # (the notification lists each alert's labels: which probe, disk, pod or app)
                   rules:
+                    - uid: probe-failing
+                      title: Probe failing
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: probe_success
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [1]}}]}}
+                      for: 5m
+                      annotations:
+                        summary: An uptime probe has been failing for 5 minutes
                     - uid: certificate-expiring
                       title: Certificate expiring
                       condition: B
@@ -264,6 +274,11 @@ spec:
               kubernetes-namespaces:
                 gnetId: 15758
                 revision: 46
+              blackbox-exporter:
+                gnetId: 13659
+                datasource:
+                  - name: DS_PROMETHEUS
+                    value: Prometheus
               kubernetes-pods:
                 gnetId: 15760
                 revision: 41
