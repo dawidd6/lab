@@ -18,6 +18,9 @@ spec:
                   main:
                     env:
                       RADARR__AUTH__METHOD: External
+                      # no effect with External (every request passes), but the chart's DisabledForLocalAddresses makes
+                      # settings saves demand Allowed Hosts, which would also reject the kubelet probes' pod-IP Host header
+                      RADARR__AUTH__REQUIRED: Enabled
                     envFrom:
                       - secretRef:
                           name: radarr-secrets
