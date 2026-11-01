@@ -228,6 +228,8 @@ spec:
                   - cert-manager:
                       href: https://crt.sh/?q=dawid.us.ci
                       icon: cert-manager.png
+                      # the controller's metrics port; its /livez port has no Service
+                      siteMonitor: http://cert-manager.ingress:9402/metrics
                       widget:
                         type: prometheusmetric
                         url: http://prometheus-server.observability
