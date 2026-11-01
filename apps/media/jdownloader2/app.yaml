@@ -51,4 +51,4 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - jdownloader2.dawid.indevs.in
+                - jdownloader2.dawid.us.ci

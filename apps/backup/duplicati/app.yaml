@@ -72,7 +72,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - duplicati.dawid.indevs.in
+                - duplicati.dawid.us.ci
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/backup/duplicati/manifests

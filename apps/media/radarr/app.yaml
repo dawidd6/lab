@@ -50,7 +50,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - radarr.dawid.indevs.in
+                - radarr.dawid.us.ci
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/media/radarr/manifests

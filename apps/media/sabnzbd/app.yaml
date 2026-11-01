@@ -28,7 +28,7 @@ spec:
                   main:
                     env:
                       # SABnzbd refuses requests for hostnames it doesn't know
-                      SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawid.indevs.in, sabnzbd.media
+                      SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawid.us.ci, sabnzbd.media
           persistence:
             config:
               storageClass: internal
@@ -49,4 +49,4 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - sabnzbd.dawid.indevs.in
+                - sabnzbd.dawid.us.ci

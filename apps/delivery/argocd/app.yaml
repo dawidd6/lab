@@ -13,14 +13,14 @@ spec:
         valuesObject:
           configs:
             cm:
-              url: https://argocd.dawid.indevs.in
+              url: https://argocd.dawid.us.ci
               # logins go through tinyauth only
               admin.enabled: false
               # read-only API token for the Homepage widget
               accounts.homepage: apiKey
               oidc.config: |
                 name: tinyauth
-                issuer: https://tinyauth.dawid.indevs.in
+                issuer: https://tinyauth.dawid.us.ci
                 clientID: argocd
                 clientSecret: $argocd-oidc:clientSecret
                 requestedScopes: [openid, profile, email, groups]
@@ -58,7 +58,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - argocd.dawid.indevs.in
+                - argocd.dawid.us.ci
           repoServer:
             metrics:
               enabled: true

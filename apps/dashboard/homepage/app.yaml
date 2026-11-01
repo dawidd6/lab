@@ -30,7 +30,7 @@ spec:
                         fieldRef:
                           fieldPath: status.podIP
                       # the pod IP for the kubelet probes, which use it as the Host header
-                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dawid.indevs.in
+                      HOMEPAGE_ALLOWED_HOSTS: $(MY_POD_IP):3000,homepage.dawid.us.ci
                     envFrom:
                       # HOMEPAGE_VAR_* values referenced as {{HOMEPAGE_VAR_...}} in the config
                       - secretRef:
@@ -74,7 +74,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - homepage.dawid.indevs.in
+                - homepage.dawid.us.ci
           homepage:
             services:
               - Services:
@@ -107,7 +107,7 @@ spec:
                       icon: cloudflare.png
                       widget:
                         type: customapi
-                        url: https://dns.google/resolve?name=dawid.indevs.in&type=A
+                        url: https://dns.google/resolve?name=dawid.us.ci&type=A
                         refreshInterval: 300000
                         mappings:
                           - field: Answer.0.data
@@ -157,7 +157,7 @@ spec:
 
               - Apps:
                   - SABnzbd:
-                      href: https://sabnzbd.dawid.indevs.in
+                      href: https://sabnzbd.dawid.us.ci
                       icon: sabnzbd.png
                       siteMonitor: http://sabnzbd.media:8080
                       widget:
@@ -167,7 +167,7 @@ spec:
                         key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
                         fields: ["rate", "queue", "timeleft"]
                   - Radarr:
-                      href: https://radarr.dawid.indevs.in
+                      href: https://radarr.dawid.us.ci
                       icon: radarr.png
                       siteMonitor: http://radarr.media:7878
                       widget:
@@ -175,7 +175,7 @@ spec:
                         url: http://radarr.media:7878
                         key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
                   - Sonarr:
-                      href: https://sonarr.dawid.indevs.in
+                      href: https://sonarr.dawid.us.ci
                       icon: sonarr.png
                       siteMonitor: http://sonarr.media:8989
                       widget:
@@ -183,7 +183,7 @@ spec:
                         url: http://sonarr.media:8989
                         key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
                   - Prowlarr:
-                      href: https://prowlarr.dawid.indevs.in
+                      href: https://prowlarr.dawid.us.ci
                       icon: prowlarr.png
                       siteMonitor: http://prowlarr.media:9696
                       widget:
@@ -191,7 +191,7 @@ spec:
                         url: http://prowlarr.media:9696
                         key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
                   - Bazarr:
-                      href: https://bazarr.dawid.indevs.in
+                      href: https://bazarr.dawid.us.ci
                       icon: bazarr.png
                       siteMonitor: http://bazarr.media:6767
                       widget:
@@ -201,7 +201,7 @@ spec:
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
                   - ntfy:
-                      href: https://ntfy.dawid.indevs.in
+                      href: https://ntfy.dawid.us.ci
                       icon: ntfy.png
                       siteMonitor: http://ntfy.observability/v1/health
                       widget:
@@ -209,7 +209,7 @@ spec:
                         url: http://ntfy.observability
                         topic: lab
                   - Duplicati:
-                      href: https://duplicati.dawid.indevs.in
+                      href: https://duplicati.dawid.us.ci
                       icon: duplicati.png
                       siteMonitor: http://duplicati.backup:8200
                       widget:
@@ -217,7 +217,7 @@ spec:
                         url: http://duplicati.backup:8200
                         password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
                   - Argo CD:
-                      href: https://argocd.dawid.indevs.in
+                      href: https://argocd.dawid.us.ci
                       icon: argo-cd.png
                       siteMonitor: http://argocd-server.delivery/healthz
                       widget:
@@ -226,7 +226,7 @@ spec:
                         key: "{{HOMEPAGE_VAR_ARGOCD_TOKEN}}"
                         fields: ["apps", "synced", "outOfSync", "healthy"]
                   - cert-manager:
-                      href: https://crt.sh/?q=dawid.indevs.in
+                      href: https://crt.sh/?q=dawid.us.ci
                       icon: cert-manager.png
                       widget:
                         type: prometheusmetric
@@ -246,19 +246,19 @@ spec:
                           - label: Not ready
                             query: sum(certmanager_certificate_ready_status{condition!="True"})
                   - Jellyfin:
-                      href: https://jellyfin.dawid.indevs.in
+                      href: https://jellyfin.dawid.us.ci
                       icon: jellyfin.png
                       siteMonitor: http://jellyfin.media:8096/health
                   - JDownloader:
-                      href: https://jdownloader2.dawid.indevs.in
+                      href: https://jdownloader2.dawid.us.ci
                       icon: jdownloader.png
                       siteMonitor: http://jdownloader2.media:5800
                   - Grafana:
-                      href: https://grafana.dawid.indevs.in
+                      href: https://grafana.dawid.us.ci
                       icon: grafana.png
                       siteMonitor: http://grafana.observability/api/health
                   - Tinyauth:
-                      href: https://tinyauth.dawid.indevs.in
+                      href: https://tinyauth.dawid.us.ci
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
 

@@ -43,4 +43,4 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - glances.dawid.indevs.in
+                - glances.dawid.us.ci

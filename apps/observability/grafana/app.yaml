@@ -26,7 +26,7 @@ spec:
                 key: client_secret
           grafana.ini:
             server:
-              root_url: https://grafana.dawid.indevs.in
+              root_url: https://grafana.dawid.us.ci
             auth:
               disable_login_form: true
             auth.generic_oauth:
@@ -34,9 +34,9 @@ spec:
               name: tinyauth
               client_id: grafana
               scopes: openid email profile
-              auth_url: https://tinyauth.dawid.indevs.in/authorize
-              token_url: https://tinyauth.dawid.indevs.in/api/oidc/token
-              api_url: https://tinyauth.dawid.indevs.in/api/oidc/userinfo
+              auth_url: https://tinyauth.dawid.us.ci/authorize
+              token_url: https://tinyauth.dawid.us.ci/api/oidc/token
+              api_url: https://tinyauth.dawid.us.ci/api/oidc/userinfo
               use_pkce: true
               auto_login: true
               allow_sign_up: true
@@ -49,7 +49,7 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - grafana.dawid.indevs.in
+                - grafana.dawid.us.ci
           datasources:
             datasources.yaml:
               apiVersion: 1

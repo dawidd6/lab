@@ -30,9 +30,9 @@ spec:
                 namespace: ingress
                 sectionName: https
             hostnames:
-              - tinyauth.dawid.indevs.in
+              - tinyauth.dawid.us.ci
           tinyauth:
-            appUrl: https://tinyauth.dawid.indevs.in
+            appUrl: https://tinyauth.dawid.us.ci
             analytics:
               enabled: false
             auth:
@@ -46,7 +46,7 @@ spec:
                   clientSecretSecretRef:
                     name: tinyauth-secrets
                     key: ARGOCD_CLIENT_SECRET
-                  trustedRedirectUris: https://argocd.dawid.indevs.in/auth/callback,http://localhost:8085/auth/callback
+                  trustedRedirectUris: https://argocd.dawid.us.ci/auth/callback,http://localhost:8085/auth/callback
                 # one client for every app envoy logs in for (SecurityPolicies with clientID envoy, secret envoy-oidc in ingress)
                 - id: envoy
                   name: Envoy
@@ -54,22 +54,22 @@ spec:
                   clientSecretSecretRef:
                     name: tinyauth-secrets
                     key: ENVOY_CLIENT_SECRET
-                  trustedRedirectUris: "https://bazarr.dawid.indevs.in/oauth2/callback,\
-                    https://duplicati.dawid.indevs.in/oauth2/callback,\
-                    https://glances.dawid.indevs.in/oauth2/callback,\
-                    https://homepage.dawid.indevs.in/oauth2/callback,\
-                    https://jdownloader2.dawid.indevs.in/oauth2/callback,\
-                    https://prowlarr.dawid.indevs.in/oauth2/callback,\
-                    https://radarr.dawid.indevs.in/oauth2/callback,\
-                    https://sabnzbd.dawid.indevs.in/oauth2/callback,\
-                    https://sonarr.dawid.indevs.in/oauth2/callback"
+                  trustedRedirectUris: "https://bazarr.dawid.us.ci/oauth2/callback,\
+                    https://duplicati.dawid.us.ci/oauth2/callback,\
+                    https://glances.dawid.us.ci/oauth2/callback,\
+                    https://homepage.dawid.us.ci/oauth2/callback,\
+                    https://jdownloader2.dawid.us.ci/oauth2/callback,\
+                    https://prowlarr.dawid.us.ci/oauth2/callback,\
+                    https://radarr.dawid.us.ci/oauth2/callback,\
+                    https://sabnzbd.dawid.us.ci/oauth2/callback,\
+                    https://sonarr.dawid.us.ci/oauth2/callback"
                 - id: grafana
                   name: Grafana
                   clientId: grafana
                   clientSecretSecretRef:
                     name: tinyauth-secrets
                     key: GRAFANA_CLIENT_SECRET
-                  trustedRedirectUris: https://grafana.dawid.indevs.in/login/generic_oauth
+                  trustedRedirectUris: https://grafana.dawid.us.ci/login/generic_oauth
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/identity/tinyauth/manifests

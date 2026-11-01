@@ -11,7 +11,7 @@ spec:
         auth: tinyauth
   oidc:
     provider:
-      issuer: https://tinyauth.dawid.indevs.in
+      issuer: https://tinyauth.dawid.us.ci
     clientID: envoy
     clientSecret:
       name: envoy-oidc

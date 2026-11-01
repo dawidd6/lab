@@ -18,7 +18,7 @@ spec:
                 prober: dns
                 timeout: 5s
                 dns:
-                  query_name: dawid.indevs.in
+                  query_name: dawid.us.ci
                   query_type: A
                   preferred_ip_protocol: ip4
                   valid_rcodes:
@@ -30,7 +30,7 @@ spec:
                 prober: dns
                 timeout: 5s
                 dns:
-                  query_name: dawid.indevs.in
+                  query_name: dawid.us.ci
                   query_type: A
                   preferred_ip_protocol: ip4
                   valid_rcodes:

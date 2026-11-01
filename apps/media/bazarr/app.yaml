@@ -35,4 +35,4 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - bazarr.dawid.indevs.in
+                - bazarr.dawid.us.ci

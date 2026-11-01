@@ -16,13 +16,13 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.dawid.indevs.in"
+      hostname: "*.dawid.us.ci"
       tls:
         mode: Terminate
         certificateRefs:
           - group: ""
             kind: Secret
-            name: dawid-indevs-in-tls
+            name: dawid-us-ci-tls
       allowedRoutes:
         namespaces:
           from: All

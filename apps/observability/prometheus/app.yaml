@@ -34,11 +34,11 @@ spec:
                 - labels:
                     module: http_ok
                   targets:
-                    - https://tinyauth.dawid.indevs.in/api/healthz
+                    - https://tinyauth.dawid.us.ci/api/healthz
                 - labels:
                     module: http_tinyauth_login
                   targets:
-                    - https://homepage.dawid.indevs.in
+                    - https://homepage.dawid.us.ci
               relabel_configs:
                 - source_labels:
                     - module

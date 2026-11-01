@@ -30,7 +30,7 @@ spec:
                     env:
                       # the chart listens on the Service port, which non-root can't for 80
                       NTFY_LISTEN_HTTP: ":8080"
-                      NTFY_BASE_URL: https://ntfy.dawid.indevs.in
+                      NTFY_BASE_URL: https://ntfy.dawid.us.ci
                       # rate limits per client need the real IP from envoy's X-Forwarded-For
                       NTFY_BEHIND_PROXY: true
                       ENABLE_CACHE_FILE: true
@@ -51,4 +51,4 @@ spec:
                   namespace: ingress
                   sectionName: https
               hostnames:
-                - ntfy.dawid.indevs.in
+                - ntfy.dawid.us.ci
