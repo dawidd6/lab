@@ -77,7 +77,7 @@ spec:
                       type: webhook
                       settings:
                         # ntfy's built-in template turns Grafana's JSON into a readable notification
-                        url: http://ntfy.observability/lab?template=grafana
+                        url: http://ntfy.observability/server?template=grafana
             policies.yaml:
               apiVersion: 1
               policies:

@@ -207,7 +207,7 @@ spec:
                       widget:
                         type: ntfy
                         url: http://ntfy.observability
-                        topic: lab
+                        topic: server
                   - Duplicati:
                       href: https://duplicati.dawid.us.ci
                       icon: duplicati.png
