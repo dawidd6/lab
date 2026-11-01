@@ -195,6 +195,51 @@ spec:
                       for: 10m
                       annotations:
                         summary: A container has been crash-looping for 10 minutes
+                    # the last-terminated reason stays OOMKilled until the next exit, so only count it with a restart in the window
+                    - uid: container-oom-killed
+                      title: Container OOM-killed
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: max by (namespace, pod, container) (increase(kube_pod_container_status_restarts_total[10m]) > 0 and on (namespace, pod, container) kube_pod_container_status_last_terminated_reason{reason="OOMKilled"} == 1)
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: gt, params: [0]}}]}}
+                      noDataState: OK
+                      for: 0s
+                      annotations:
+                        summary: A container was killed for running out of memory in the last 10 minutes
+                    - uid: memory-low
+                      title: Memory low
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [0.1]}}]}}
+                      for: 15m
+                      annotations:
+                        summary: The server has had less than 10% memory available for 15 minutes (value = fraction available)
+                    # the other rules read these metrics, so a dead exporter would otherwise just silence them
+                    - uid: scrape-target-down
+                      title: Scrape target down
+                      condition: B
+                      data:
+                        - refId: A
+                          datasourceUid: prometheus
+                          relativeTimeRange: {from: 600, to: 0}
+                          model:
+                            instant: true
+                            expr: up
+                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [1]}}]}}
+                      for: 10m
+                      annotations:
+                        summary: Prometheus has failed to scrape a target for 10 minutes
                     - uid: app-degraded
                       title: App degraded
                       condition: B
