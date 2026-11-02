@@ -14,18 +14,18 @@ spec:
           fullnameOverride: blackbox-exporter
           config:
             modules:
+              # over HTTPS: the router's https-dns-proxy force_dns turns any LAN query to port 53 into one to itself
               dns_cloudflare:
-                prober: dns
+                prober: http
                 timeout: 5s
-                dns:
-                  query_name: dawid.us.ci
-                  query_type: A
+                http:
                   preferred_ip_protocol: ip4
-                  valid_rcodes:
-                    - NOERROR
-                  validate_answer_rrs:
-                    fail_if_not_matches_regexp:
-                      - 192.168.1.109
+                  headers:
+                    Accept: application/dns-json
+                  valid_status_codes:
+                    - 200
+                  fail_if_body_not_matches_regexp:
+                    - '"data":"192\.168\.1\.109"'
               dns_router_static:
                 prober: dns
                 timeout: 5s

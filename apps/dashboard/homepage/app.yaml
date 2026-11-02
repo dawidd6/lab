@@ -264,6 +264,25 @@ spec:
                       icon: tinyauth.png
                       siteMonitor: http://tinyauth.identity/api/healthz
 
+              - Calendar:
+                  - Upcoming:
+                      icon: mdi-calendar
+                      widget:
+                        type: calendar
+                        view: agenda
+                        maxEvents: 10
+                        showTime: true
+                        # events come from the Sonarr and Radarr widgets above, found by group and service name
+                        integrations:
+                          - type: sonarr
+                            service_group: Apps
+                            service_name: Sonarr
+                            baseUrl: https://sonarr.dawid.us.ci
+                          - type: radarr
+                            service_group: Apps
+                            service_name: Radarr
+                            baseUrl: https://radarr.dawid.us.ci
+
               - Repositories:
                   - dawidd6/lab:
                       href: https://github.com/dawidd6/lab
@@ -423,6 +442,9 @@ spec:
                 - Apps:
                     style: row
                     columns: 4
+                - Calendar:
+                    style: row
+                    columns: 1
                 - Releases:
                     style: row
                     columns: 4
