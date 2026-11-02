@@ -24,6 +24,11 @@ spec:
               secretKeyRef:
                 name: grafana-oidc
                 key: client_secret
+            # interpolated into the ntfy contact point below
+            NTFY_TOKEN:
+              secretKeyRef:
+                name: grafana-ntfy
+                key: token
           grafana.ini:
             server:
               root_url: https://grafana.dawid.us.ci
@@ -79,6 +84,8 @@ spec:
                       settings:
                         # ntfy's built-in template turns Grafana's JSON into a readable notification
                         url: http://ntfy.observability/server?template=grafana
+                        authorization_scheme: Bearer
+                        authorization_credentials: $NTFY_TOKEN
             policies.yaml:
               apiVersion: 1
               policies:

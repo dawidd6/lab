@@ -208,6 +208,7 @@ spec:
                         type: ntfy
                         url: http://ntfy.observability
                         topic: server
+                        key: "{{HOMEPAGE_VAR_NTFY_TOKEN}}"
                   - Duplicati:
                       href: https://duplicati.dawid.us.ci
                       icon: duplicati.png

@@ -35,6 +35,16 @@ spec:
                       NTFY_BEHIND_PROXY: true
                       ENABLE_CACHE_FILE: true
                       ENABLE_ATTACHMENT_CACHE_DIR: true
+                      # private: users (dawid, admin; services) and the services token are in ntfy-secrets
+                      NTFY_AUTH_FILE: /var/cache/ntfy/auth.db
+                      NTFY_AUTH_DEFAULT_ACCESS: deny-all
+                      NTFY_AUTH_ACCESS: services:server:rw
+                      # shows the web app's login
+                      NTFY_ENABLE_LOGIN: true
+                    envFrom:
+                      - secretRef:
+                          name: ntfy-secrets
+                          expandObjectName: false
           persistence:
             # configured through env, no server.yml
             config:
@@ -52,3 +62,6 @@ spec:
                   sectionName: https
               hostnames:
                 - ntfy.dawid.us.ci
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/observability/ntfy/manifests

@@ -1,0 +1,24 @@
+apiVersion: isindir.github.com/v1alpha3
+kind: SopsSecret
+metadata:
+  name: grafana-ntfy
+spec:
+  secretTemplates:
+    - name: grafana-ntfy
+      stringData:
+        token: ENC[AES256_GCM,data:IoRu1jfLO6J2+60/0xpxColZY+dKtfRiw8fGeCEgkVs=,iv:R48PSSfJu++YXv3wsZ2ZXCfAiRhnJQH0CTcmVOkWUjw=,tag:VxsLf+hmJ57Ssc/IuhwQCw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnUVNGVHZoWkZ1VjdZcHZQ
+        bkRldTlyMEoxZ1lqUFA4UGVZdkUxbUppdnlFClVTeG1yVzNWTXd1WllFWE1jUUpW
+        d29EbTIxNmUrWmJCOGpDK2QvMUxjbWMKLS0tIGZOUFNBdk5hN3V4N255cWZMa2pP
+        MzZmTGxFbHF2YkNHMUU2REI5ZWEySmcKfDZJ2FHpjRsErO+f0mO1KNOxs5O0M5ki
+        vOFlIvSnCsB4opdklftrgjSEuqR3saummu3dN3WRFPlqyICEo/0ZIw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-11-02T18:21:39Z"
+  mac: ENC[AES256_GCM,data:/204We0LwJEo28Pe04hrhFhLG6NnH94xbTEA0O19OkHtnykY2J7qBqjbbn0NDfhqGBBwaNxuQ+2ofCcg99/V3y+88k2QIgvWaBJ8mI52C5quD5vKrRgUtNWOz0o/q0qvQF8UtsqXyW4c32Kk8AgHX9dQ41LukS1QvoBNMJNNH7A=,iv:7IN/Jte3YefV/tD/Lz06sNDZROFrZr8iS2m2B0G4N+M=,tag:yqNMXceyyisDLKpQBBV1UQ==,type:str]
+  version: 3.13.3
