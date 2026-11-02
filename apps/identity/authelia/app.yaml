@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authelia
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: https://charts.authelia.com
+      chart: authelia
+      targetRevision: 0.11.22
+      helm:
+        valuesObject:
+          ingress:
+            enabled: true
+            gatewayAPI:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+          persistence:
+            enabled: true
+            storageClass: internal
+          # every secret, the users file and the JWKS key come from the sops-managed authelia Secret, mounted at /secrets/authelia;
+          # existingSecret stops the chart rendering its own (regenerated on every render) and secret_name below points at it
+          secret:
+            existingSecret: authelia
+            additionalSecrets:
+              authelia: {}
+          configMap:
+            identity_validation:
+              reset_password:
+                secret:
+                  secret_name: authelia
+            authentication_backend:
+              # the users file is a read-only Secret mount, managed in git
+              password_reset:
+                disable: true
+              password_change:
+                disable: true
+              file:
+                enabled: true
+                path: /secrets/authelia/users_database.yml
+            access_control:
+              default_policy: one_factor
+            session:
+              encryption_key:
+                secret_name: authelia
+              cookies:
+                - domain: dawid.us.ci
+                  subdomain: authelia
+            storage:
+              encryption_key:
+                secret_name: authelia
+              local:
+                enabled: true
+            notifier:
+              filesystem:
+                enabled: true
+            identity_providers:
+              oidc:
+                enabled: true
+                hmac_secret:
+                  secret_name: authelia
+                jwks:
+                  - key:
+                      path: /secrets/authelia/oidc.jwk.rsa.pem
+                # client_secret values are PBKDF2 digests; the plaintext secrets are in each app's sops file
+                clients:
+                  - client_id: argocd
+                    client_secret: '$pbkdf2-sha512$310000$BHwh/tECiqvLZVYKcJ.9hQ$h/Za77vKnicwAhDcTQjXUxwFgYDCD9/m1774HT4WZ2HKPdYK2BKybYyykPOCCvLo01QcZDTXyqiqZzBC.VDICg'
+                    authorization_policy: one_factor
+                    redirect_uris:
+                      - https://argocd.dawid.us.ci/auth/callback
+                  - client_id: argocd-cli
+                    public: true
+                    authorization_policy: one_factor
+                    require_pkce: true
+                    redirect_uris:
+                      - http://localhost:8085/auth/callback
+                    scopes: [openid, offline_access, groups, email]
+                    grant_types: [authorization_code, refresh_token]
+                  - client_id: grafana
+                    client_secret: '$pbkdf2-sha512$310000$sMXO1OU6wx31H0jbtpmRfQ$nT3IsrSnxM1cjs3rP6WKsIELfydaBno.AD8AGcD6gRqNSn6/aM9Chb4P6ZRxVu/7GU1Q5E2EMKaRv9jD1wdyFg'
+                    authorization_policy: one_factor
+                    redirect_uris:
+                      - https://grafana.dawid.us.ci/login/generic_oauth
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/identity/authelia/manifests

@@ -35,9 +35,9 @@ spec:
           route:
             main:
               enabled: true
-              # tinyauth login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
               labels:
-                auth: tinyauth
+                auth: authelia
               parentRefs:
                 - name: envoy
                   namespace: ingress

@@ -53,13 +53,16 @@ spec:
                   preferred_ip_protocol: ip4
                   valid_status_codes:
                     - 200
-              # an app behind the tinyauth SecurityPolicy still ends up on the login page, not its own
-              http_tinyauth_login:
+              # an app behind the Authelia SecurityPolicy still ends up on Authelia's login page, not its own
+              # (Accept: text/html, as Authelia redirects browsers and answers other clients with 401)
+              http_authelia_login:
                 prober: http
                 timeout: 5s
                 http:
                   preferred_ip_protocol: ip4
+                  headers:
+                    Accept: text/html
                   valid_status_codes:
                     - 200
                   fail_if_body_not_matches_regexp:
-                    - <title>Tinyauth</title>
+                    - data-resetpassword=

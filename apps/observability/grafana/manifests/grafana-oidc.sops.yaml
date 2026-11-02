@@ -6,7 +6,7 @@ spec:
   secretTemplates:
     - name: grafana-oidc
       stringData:
-        client_secret: ENC[AES256_GCM,data:HQ3tOKyu1MIN2jSbSTsKMisk41ll0a/QlZbhI7B+5rB5mmseyNl8sY/nZuNrudKoSMqHGjlBXFX7mxaODd0VgQ==,iv:nppa4AZlVHol7ZkU0vFDwc5g4TNo5X+XKQn3xpY+OZM=,tag:L7vMmXRRxAGQDd8muPDo0A==,type:str]
+        client_secret: ENC[AES256_GCM,data:SwYAlRW87t4OBaIOaA2HtUhcwXhsNC2uM32tO6EpNc3mHXdZ/i5+HvzKfW8QyLlidqNZz9yJUWHsoEM+MG9seQ==,iv:mkogY8QHV27L7qKXMkEF2AlmfvVrfAPc/7LwIl4FomE=,tag:ZMKgiQODymfoKbVkRFL5OQ==,type:str]
 sops:
   age:
     - enc: |
@@ -19,6 +19,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
   encrypted_regex: ^(data|stringData)$
-  lastmodified: "2026-10-18T19:19:03Z"
-  mac: ENC[AES256_GCM,data:7UBh3KpewgfBaZ10E6rVDdR8NQXotKqkjvGAyNIKEF+eq8NeqXYCFkv3moyPfEM777Sv2NlIjW8EY4j4WlUy3LGhJVLpEGS3EiUoupUVXOwfT6ihTAdNcdIEsnciJfsxPtNgkZC4I+q7pFGHPrsShMysAkAPhXGkc9rF4Vhn89E=,iv:3B5DuMSqpJcvBCsHsKR+fuUlLduSUxDjKKKUwTx7FKU=,tag:PsGReRoImrAArLiuIxKwSQ==,type:str]
+  lastmodified: "2026-11-02T17:59:45Z"
+  mac: ENC[AES256_GCM,data:bGgkpNK5mxAfI27BB7sg5+3MvuL6VGx6+qSzK0RHJxV+seoi4PZDXBKbTMtYIiglT5hbw5Lixpg7tXvaZhodGKQgEKqRLhqcox0jwZcWG26BQwcFXk1jv6dqoktZJ3ImW24GRlYaREIYd+tV8tDxD3R3TR9XHHzcPI1ITGfcUn0=,iv:rj+5rxQMDnyHXX/zall6YjF60S9HOWS0IYaNrt6lSVU=,tag:yuB9Web2DuVXpR1Xi84jzg==,type:str]
   version: 3.13.3

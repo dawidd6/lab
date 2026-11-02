@@ -66,9 +66,9 @@ spec:
           route:
             main:
               enabled: true
-              # tinyauth login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
               labels:
-                auth: tinyauth
+                auth: authelia
               parentRefs:
                 - name: envoy
                   namespace: ingress
@@ -259,10 +259,10 @@ spec:
                       href: https://grafana.dawid.us.ci
                       icon: grafana.png
                       siteMonitor: http://grafana.observability/api/health
-                  - Tinyauth:
-                      href: https://tinyauth.dawid.us.ci
-                      icon: tinyauth.png
-                      siteMonitor: http://tinyauth.identity/api/healthz
+                  - Authelia:
+                      href: https://authelia.dawid.us.ci
+                      icon: authelia.png
+                      siteMonitor: http://authelia.identity/api/health
 
               - Calendar:
                   - Upcoming:
@@ -405,12 +405,12 @@ spec:
                       widget:
                         <<: *feed
                         url: https://github.com/grafana/grafana/releases.atom
-                  - Tinyauth:
-                      href: https://github.com/tinyauthapp/tinyauth/releases
-                      icon: tinyauth.png
+                  - Authelia:
+                      href: https://github.com/authelia/authelia/releases
+                      icon: authelia.png
                       widget:
                         <<: *feed
-                        url: https://github.com/tinyauthapp/tinyauth/releases.atom
+                        url: https://github.com/authelia/authelia/releases.atom
                   - cert-manager:
                       href: https://github.com/cert-manager/cert-manager/releases
                       icon: cert-manager.png

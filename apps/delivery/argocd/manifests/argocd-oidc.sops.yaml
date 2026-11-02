@@ -8,7 +8,7 @@ spec:
       labels:
         app.kubernetes.io/part-of: argocd
       stringData:
-        clientSecret: ENC[AES256_GCM,data:UdLVlHpLyW4dPmHienz85qzWQbI7qt3FK53N2IY2DB2qtymv04lDIyO+kSaREJ6ZizKYO720PKLRUivTgXqvUg==,iv:JyAk5tbK9qwB6A+NGvvSraAoaBuAIVDmAwNRWmug3s4=,tag:PwJu2GTYgPVzHR9d68Gw+A==,type:str]
+        clientSecret: ENC[AES256_GCM,data:bYwbPpXhTcxk/BU8WcslVHRR4juG4Kb9StL9O62tNpjLenA30BQ9+DXQ0/jcmMDtdSQjYkHbzpy63tp1UUo9Rg==,iv:G182vWv3AuPX1WIS2wXBI8TOym+MgIVjwjTsqCLkAIs=,tag:0yBhczUmgu3iaDCIVkcTAw==,type:str]
 sops:
   age:
     - enc: |
@@ -21,6 +21,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1zkq8prdy8ze4aq9cacm7kn2ft3paevtzdlu36629c6tauhp4upas8rt7tf
   encrypted_regex: ^(data|stringData)$
-  lastmodified: "2026-10-18T19:19:03Z"
-  mac: ENC[AES256_GCM,data:wAmJTQu7Ryf+Dn2oNJGLfo7Vng9ZFgsxlo0zecI0BexN5U0KxRkS/UDkGH63TAF8Y24mCR8jMsyn8BUmQ/N8zqqyhIFRsl3boEhYJn1M593gmGafgN5DCuW5Z6q2612dBAIwc3UoEt0aglrQ8VFpj1Ukzu3jwSON70rVZ6u7+5k=,iv:1Ge1NaW7kt+56+WTHHRXXwzsWjGKyUvNm6ActZdKUvs=,tag:mQAW1p7/SUhozCKz7GweNg==,type:str]
+  lastmodified: "2026-11-02T17:59:45Z"
+  mac: ENC[AES256_GCM,data:z9NVILc8cTEprr1V66lBHysQv4tqmrZUKfqNh0sJXrfklFiok59HA9nQV0T3IGFoTEd8/SD3DBfQyv9GFSa91Ir92Fhk+WeU/IB4N3XLfKgbJuYilAmv+VtpyeiKArKUdeQsVN0yq2kmjln0ROsLEvgGFDWxUVtA+Yhwz2RRRWs=,iv:v6O5YGzbkRHa/A5JEaK4qsgoEaz5Fr+OdVRLyP93UXE=,tag:ohaD1UUe9lB6EwTpQRTxGQ==,type:str]
   version: 3.13.3

@@ -1,8 +1,8 @@
-# lets the SecurityPolicies of every app envoy logs in for use the one tinyauth client secret, envoy-oidc
+# lets the SecurityPolicies in apps/ingress/envoy-gateway/manifests send envoy's ext-authz checks to the authelia Service
 apiVersion: gateway.networking.k8s.io/v1
 kind: ReferenceGrant
 metadata:
-  name: envoy-oidc
+  name: authelia
 spec:
   from:
     - group: gateway.envoyproxy.io
@@ -19,5 +19,5 @@ spec:
       namespace: observability
   to:
     - group: ""
-      kind: Secret
-      name: envoy-oidc
+      kind: Service
+      name: authelia

@@ -31,16 +31,17 @@ spec:
               disable_login_form: true
             auth.generic_oauth:
               enabled: true
-              name: tinyauth
+              name: Authelia
               client_id: grafana
-              scopes: openid email profile
-              auth_url: https://tinyauth.dawid.us.ci/authorize
-              token_url: https://tinyauth.dawid.us.ci/api/oidc/token
-              api_url: https://tinyauth.dawid.us.ci/api/oidc/userinfo
+              scopes: openid profile email groups
+              auth_url: https://authelia.dawid.us.ci/api/oidc/authorization
+              token_url: https://authelia.dawid.us.ci/api/oidc/token
+              api_url: https://authelia.dawid.us.ci/api/oidc/userinfo
               use_pkce: true
               auto_login: true
               allow_sign_up: true
-              role_attribute_path: preferred_username == 'dawid' && 'Admin' || 'Viewer'
+              login_attribute_path: preferred_username
+              role_attribute_path: contains(groups[], 'admins') && 'Admin' || 'Viewer'
           route:
             main:
               enabled: true

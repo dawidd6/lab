@@ -34,9 +34,9 @@ spec:
                 - labels:
                     module: http_ok
                   targets:
-                    - https://tinyauth.dawid.us.ci/api/healthz
+                    - https://authelia.dawid.us.ci/api/health
                 - labels:
-                    module: http_tinyauth_login
+                    module: http_authelia_login
                   targets:
                     - https://homepage.dawid.us.ci
               relabel_configs:
