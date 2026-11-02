@@ -29,6 +29,7 @@ spec:
             additionalSecrets:
               authelia: {}
           configMap:
+            theme: dark
             identity_validation:
               reset_password:
                 secret:
