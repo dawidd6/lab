@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: quay.io/metallb/chart
       chart: metallb
-      targetRevision: 0.16.1
+      targetRevision: 0.16.2
       helm:
         valuesObject:
           frrk8s:
