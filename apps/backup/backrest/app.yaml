@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backrest
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: backrest
+      targetRevision: 3.0.4
+      helm:
+        valuesObject:
+          securityContext:
+            container:
+              # root with the read-any-file capability so it can read every app's files, whoever owns them
+              runAsUser: 0
+              runAsGroup: 0
+              capabilities:
+                add:
+                  - DAC_READ_SEARCH
+          persistence:
+            data:
+              storageClass: internal
+              size: 1Gi
+            config:
+              storageClass: internal
+              size: 1Gi
+            cache:
+              storageClass: internal
+              size: 1Gi
+            # backup source, read-only at /userdata: every app's config volume on the internal disk
+            userdata:
+              enabled: true
+              type: hostPath
+              hostPath: /data/internal
+              hostPathType: Directory
+          route:
+            main:
+              enabled: true
+              # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              labels:
+                auth: authelia
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - backrest.dawid.us.ci

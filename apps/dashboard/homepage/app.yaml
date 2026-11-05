@@ -231,6 +231,13 @@ spec:
                         type: duplicati
                         url: http://duplicati.backup:8200
                         password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
+                  - Backrest:
+                      href: https://backrest.dawid.us.ci
+                      icon: backrest.png
+                      siteMonitor: http://backrest.backup:9898
+                      widget:
+                        type: backrest
+                        url: http://backrest.backup:9898
                   - Argo CD:
                       href: https://argocd.dawid.us.ci
                       icon: argo-cd.png
