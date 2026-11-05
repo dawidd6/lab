@@ -223,14 +223,6 @@ spec:
                         url: http://ntfy.observability
                         topic: server
                         key: "{{HOMEPAGE_VAR_NTFY_TOKEN}}"
-                  - Duplicati:
-                      href: https://duplicati.dawid.us.ci
-                      icon: duplicati.png
-                      siteMonitor: http://duplicati.backup:8200
-                      widget:
-                        type: duplicati
-                        url: http://duplicati.backup:8200
-                        password: "{{HOMEPAGE_VAR_DUPLICATI_PASSWORD}}"
                   - Backrest:
                       href: https://backrest.dawid.us.ci
                       icon: backrest.png
