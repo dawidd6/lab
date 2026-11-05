@@ -26,6 +26,7 @@ spec:
                   main:
                     # RESTIC_PASSWORD, the repositories' encryption password; restic only uses it for a repository with no
                     # password of its own and the env entry RESTIC_PASSWORD=${RESTIC_PASSWORD} (Backrest expands it)
+                    # NTFY_TOKEN, ntfy's services token, for a command hook (hooks get Backrest's environment)
                     envFrom:
                       - secretRef:
                           name: backrest-secrets
