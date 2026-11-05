@@ -77,85 +77,21 @@ spec:
                 - homepage.dawid.us.ci
           homepage:
             services:
-              - Services:
-                  - GitHub:
-                      href: https://github.com/notifications
-                      icon: github.png
+              - Watch:
+                  - Seerr:
+                      href: https://seerr.dawid.us.ci
+                      icon: seerr.png
+                      siteMonitor: http://seerr.media/api/v1/status
                       widget:
-                        type: customapi
-                        url: https://api.github.com/notifications
-                        refreshInterval: 300000
-                        headers:
-                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
-                          Accept: application/vnd.github+json
-                          # GitHub's API rejects requests without one
-                          User-Agent: homepage
-                        display: dynamic-list
-                        mappings:
-                          name: subject.title
-                          label: repository.full_name
-                          limit: 5
-                  - Tailscale:
-                      href: https://login.tailscale.com/admin/machines
-                      icon: tailscale.png
-                      widget:
-                        type: tailscale
-                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
-                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
-                  - Cloudflare:
-                      href: https://dash.cloudflare.com
-                      icon: cloudflare.png
-                      widget:
-                        type: customapi
-                        url: https://dns.google/resolve?name=dawid.us.ci&type=A
-                        refreshInterval: 300000
-                        mappings:
-                          - field: Answer.0.data
-                            label: IP
-                          - field: Answer.0.TTL
-                            label: TTL
-                            format: number
-                            suffix: s
-              - Vitals:
-                  - CPU:
-                      widget:
-                        # the Vitals widgets below merge these in too (<<: *glances); the anchor leaves metric out,
-                        # since kubeconform -strict rejects a merged key set again
-                        <<: &glances
-                          type: glances
-                          url: http://glances.observability:61208
-                          version: 4
-                        metric: cpu
-                  - Memory:
-                      widget:
-                        <<: *glances
-                        metric: memory
-                  - Internal disk:
-                      widget:
-                        <<: *glances
-                        metric: fs:/rootfs
-                  - External disk:
-                      widget:
-                        <<: *glances
-                        metric: fs:/rootfs/data/external
-                  - CPU temperature:
-                      widget:
-                        <<: *glances
-                        metric: sensor:Package id 0
-                  - Memory temperature:
-                      widget:
-                        <<: *glances
-                        metric: sensor:Memory
-                  - NVMe temperature:
-                      widget:
-                        <<: *glances
-                        metric: sensor:Composite
-                  - Ambient temperature:
-                      widget:
-                        <<: *glances
-                        metric: sensor:Ambient
+                        type: seerr
+                        url: http://seerr.media
+                        key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+                  - Jellyfin:
+                      href: https://jellyfin.dawid.us.ci
+                      icon: jellyfin.png
+                      siteMonitor: http://jellyfin.media:8096/health
 
-              - Apps:
+              - Downloads:
                   - SABnzbd:
                       href: https://sabnzbd.dawid.us.ci
                       icon: sabnzbd.png
@@ -200,14 +136,70 @@ spec:
                         # Bazarr generates it itself (Settings > General); copied into homepage-secrets
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
-                  - Seerr:
-                      href: https://seerr.dawid.us.ci
-                      icon: seerr.png
-                      siteMonitor: http://seerr.media/api/v1/status
+                  - JDownloader:
+                      href: https://jdownloader2.dawid.us.ci
+                      icon: jdownloader.png
+                      siteMonitor: http://jdownloader2.media:5800
+
+              - Calendar:
+                  - Upcoming:
+                      icon: mdi-calendar
                       widget:
-                        type: seerr
-                        url: http://seerr.media
-                        key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+                        type: calendar
+                        view: agenda
+                        maxEvents: 10
+                        showTime: true
+                        # events come from the Sonarr and Radarr widgets above, found by group and service name
+                        integrations:
+                          - type: sonarr
+                            service_group: Downloads
+                            service_name: Sonarr
+                            baseUrl: https://sonarr.dawid.us.ci
+                          - type: radarr
+                            service_group: Downloads
+                            service_name: Radarr
+                            baseUrl: https://radarr.dawid.us.ci
+
+              - Vitals:
+                  - CPU:
+                      widget:
+                        # the Vitals widgets below merge these in too (<<: *glances); the anchor leaves metric out,
+                        # since kubeconform -strict rejects a merged key set again
+                        <<: &glances
+                          type: glances
+                          url: http://glances.observability:61208
+                          version: 4
+                        metric: cpu
+                  - Memory:
+                      widget:
+                        <<: *glances
+                        metric: memory
+                  - Internal disk:
+                      widget:
+                        <<: *glances
+                        metric: fs:/rootfs
+                  - External disk:
+                      widget:
+                        <<: *glances
+                        metric: fs:/rootfs/data/external
+                  - CPU temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Package id 0
+                  - Memory temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Memory
+                  - NVMe temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Composite
+                  - Ambient temperature:
+                      widget:
+                        <<: *glances
+                        metric: sensor:Ambient
+
+              - Platform:
                   - ntfy:
                       href: https://ntfy.dawid.us.ci
                       icon: ntfy.png
@@ -256,14 +248,6 @@ spec:
                             query: sum(certmanager_certificate_ready_status{condition="True"})
                           - label: Not ready
                             query: sum(certmanager_certificate_ready_status{condition!="True"})
-                  - Jellyfin:
-                      href: https://jellyfin.dawid.us.ci
-                      icon: jellyfin.png
-                      siteMonitor: http://jellyfin.media:8096/health
-                  - JDownloader:
-                      href: https://jdownloader2.dawid.us.ci
-                      icon: jdownloader.png
-                      siteMonitor: http://jdownloader2.media:5800
                   - Grafana:
                       href: https://grafana.dawid.us.ci
                       icon: grafana.png
@@ -273,26 +257,45 @@ spec:
                       icon: authelia.png
                       siteMonitor: http://authelia.identity/api/health
 
-              - Calendar:
-                  - Upcoming:
-                      icon: mdi-calendar
+              - Services:
+                  - GitHub:
+                      href: https://github.com/notifications
+                      icon: github.png
                       widget:
-                        type: calendar
-                        view: agenda
-                        maxEvents: 10
-                        showTime: true
-                        # events come from the Sonarr and Radarr widgets above, found by group and service name
-                        integrations:
-                          - type: sonarr
-                            service_group: Apps
-                            service_name: Sonarr
-                            baseUrl: https://sonarr.dawid.us.ci
-                          - type: radarr
-                            service_group: Apps
-                            service_name: Radarr
-                            baseUrl: https://radarr.dawid.us.ci
-
-              - Repositories:
+                        type: customapi
+                        url: https://api.github.com/notifications
+                        refreshInterval: 300000
+                        headers:
+                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
+                          Accept: application/vnd.github+json
+                          # GitHub's API rejects requests without one
+                          User-Agent: homepage
+                        display: dynamic-list
+                        mappings:
+                          name: subject.title
+                          label: repository.full_name
+                          limit: 5
+                  - Tailscale:
+                      href: https://login.tailscale.com/admin/machines
+                      icon: tailscale.png
+                      widget:
+                        type: tailscale
+                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+                  - Cloudflare:
+                      href: https://dash.cloudflare.com
+                      icon: cloudflare.png
+                      widget:
+                        type: customapi
+                        url: https://dns.google/resolve?name=dawid.us.ci&type=A
+                        refreshInterval: 300000
+                        mappings:
+                          - field: Answer.0.data
+                            label: IP
+                          - field: Answer.0.TTL
+                            label: TTL
+                            format: number
+                            suffix: s
                   - dawidd6/lab:
                       href: https://github.com/dawidd6/lab
                       icon: github.png
@@ -324,6 +327,7 @@ spec:
                           - field: data.repository.pushedAt
                             label: Last push
                             format: relativeDate
+
               - Releases:
                   - Kubernetes:
                       href: https://github.com/kubernetes/kubernetes/releases
@@ -440,23 +444,27 @@ spec:
               color: neutral
               # a list, since Helm's toYaml would sort a map's keys and Homepage orders tabs and groups by this
               layout:
-                - Apps:
-                    tab: Apps
+                - Watch:
+                    tab: Media
+                    style: row
+                    columns: 2
+                - Downloads:
+                    tab: Media
                     style: row
                     columns: 4
                 - Calendar:
-                    tab: Apps
+                    tab: Media
                     style: row
                     columns: 1
                 - Vitals:
                     tab: Server
                     style: row
                     columns: 4
-                - Services:
+                - Platform:
                     tab: Server
                     style: row
                     columns: 4
-                - Repositories:
+                - Services:
                     tab: Server
                     style: row
                     columns: 4
