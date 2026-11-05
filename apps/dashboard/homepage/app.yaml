@@ -424,29 +424,30 @@ spec:
               statusStyle: dot
               blockStyle: refined
               color: neutral
-              background:
-                image: https://raw.githubusercontent.com/tinyauthapp/tinyauth/c3b5c0443e9407d451f7d9473e1ab666220ff676/assets/background.jpg
-                opacity: 50
-                brightness: 50
-                saturate: 50
-              # a list, since Helm's toYaml would sort a map's keys and Homepage orders groups by this
+              # a list, since Helm's toYaml would sort a map's keys and Homepage orders tabs and groups by this
               layout:
-                - Services:
-                    style: row
-                    columns: 4
-                - Repositories:
-                    style: row
-                    columns: 4
-                - Vitals:
-                    style: row
-                    columns: 4
                 - Apps:
+                    tab: Apps
                     style: row
                     columns: 4
                 - Calendar:
+                    tab: Apps
                     style: row
                     columns: 1
+                - Vitals:
+                    tab: Server
+                    style: row
+                    columns: 4
+                - Services:
+                    tab: Server
+                    style: row
+                    columns: 4
+                - Repositories:
+                    tab: Server
+                    style: row
+                    columns: 4
                 - Releases:
+                    tab: Releases
                     style: row
                     columns: 4
             widgets:
