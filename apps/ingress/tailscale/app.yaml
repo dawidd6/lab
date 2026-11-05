@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: tailscale
-      targetRevision: 13.1.6
+      targetRevision: 13.1.7
       helm:
         valuesObject:
           securityContext:
