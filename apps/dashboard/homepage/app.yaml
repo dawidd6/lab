@@ -91,17 +91,7 @@ spec:
                       icon: jellyfin.png
                       siteMonitor: http://jellyfin.media:8096/health
 
-              - Downloads:
-                  - SABnzbd:
-                      href: https://sabnzbd.dawid.us.ci
-                      icon: sabnzbd.png
-                      siteMonitor: http://sabnzbd.media:8080
-                      widget:
-                        type: sabnzbd
-                        url: http://sabnzbd.media:8080
-                        # SABnzbd generates it on first start: Config > General > API Key
-                        key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
-                        fields: ["rate", "queue", "timeleft"]
+              - Automation:
                   - Radarr:
                       href: https://radarr.dawid.us.ci
                       icon: radarr.png
@@ -136,6 +126,18 @@ spec:
                         # Bazarr generates it itself (Settings > General); copied into homepage-secrets
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
+
+              - Downloads:
+                  - SABnzbd:
+                      href: https://sabnzbd.dawid.us.ci
+                      icon: sabnzbd.png
+                      siteMonitor: http://sabnzbd.media:8080
+                      widget:
+                        type: sabnzbd
+                        url: http://sabnzbd.media:8080
+                        # SABnzbd generates it on first start: Config > General > API Key
+                        key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
+                        fields: ["rate", "queue", "timeleft"]
                   - JDownloader:
                       href: https://jdownloader2.dawid.us.ci
                       icon: jdownloader.png
@@ -152,11 +154,11 @@ spec:
                         # events come from the Sonarr and Radarr widgets above, found by group and service name
                         integrations:
                           - type: sonarr
-                            service_group: Downloads
+                            service_group: Automation
                             service_name: Sonarr
                             baseUrl: https://sonarr.dawid.us.ci
                           - type: radarr
-                            service_group: Downloads
+                            service_group: Automation
                             service_name: Radarr
                             baseUrl: https://radarr.dawid.us.ci
 
@@ -327,115 +329,6 @@ spec:
                           - field: data.repository.pushedAt
                             label: Last push
                             format: relativeDate
-
-              - Releases:
-                  - Kubernetes:
-                      href: https://github.com/kubernetes/kubernetes/releases
-                      icon: kubernetes.png
-                      widget:
-                        # the Releases widgets below merge these in too (<<: *feed); the anchor leaves url out,
-                        # since kubeconform -strict rejects a merged key set again
-                        <<: &feed
-                          type: feed
-                          maxItems: 5
-                          images: false
-                        url: https://github.com/kubernetes/kubernetes/releases.atom
-                  - k0s:
-                      href: https://github.com/k0sproject/k0s/releases
-                      icon: kubernetes.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/k0sproject/k0s/releases.atom
-                  - SABnzbd:
-                      href: https://github.com/sabnzbd/sabnzbd/releases
-                      icon: sabnzbd.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/sabnzbd/sabnzbd/releases.atom
-                  - Radarr:
-                      href: https://github.com/Radarr/Radarr/releases
-                      icon: radarr.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/Radarr/Radarr/releases.atom
-                  - Sonarr:
-                      href: https://github.com/Sonarr/Sonarr/releases
-                      icon: sonarr.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/Sonarr/Sonarr/releases.atom
-                  - Prowlarr:
-                      href: https://github.com/Prowlarr/Prowlarr/releases
-                      icon: prowlarr.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/Prowlarr/Prowlarr/releases.atom
-                  - Bazarr:
-                      href: https://github.com/morpheus65535/bazarr/releases
-                      icon: bazarr.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/morpheus65535/bazarr/releases.atom
-                  - Seerr:
-                      href: https://github.com/seerr-team/seerr/releases
-                      icon: seerr.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/seerr-team/seerr/releases.atom
-                  - ntfy:
-                      href: https://github.com/binwiederhier/ntfy/releases
-                      icon: ntfy.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/binwiederhier/ntfy/releases.atom
-                  - Duplicati:
-                      href: https://github.com/duplicati/duplicati/releases
-                      icon: duplicati.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/duplicati/duplicati/releases.atom
-                  - Argo CD:
-                      href: https://github.com/argoproj/argo-cd/releases
-                      icon: argo-cd.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/argoproj/argo-cd/releases.atom
-                  - Tailscale:
-                      href: https://github.com/tailscale/tailscale/releases
-                      icon: tailscale.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/tailscale/tailscale/releases.atom
-                  - Jellyfin:
-                      href: https://github.com/jellyfin/jellyfin/releases
-                      icon: jellyfin.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/jellyfin/jellyfin/releases.atom
-                  - JDownloader:
-                      href: https://github.com/jlesage/docker-jdownloader-2/releases
-                      icon: jdownloader.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/jlesage/docker-jdownloader-2/releases.atom
-                  - Grafana:
-                      href: https://github.com/grafana/grafana/releases
-                      icon: grafana.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/grafana/grafana/releases.atom
-                  - Authelia:
-                      href: https://github.com/authelia/authelia/releases
-                      icon: authelia.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/authelia/authelia/releases.atom
-                  - cert-manager:
-                      href: https://github.com/cert-manager/cert-manager/releases
-                      icon: cert-manager.png
-                      widget:
-                        <<: *feed
-                        url: https://github.com/cert-manager/cert-manager/releases.atom
             settings:
               title: Server
               headerStyle: clean
@@ -448,10 +341,14 @@ spec:
                     tab: Media
                     style: row
                     columns: 2
-                - Downloads:
+                - Automation:
                     tab: Media
                     style: row
                     columns: 4
+                - Downloads:
+                    tab: Media
+                    style: row
+                    columns: 2
                 - Calendar:
                     tab: Media
                     style: row
@@ -466,10 +363,6 @@ spec:
                     columns: 4
                 - Services:
                     tab: Server
-                    style: row
-                    columns: 4
-                - Releases:
-                    tab: Releases
                     style: row
                     columns: 4
             widgets:
