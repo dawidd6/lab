@@ -78,6 +78,20 @@ spec:
           homepage:
             services:
               - Watch:
+                  - Jellyfin:
+                      href: https://jellyfin.dawid.us.ci
+                      icon: jellyfin.png
+                      siteMonitor: http://jellyfin.media:8096/health
+                      widget:
+                        type: jellyfin
+                        url: http://jellyfin.media:8096
+                        # created in Jellyfin (Dashboard > API Keys), not something Jellyfin can take from config
+                        key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+                        # Jellyfin 10.12 and later
+                        version: 2
+                        enableBlocks: true
+                        fields: ["movies", "series", "episodes"]
+                        showEpisodeNumber: true
                   - Seerr:
                       href: https://seerr.dawid.us.ci
                       icon: seerr.png
@@ -86,10 +100,6 @@ spec:
                         type: seerr
                         url: http://seerr.media
                         key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
-                  - Jellyfin:
-                      href: https://jellyfin.dawid.us.ci
-                      icon: jellyfin.png
-                      siteMonitor: http://jellyfin.media:8096/health
 
               - Automation:
                   - Radarr:
