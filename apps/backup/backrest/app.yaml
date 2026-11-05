@@ -19,6 +19,17 @@ spec:
               capabilities:
                 add:
                   - DAC_READ_SEARCH
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    # RESTIC_PASSWORD, the repositories' encryption password; restic only uses it for a repository with no
+                    # password of its own and the env entry RESTIC_PASSWORD=${RESTIC_PASSWORD} (Backrest expands it)
+                    envFrom:
+                      - secretRef:
+                          name: backrest-secrets
+                          expandObjectName: false
           persistence:
             data:
               storageClass: internal
@@ -47,3 +58,6 @@ spec:
                   sectionName: https
               hostnames:
                 - backrest.dawid.us.ci
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/backup/backrest/manifests
