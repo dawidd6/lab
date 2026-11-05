@@ -273,44 +273,6 @@ spec:
 
               - Services:
                   - GitHub:
-                      href: https://github.com/notifications
-                      icon: github.png
-                      widget:
-                        type: customapi
-                        url: https://api.github.com/notifications
-                        refreshInterval: 300000
-                        headers:
-                          Authorization: Bearer {{HOMEPAGE_VAR_GITHUB_TOKEN}}
-                          Accept: application/vnd.github+json
-                          # GitHub's API rejects requests without one
-                          User-Agent: homepage
-                        display: dynamic-list
-                        mappings:
-                          name: subject.title
-                          label: repository.full_name
-                          limit: 5
-                  - Tailscale:
-                      href: https://login.tailscale.com/admin/machines
-                      icon: tailscale.png
-                      widget:
-                        type: tailscale
-                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
-                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
-                  - Cloudflare:
-                      href: https://dash.cloudflare.com
-                      icon: cloudflare.png
-                      widget:
-                        type: customapi
-                        url: https://dns.google/resolve?name=dawid.us.ci&type=A
-                        refreshInterval: 300000
-                        mappings:
-                          - field: Answer.0.data
-                            label: IP
-                          - field: Answer.0.TTL
-                            label: TTL
-                            format: number
-                            suffix: s
-                  - dawidd6/lab:
                       href: https://github.com/dawidd6/lab
                       icon: github.png
                       widget:
@@ -341,6 +303,27 @@ spec:
                           - field: data.repository.pushedAt
                             label: Last push
                             format: relativeDate
+                  - Tailscale:
+                      href: https://login.tailscale.com/admin/machines
+                      icon: tailscale.png
+                      widget:
+                        type: tailscale
+                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
+                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+                  - Cloudflare:
+                      href: https://dash.cloudflare.com
+                      icon: cloudflare.png
+                      widget:
+                        type: customapi
+                        url: https://dns.google/resolve?name=dawid.us.ci&type=A
+                        refreshInterval: 300000
+                        mappings:
+                          - field: Answer.0.data
+                            label: IP
+                          - field: Answer.0.TTL
+                            label: TTL
+                            format: number
+                            suffix: s
             settings:
               title: Server
               headerStyle: clean
