@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seerr
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: ghcr.io/seerr-team/seerr
+      chart: seerr-chart
+      targetRevision: 3.11.0
+      helm:
+        valuesObject:
+          # instead of seerr-seerr-chart
+          fullnameOverride: seerr
+          # API_KEY (also in homepage-secrets for the Homepage widget); Seerr generates one otherwise
+          extraEnvFrom:
+            - secretRef:
+                name: seerr-secrets
+          config:
+            persistence:
+              storageClass: internal
+              size: 1Gi
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - seerr.dawid.us.ci
+    - repoURL: https://github.com/dawidd6/lab
+      targetRevision: master
+      path: apps/media/seerr/manifests

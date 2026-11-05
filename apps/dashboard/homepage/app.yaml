@@ -200,6 +200,14 @@ spec:
                         # Bazarr generates it itself (Settings > General); copied into homepage-secrets
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
+                  - Seerr:
+                      href: https://seerr.dawid.us.ci
+                      icon: seerr.png
+                      siteMonitor: http://seerr.media/api/v1/status
+                      widget:
+                        type: seerr
+                        url: http://seerr.media
+                        key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
                   - ntfy:
                       href: https://ntfy.dawid.us.ci
                       icon: ntfy.png
@@ -364,6 +372,12 @@ spec:
                       widget:
                         <<: *feed
                         url: https://github.com/morpheus65535/bazarr/releases.atom
+                  - Seerr:
+                      href: https://github.com/seerr-team/seerr/releases
+                      icon: seerr.png
+                      widget:
+                        <<: *feed
+                        url: https://github.com/seerr-team/seerr/releases.atom
                   - ntfy:
                       href: https://github.com/binwiederhier/ntfy/releases
                       icon: ntfy.png
