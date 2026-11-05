@@ -90,8 +90,8 @@ spec:
                         # Jellyfin 10.12 and later
                         version: 2
                         enableBlocks: true
+                        enableNowPlaying: false
                         fields: ["movies", "series", "episodes"]
-                        showEpisodeNumber: true
                   - Seerr:
                       href: https://seerr.dawid.us.ci
                       icon: seerr.png
