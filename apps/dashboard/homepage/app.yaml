@@ -172,7 +172,7 @@ spec:
                             service_name: Radarr
                             baseUrl: https://radarr.dawid.us.ci
 
-              - Vitals:
+              - Resources:
                   - CPU:
                       widget:
                         # the Vitals widgets below merge these in too (<<: *glances); the anchor leaves metric out,
@@ -194,6 +194,8 @@ spec:
                       widget:
                         <<: *glances
                         metric: fs:/rootfs/data/external
+
+              - Sensors:
                   - CPU temperature:
                       widget:
                         <<: *glances
@@ -363,7 +365,11 @@ spec:
                     tab: Media
                     style: row
                     columns: 1
-                - Vitals:
+                - Resources:
+                    tab: Server
+                    style: row
+                    columns: 4
+                - Sensors:
                     tab: Server
                     style: row
                     columns: 4
