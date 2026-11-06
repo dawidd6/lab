@@ -23,7 +23,7 @@ spec:
                     # set here instead of the chart's tailscale-config ConfigMap, whose TS_KUBE_SECRET env can't override
                     envFrom: []
                     env:
-                      TS_HOSTNAME: server-pod
+                      TS_HOSTNAME: server
                       # kernel networking, as a subnet router for the server's LAN address
                       TS_USERSPACE: "false"
                       TS_ROUTES: 192.168.1.109/32
