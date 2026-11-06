@@ -19,7 +19,7 @@ spec:
             - grep -q ^LABEL=external /etc/fstab || echo 'LABEL=external /data/external ext4 defaults,noatime,nofail 0 2' | sudo tee -a /etc/fstab
             - findmnt /data/external || { sudo mkdir -p /data/external && sudo chattr +i /data/external && (sudo mount /data/external || true); }
   k0s:
-    version: v1.37.1+k0s.0
+    version: v1.37.2+k0s.0
     config:
       spec:
         workerProfiles:
