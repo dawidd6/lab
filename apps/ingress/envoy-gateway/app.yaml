@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: docker.io/envoyproxy
       chart: gateway-helm
-      targetRevision: 1.9.3
+      targetRevision: 1.10.0
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/ingress/envoy-gateway/manifests
