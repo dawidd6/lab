@@ -12,14 +12,17 @@ spec:
       hooks:
         apply:
           before:
-            - sudo timedatectl set-timezone Europe/Warsaw
-            - sudo localectl set-locale C
+            # otherwise Ubuntu kernels from 7.0.0-42 give containers a stacked AppArmor label that containerd's default profile
+            # doesn't allow signals for, and .NET apps abort with exit 139 (containerd/containerd#14485)
+            - echo kernel.apparmor_restrict_unprivileged_unconfined=0 | sudo tee /etc/sysctl.d/20-apparmor.conf >/dev/null && sudo sysctl -q --system
             # the default 128 inotify instances per user runs out with a few dozen pods (most run as root)
             - echo fs.inotify.max_user_instances=1024 | sudo tee /etc/sysctl.d/90-inotify.conf >/dev/null && sudo sysctl -q --system
+            - sudo timedatectl set-timezone Europe/Warsaw
+            - sudo localectl set-locale C
             - grep -q ^LABEL=external /etc/fstab || echo 'LABEL=external /data/external ext4 defaults,noatime,nofail 0 2' | sudo tee -a /etc/fstab
             - findmnt /data/external || { sudo mkdir -p /data/external && sudo chattr +i /data/external && (sudo mount /data/external || true); }
   k0s:
-    version: v1.37.2+k0s.0
+    version: v1.37.2+k0s.1
     config:
       spec:
         workerProfiles:
