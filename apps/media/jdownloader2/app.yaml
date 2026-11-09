@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: jdownloader2
-      targetRevision: 23.0.4
+      targetRevision: 23.1.2
       helm:
         valuesObject:
           service:
