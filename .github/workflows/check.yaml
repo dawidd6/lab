@@ -24,8 +24,20 @@ jobs:
 
       - run: mise run check
 
-      - uses: guarnz/deadvalues@6ed0a88f1513ea7c3c93b3bb9a4b4fc71b951b25 # v0.1.9
+      - id: deadvalues
+        continue-on-error: true
+        uses: guarnz/deadvalues@6ed0a88f1513ea7c3c93b3bb9a4b4fc71b951b25 # v0.1.9
         with:
           path: apps
           # the report goes to the job summary; a PR comment would come on every PR, apps changed or not
+          comment: false
+
+      # Chart downloads occasionally fail with transient GitHub release gateway errors.
+      - if: steps.deadvalues.outcome == 'failure'
+        run: sleep 30
+
+      - if: steps.deadvalues.outcome == 'failure'
+        uses: guarnz/deadvalues@6ed0a88f1513ea7c3c93b3bb9a4b4fc71b951b25 # v0.1.9
+        with:
+          path: apps
           comment: false
