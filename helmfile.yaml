@@ -8,3 +8,8 @@ releases:
     namespace: delivery
     chart: argo/argo-cd
     version: 10.17.2
+    set:
+      # the chart renders dex by default; nothing uses SSO here, and the managed app disables it, which would leave
+      # these objects running untracked (the bootstrap's kubectl-applied resources carry no Argo tracking annotation)
+      - name: dex.enabled
+        value: false
