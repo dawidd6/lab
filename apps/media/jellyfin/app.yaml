@@ -23,7 +23,7 @@ spec:
             media:
               existingClaim: media
             config:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master

@@ -33,7 +33,7 @@ spec:
               delete_request_store: filesystem
           singleBinary:
             persistence:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
           read:
             replicas: 0

@@ -13,7 +13,7 @@ spec:
         valuesObject:
           server:
             persistentVolume:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
           scrapeConfigs:
             blackbox:

@@ -13,7 +13,7 @@ spec:
         valuesObject:
           persistence:
             enabled: true
-            storageClassName: internal
+            storageClassName: data
             size: 1Gi
           deploymentStrategy:
             type: Recreate
@@ -139,26 +139,11 @@ spec:
                           relativeTimeRange: {from: 600, to: 0}
                           model:
                             instant: true
-                            expr: node_filesystem_avail_bytes{mountpoint=~"/|/data/external"} / node_filesystem_size_bytes
+                            expr: node_filesystem_avail_bytes{mountpoint=~"/"} / node_filesystem_size_bytes
                         - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [0.1]}}]}}
                       for: 15m
                       annotations:
                         summary: A disk has less than 10% free (value = fraction free)
-                    # nofail in fstab: without the disk the server boots anyway, and /data/external is then just a folder on /
-                    - uid: external-disk-missing
-                      title: External disk missing
-                      condition: B
-                      data:
-                        - refId: A
-                          datasourceUid: prometheus
-                          relativeTimeRange: {from: 600, to: 0}
-                          model:
-                            instant: true
-                            expr: count(node_filesystem_size_bytes{mountpoint="/data/external"}) or vector(0)
-                        - {refId: B, datasourceUid: __expr__, model: {type: threshold, expression: A, conditions: [{evaluator: {type: lt, params: [1]}}]}}
-                      for: 5m
-                      annotations:
-                        summary: The external disk isn't mounted at /data/external
                     # fixed limits: the sensors' own max values are 0 or nonsense on this board
                     - uid: cpu-too-hot
                       title: CPU too hot

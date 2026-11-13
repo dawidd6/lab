@@ -21,7 +21,7 @@ spec:
                   sectionName: https
           persistence:
             enabled: true
-            storageClass: internal
+            storageClass: data
             size: 1Gi
           # every secret, the users file and the JWKS key come from the sops-managed authelia Secret, mounted at /secrets/authelia;
           # existingSecret stops the chart rendering its own (regenerated on every render) and secret_name below points at it

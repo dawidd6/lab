@@ -50,7 +50,7 @@ spec:
             config:
               enabled: false
             cache:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
 
           route:

@@ -186,14 +186,10 @@ spec:
                       widget:
                         <<: *glances
                         metric: memory
-                  - Internal disk:
+                  - Disk:
                       widget:
                         <<: *glances
                         metric: fs:/rootfs
-                  - External disk:
-                      widget:
-                        <<: *glances
-                        metric: fs:/rootfs/data/external
 
               - Sensors:
                   - CPU temperature:

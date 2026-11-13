@@ -33,19 +33,18 @@ spec:
                           expandObjectName: false
           persistence:
             data:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
             config:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
             cache:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
-            # backup source, read-only at /userdata: every app's config volume on the internal disk
             userdata:
               enabled: true
               type: hostPath
-              hostPath: /data/internal
+              hostPath: /data
               hostPathType: Directory
           route:
             main:

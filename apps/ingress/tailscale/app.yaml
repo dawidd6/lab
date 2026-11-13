@@ -43,7 +43,7 @@ spec:
             state:
               enabled: true
               mountPath: /var/lib/tailscale
-              storageClass: internal
+              storageClass: data
               size: 1Gi
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master

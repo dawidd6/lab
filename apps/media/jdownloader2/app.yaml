@@ -30,7 +30,7 @@ spec:
                       WEB_FILE_MANAGER: "1"
           persistence:
             config:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
             # downloads go to /media/downloads instead
             output:

@@ -15,8 +15,6 @@ spec:
             # the web UI's process list shows the host's processes, not only Glances itself
             hostPID: true
           persistence:
-            # CPU, memory and sensors come from the host's /proc and /sys as seen in any container;
-            # disk usage needs the host filesystems, sub-mounts (/data/external) included
             rootfs:
               enabled: true
               type: hostPath

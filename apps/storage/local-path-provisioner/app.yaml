@@ -13,7 +13,7 @@ spec:
         valuesObject:
           nodePathMap: []
           storageClassConfigs:
-            internal:
+            data:
               storageClass:
                 create: true
                 defaultVolumeType: hostPath
@@ -23,15 +23,4 @@ spec:
               nodePathMap:
                 - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
                   paths:
-                    - /data/internal
-            external:
-              storageClass:
-                create: true
-                defaultVolumeType: hostPath
-                reclaimPolicy: Retain
-                volumeBindingMode: WaitForFirstConsumer
-                pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/"
-              nodePathMap:
-                - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
-                  paths:
-                    - /data/external
+                    - /data

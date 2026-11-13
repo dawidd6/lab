@@ -13,7 +13,7 @@ spec:
         valuesObject:
           persistence:
             config:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
             media:
               enabled: true

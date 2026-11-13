@@ -11,8 +11,6 @@ spec:
       targetRevision: 27.1.2
       helm:
         valuesObject:
-          # folders, set in SABnzbd's UI and kept in its config: temporary /media/downloads/.incomplete, completed /media/downloads
-          # (below /media/<folder>, not /media itself: SABnzbd treats /media/<first folder> as an external drive and waits for it)
           service:
             main:
               ports:
@@ -31,7 +29,7 @@ spec:
                       SABNZBD__HOST_WHITELIST_ENTRIES: sabnzbd.dawid.us.ci, sabnzbd.media
           persistence:
             config:
-              storageClass: internal
+              storageClass: data
               size: 1Gi
             media:
               enabled: true

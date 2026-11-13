@@ -1,5 +1,3 @@
-# shared by every media app (mounted at /media); one volume, so imports by Radarr/Sonarr are renames, not copies
-#   downloads (JDownloader, SABnzbd; SABnzbd's temporary folder is downloads/.incomplete), movies (Radarr), series (Sonarr)
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,7 +8,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: external
+  storageClassName: data
   resources:
     requests:
       storage: 1Gi
