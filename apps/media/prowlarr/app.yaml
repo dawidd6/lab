@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: prowlarr
-      targetRevision: 23.2.2
+      targetRevision: 23.2.4
       helm:
         valuesObject:
           workload:
