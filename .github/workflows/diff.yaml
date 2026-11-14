@@ -12,7 +12,7 @@ jobs:
       contents: read # checkout
       pull-requests: write # diff comment
     steps:
-      - uses: sholdee/drydock/pr-action@b9ea057d0acea877ee93e3dcee6229618d3b83d7 # v0.3.8
+      - uses: sholdee/drydock/pr-action@6d99013227c8d1271edd730d61d75b96260a9da1 # v0.4.2
         with:
           # app.yaml files are the ApplicationSet's input, not Applications of their own
           discover-ignore: apps/*/*/app.yaml
