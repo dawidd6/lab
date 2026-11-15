@@ -37,7 +37,7 @@ spec:
                     - NOERROR
                   validate_answer_rrs:
                     fail_if_not_matches_regexp:
-                      - '\t0\tIN\tA\t192.168.1.109'
+                      - '\t0\tIN\tA\t192.168.10.10'
               tcp_ssh:
                 prober: tcp
                 timeout: 5s

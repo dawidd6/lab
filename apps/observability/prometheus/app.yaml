@@ -30,7 +30,7 @@ spec:
                 - labels:
                     module: tcp_ssh
                   targets:
-                    - 192.168.1.109:22
+                    - 192.168.10.10:22
                 - labels:
                     module: http_ok
                   targets:

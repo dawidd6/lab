@@ -26,7 +26,7 @@ spec:
                       TS_HOSTNAME: server
                       # kernel networking, as a subnet router for the server's LAN address
                       TS_USERSPACE: "false"
-                      TS_ROUTES: 192.168.1.109/32
+                      TS_ROUTES: 192.168.10.10/32
                       TS_ACCEPT_DNS: "false"
                       TS_AUTH_ONCE: "true"
                       # where the chart's probes look for it
