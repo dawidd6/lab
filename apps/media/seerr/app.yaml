@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: ghcr.io/seerr-team/seerr
       chart: seerr-chart
-      targetRevision: 3.11.0
+      targetRevision: 3.11.1
       helm:
         valuesObject:
           # instead of seerr-seerr-chart
