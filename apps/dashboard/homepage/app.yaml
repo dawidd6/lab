@@ -306,18 +306,10 @@ spec:
                         type: prometheusmetric
                         url: http://prometheus-server.observability
                         metrics:
-                          - label: Routes
+                          - label: Advertised
+                            query: tailscaled_advertised_routes
+                          - label: Approved
                             query: tailscaled_approved_routes
-                          - label: Health
-                            query: tailscaled_health_messages
-                          - label: In
-                            query: sum(rate(tailscaled_inbound_bytes_total[5m]))
-                            format:
-                              type: byterate
-                          - label: Out
-                            query: sum(rate(tailscaled_outbound_bytes_total[5m]))
-                            format:
-                              type: byterate
                   - Cloudflare:
                       href: https://dash.cloudflare.com
                       icon: cloudflare.png
