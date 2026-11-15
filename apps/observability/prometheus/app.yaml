@@ -16,6 +16,10 @@ spec:
               storageClass: data
               size: 1Gi
           scrapeConfigs:
+            tailscale:
+              static_configs:
+                - targets:
+                    - tailscale.ingress.svc.cluster.local:9002
             blackbox:
               metrics_path: /probe
               static_configs:

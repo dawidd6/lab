@@ -15,6 +15,15 @@ spec:
             container:
               # containerboot turns on IP forwarding for the route, which needs a writable /proc/sys
               privileged: true
+          service:
+            main:
+              enabled: true
+              ports:
+                # hostNetwork, so this Service just points prometheus at the node's :9002
+                metrics:
+                  enabled: true
+                  primary: true
+                  port: 9002
           workload:
             main:
               podSpec:
@@ -29,6 +38,8 @@ spec:
                       TS_ROUTES: 192.168.10.10/32
                       TS_ACCEPT_DNS: "false"
                       TS_AUTH_ONCE: "true"
+                      # tailscaled client metrics on :9002/metrics, scraped by prometheus
+                      TS_ENABLE_METRICS: "true"
                       # where the chart's probes look for it
                       TS_SOCKET: /var/run/tailscale/tailscaled.sock
                       TS_AUTHKEY:

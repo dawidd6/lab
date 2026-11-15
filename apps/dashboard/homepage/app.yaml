@@ -301,10 +301,23 @@ spec:
                   - Tailscale:
                       href: https://login.tailscale.com/admin/machines
                       icon: tailscale.png
+                      # tailscaled client metrics via prometheus: no Tailscale API credential needed
                       widget:
-                        type: tailscale
-                        deviceid: "{{HOMEPAGE_VAR_TAILSCALE_DEVICE_ID}}"
-                        key: "{{HOMEPAGE_VAR_TAILSCALE_KEY}}"
+                        type: prometheusmetric
+                        url: http://prometheus-server.observability
+                        metrics:
+                          - label: Routes
+                            query: tailscaled_approved_routes
+                          - label: Health
+                            query: tailscaled_health_messages
+                          - label: In
+                            query: sum(rate(tailscaled_inbound_bytes_total[5m]))
+                            format:
+                              type: byterate
+                          - label: Out
+                            query: sum(rate(tailscaled_outbound_bytes_total[5m]))
+                            format:
+                              type: byterate
                   - Cloudflare:
                       href: https://dash.cloudflare.com
                       icon: cloudflare.png
