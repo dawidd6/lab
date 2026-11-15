@@ -25,7 +25,7 @@ spec:
                   valid_status_codes:
                     - 200
                   fail_if_body_not_matches_regexp:
-                    - '"data":"192\.168\.1\.109"'
+                    - '"data":"192\.168\.10\.10"'
               dns_router_static:
                 prober: dns
                 timeout: 5s
