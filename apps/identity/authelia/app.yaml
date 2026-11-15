@@ -73,11 +73,13 @@ spec:
                   - client_id: argocd
                     client_secret: '$pbkdf2-sha512$310000$BHwh/tECiqvLZVYKcJ.9hQ$h/Za77vKnicwAhDcTQjXUxwFgYDCD9/m1774HT4WZ2HKPdYK2BKybYyykPOCCvLo01QcZDTXyqiqZzBC.VDICg'
                     authorization_policy: one_factor
+                    consent_mode: implicit
                     redirect_uris:
                       - https://argocd.dawid.us.ci/auth/callback
                   - client_id: argocd-cli
                     public: true
                     authorization_policy: one_factor
+                    consent_mode: implicit
                     require_pkce: true
                     redirect_uris:
                       - http://localhost:8085/auth/callback
@@ -86,6 +88,7 @@ spec:
                   - client_id: grafana
                     client_secret: '$pbkdf2-sha512$310000$sMXO1OU6wx31H0jbtpmRfQ$nT3IsrSnxM1cjs3rP6WKsIELfydaBno.AD8AGcD6gRqNSn6/aM9Chb4P6ZRxVu/7GU1Q5E2EMKaRv9jD1wdyFg'
                     authorization_policy: one_factor
+                    consent_mode: implicit
                     redirect_uris:
                       - https://grafana.dawid.us.ci/login/generic_oauth
     - repoURL: https://github.com/dawidd6/lab
