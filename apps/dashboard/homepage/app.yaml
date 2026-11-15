@@ -265,8 +265,23 @@ spec:
                       href: https://authelia.dawid.us.ci
                       icon: authelia.png
                       siteMonitor: http://authelia.identity/api/health
+                  - Tailscale:
+                      href: https://login.tailscale.com/admin/machines
+                      icon: tailscale.png
+                      # the metrics port is the only exposed one; no Tailscale API credential needed
+                      siteMonitor: http://tailscale.ingress:9002/metrics
+                      widget:
+                        type: prometheusmetric
+                        url: http://prometheus-server.observability
+                        metrics:
+                          - label: Advertised
+                            query: tailscaled_advertised_routes
+                          - label: Approved
+                            query: tailscaled_approved_routes
+                          - label: Health
+                            query: sum(tailscaled_health_messages)
 
-              - Services:
+              - External:
                   - GitHub:
                       href: https://github.com/dawidd6/lab
                       icon: github.png
@@ -298,18 +313,6 @@ spec:
                           - field: data.repository.pushedAt
                             label: Last push
                             format: relativeDate
-                  - Tailscale:
-                      href: https://login.tailscale.com/admin/machines
-                      icon: tailscale.png
-                      # tailscaled client metrics via prometheus: no Tailscale API credential needed
-                      widget:
-                        type: prometheusmetric
-                        url: http://prometheus-server.observability
-                        metrics:
-                          - label: Advertised
-                            query: tailscaled_advertised_routes
-                          - label: Approved
-                            query: tailscaled_approved_routes
                   - Cloudflare:
                       href: https://dash.cloudflare.com
                       icon: cloudflare.png
