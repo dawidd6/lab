@@ -257,14 +257,6 @@ spec:
                             query: sum(certmanager_certificate_ready_status{condition="True"})
                           - label: Not ready
                             query: sum(certmanager_certificate_ready_status{condition!="True"})
-                  - Grafana:
-                      href: https://grafana.dawid.us.ci
-                      icon: grafana.png
-                      siteMonitor: http://grafana.observability/api/health
-                  - Authelia:
-                      href: https://authelia.dawid.us.ci
-                      icon: authelia.png
-                      siteMonitor: http://authelia.identity/api/health
                   - Tailscale:
                       href: https://login.tailscale.com/admin/machines
                       icon: tailscale.png
@@ -280,6 +272,14 @@ spec:
                             query: tailscaled_approved_routes
                           - label: Health
                             query: sum(tailscaled_health_messages)
+                  - Grafana:
+                      href: https://grafana.dawid.us.ci
+                      icon: grafana.png
+                      siteMonitor: http://grafana.observability/api/health
+                  - Authelia:
+                      href: https://authelia.dawid.us.ci
+                      icon: authelia.png
+                      siteMonitor: http://authelia.identity/api/health
 
               - External:
                   - GitHub:
@@ -363,10 +363,10 @@ spec:
                     tab: Server
                     style: row
                     columns: 4
-                - Services:
+                - External:
                     tab: Server
                     style: row
-                    columns: 4
+                    columns: 2
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/dashboard/homepage/manifests
