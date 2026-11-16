@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: radarr
-      targetRevision: 29.1.7
+      targetRevision: 29.1.9
       helm:
         valuesObject:
           workload:
