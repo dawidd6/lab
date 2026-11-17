@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: profilarr
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: profilarr
+      targetRevision: 5.2.4
+      helm:
+        valuesObject:
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests); profilarr's own would be a second one
+                      AUTH: "off"
+                      # the chart's default is the service URL, not the route's
+                      ORIGIN: https://profilarr.dawid.us.ci
+          persistence:
+            config:
+              storageClass: data
+              size: 1Gi
+
+          route:
+            main:
+              enabled: true
+              # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests)
+              labels:
+                auth: authelia
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - profilarr.dawid.us.ci
