@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: oci.trueforge.org/truecharts
       chart: sabnzbd
-      targetRevision: 27.1.4
+      targetRevision: 27.1.5
       helm:
         valuesObject:
           service:
