@@ -11,16 +11,34 @@ spec:
       targetRevision: 5.2.4
       helm:
         valuesObject:
+          # custom format / quality profile testing; bump with the chart, since Renovate's argocd manager doesn't
+          # read images out of helm values
+          parserImage:
+            repository: ghcr.io/dictionarry-hub/profilarr-parser
+            tag: 2.3.1
           workload:
             main:
               podSpec:
                 containers:
+                  parser:
+                    enabled: true
+                    imageSelector: parserImage
+                    probes:
+                      liveness:
+                        enabled: false
+                      readiness:
+                        enabled: false
+                      startup:
+                        enabled: false
                   main:
                     env:
                       # Authelia login (SecurityPolicy in apps/ingress/envoy-gateway/manifests); profilarr's own would be a second one
                       AUTH: "off"
                       # the chart's default is the service URL, not the route's
                       ORIGIN: https://profilarr.dawid.us.ci
+                      # the parser container shares the pod's network namespace
+                      PARSER_HOST: 127.0.0.1
+                      PARSER_PORT: "5000"
           persistence:
             config:
               storageClass: data
