@@ -136,6 +136,10 @@ spec:
                         # Bazarr generates it itself (Settings > General); copied into homepage-secrets
                         key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
                         fields: ["missingEpisodes", "missingMovies"]
+                  - Profilarr:
+                      href: https://profilarr.dawid.us.ci
+                      icon: profilarr.png
+                      siteMonitor: http://profilarr.media:6868
 
               - Downloads:
                   - SABnzbd:
@@ -342,7 +346,7 @@ spec:
                 - Automation:
                     tab: Media
                     style: row
-                    columns: 4
+                    columns: 5
                 - Downloads:
                     tab: Media
                     style: row
