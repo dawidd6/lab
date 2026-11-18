@@ -196,7 +196,6 @@ spec:
                         metric: fs:/rootfs
                   - Uptime:
                       href: https://glances.dawid.us.ci
-                      icon: glances.png
                       widget:
                         type: customapi
                         # the node's uptime, which Glances answers as a bare JSON string, e.g. "3 days, 4:05:06";
