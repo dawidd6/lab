@@ -194,6 +194,17 @@ spec:
                       widget:
                         <<: *glances
                         metric: fs:/rootfs
+                  - Uptime:
+                      href: https://glances.dawid.us.ci
+                      icon: glances.png
+                      widget:
+                        type: customapi
+                        # the node's uptime, which Glances answers as a bare JSON string, e.g. "3 days, 4:05:06";
+                        # a service rather than an information widget, as those show in the header of every tab
+                        url: http://glances.observability:61208/api/4/uptime
+                        refreshInterval: 60000
+                        mappings:
+                          - label: Up for
 
               - Sensors:
                   - CPU temperature:
@@ -371,14 +382,6 @@ spec:
                     tab: Server
                     style: row
                     columns: 2
-            widgets:
-              - glances:
-                  url: http://glances.observability:61208
-                  version: 4
-                  # the node's uptime, in the header of every tab; CPU and memory are in the Resources group already
-                  cpu: false
-                  mem: false
-                  uptime: true
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/dashboard/homepage/manifests
