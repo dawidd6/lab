@@ -371,6 +371,14 @@ spec:
                     tab: Server
                     style: row
                     columns: 2
+            widgets:
+              - glances:
+                  url: http://glances.observability:61208
+                  version: 4
+                  # the node's uptime, in the header of every tab; CPU and memory are in the Resources group already
+                  cpu: false
+                  mem: false
+                  uptime: true
     - repoURL: https://github.com/dawidd6/lab
       targetRevision: master
       path: apps/dashboard/homepage/manifests
