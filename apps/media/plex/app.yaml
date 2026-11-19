@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: plex
+spec:
+  project: ""
+  destination: {}
+  sources:
+    - repoURL: oci.trueforge.org/truecharts
+      chart: plex
+      targetRevision: 23.1.7
+      helm:
+        valuesObject:
+          plex:
+            # the chart only advertises the ingress URL, not the route's
+            additionalAdvertiseURL: https://plex.dawid.us.ci
+          persistence:
+            config:
+              storageClass: data
+              size: 1Gi
+            media:
+              enabled: true
+              existingClaim: media
+              mountPath: /media
+
+          route:
+            main:
+              enabled: true
+              parentRefs:
+                - name: envoy
+                  namespace: ingress
+                  sectionName: https
+              hostnames:
+                - plex.dawid.us.ci
