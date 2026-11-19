@@ -11,6 +11,10 @@ spec:
       targetRevision: 23.1.7
       helm:
         valuesObject:
+          # Plex calls playback from any subnet but its own "remote" (Remote Watch Pass paywall); on the node it
+          # sees the LAN subnet, so both the route (X-Forwarded-For) and http://<node-ip>:32400 count as local
+          podOptions:
+            hostNetwork: true
           plex:
             # the chart only advertises the ingress URL, not the route's
             additionalAdvertiseURL: https://plex.dawid.us.ci
