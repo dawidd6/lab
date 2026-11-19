@@ -78,6 +78,16 @@ spec:
           homepage:
             services:
               - Watch:
+                  - Plex:
+                      href: https://plex.dawid.us.ci
+                      icon: plex.png
+                      siteMonitor: http://plex.media:32400/identity
+                      widget:
+                        type: plex
+                        url: http://plex.media:32400
+                        # Plex web app token (not Plex Home per-user tokens); goes into homepage-secrets
+                        key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+                        fields: ["streams", "movies", "tv"]
                   - Jellyfin:
                       href: https://jellyfin.dawid.us.ci
                       icon: jellyfin.png
@@ -352,7 +362,7 @@ spec:
                 - Watch:
                     tab: Media
                     style: row
-                    columns: 2
+                    columns: 3
                 - Automation:
                     tab: Media
                     style: row
